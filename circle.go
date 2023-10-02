@@ -6,8 +6,8 @@ import (
 )
 
 // Circle is a 2D circle. It is defined by two properties:
-//  - Center vector
-//  - Radius float64
+//   - Center vector
+//   - Radius float64
 type Circle struct {
 	Center Vec
 	Radius float64
@@ -25,9 +25,9 @@ func C(center Vec, radius float64) Circle {
 
 // String returns the string representation of the Circle.
 //
-//  c := pixel.C(10.1234, pixel.ZV)
-//  c.String()     // returns "Circle(10.12, Vec(0, 0))"
-//  fmt.Println(c) // Circle(10.12, Vec(0, 0))
+//	c := pixel.C(10.1234, pixel.ZV)
+//	c.String()     // returns "Circle(10.12, Vec(0, 0))"
+//	fmt.Println(c) // Circle(10.12, Vec(0, 0))
 func (c Circle) String() string {
 	return fmt.Sprintf("Circle(%s, %.2f)", c.Center, c.Radius)
 }
@@ -46,6 +46,13 @@ func (c Circle) Norm() Circle {
 // Area returns the area of the Circle.
 func (c Circle) Area() float64 {
 	return math.Pi * math.Pow(c.Radius, 2)
+}
+
+func (c Circle) Bounds() Rect {
+	return Rect{
+		Min: V(c.Center.X-c.Radius, c.Center.Y-c.Radius),
+		Max: V(c.Center.X+c.Radius, c.Center.Y+c.Radius),
+	}
 }
 
 // Moved returns the Circle moved by the given vector delta.
@@ -169,8 +176,8 @@ func (c Circle) IntersectLine(l Line) Vec {
 // the perimeters touch.
 //
 // This function will return a non-zero vector if:
-//  - The Rect contains the Circle, partially or fully
-//  - The Circle contains the Rect, partially of fully
+//   - The Rect contains the Circle, partially or fully
+//   - The Circle contains the Rect, partially of fully
 func (c Circle) IntersectRect(r Rect) Vec {
 	// Checks if the c.Center is not in the diagonal quadrants of the rectangle
 	if (r.Min.X <= c.Center.X && c.Center.X <= r.Max.X) || (r.Min.Y <= c.Center.Y && c.Center.Y <= r.Max.Y) {
