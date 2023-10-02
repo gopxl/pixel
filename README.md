@@ -1,8 +1,8 @@
+# __**Important Notice **__
+Revived fork of the original long-dead [Pixel](https://github.com/faiface/pixel) library by [faiface](https://github.com/faiface). This fork is intended to be a community-driven effort to continue the development of the library. We were unable to get a hold of the original author, to take ownership of the original repository to carry on the legacy of the wonderful work. If you are interested in contributing, please join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
+
+
 <p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE2.png"></p>
-
-
-# **Important Notice **
-Revived fork of the original long-dead [Pixel](https://github.com/duysqubix/pixel2) library by [faiface](https://github.com/faiface). This fork is intended to be a community-driven effort to continue the development of the library. We were unable to get a hold of the original author, to take ownership of the original repository to carry on the legacy of the wonderful work. If you are interested in contributing, please join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
 
 
 # Pixel 2 [![Build Status](https://travis-ci.org/faiface/pixel.svg?branch=master)](https://travis-ci.org/faiface/pixel) [![GoDoc](https://godoc.org/github.com/duysqubix/pixel2?status.svg)](https://godoc.org/github.com/duysqubix/pixel2) [![Go Report Card](https://goreportcard.com/badge/github.com/duysqubix/pixel2)](https://goreportcard.com/report/github.com/duysqubix/pixel2) [![Join the chat at https://gitter.im/pixellib/Lobby](https://badges.gitter.im/pixellib/Lobby.svg)](https://gitter.im/pixellib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord Chat](https://img.shields.io/discord/699679031603494954)](https://discord.gg/q2DK4MP)  
