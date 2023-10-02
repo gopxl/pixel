@@ -29,9 +29,9 @@ func R(minX, minY, maxX, maxY float64) Rect {
 
 // String returns the string representation of the Rect.
 //
-//   r := pixel.R(100, 50, 200, 300)
-//   r.String()     // returns "Rect(100, 50, 200, 300)"
-//   fmt.Println(r) // Rect(100, 50, 200, 300)
+//	r := pixel.R(100, 50, 200, 300)
+//	r.String()     // returns "Rect(100, 50, 200, 300)"
+//	fmt.Println(r) // Rect(100, 50, 200, 300)
 func (r Rect) String() string {
 	return fmt.Sprintf("Rect(%v, %v, %v, %v)", r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
 }
@@ -68,6 +68,11 @@ func (r Rect) Size() Vec {
 // Area returns the area of r. If r is not normalized, area may be negative.
 func (r Rect) Area() float64 {
 	return r.W() * r.H()
+}
+
+// Bounds returns the bounding b ox for the rect (itself)
+func (r Rect) Bounds() Rect {
+	return r
 }
 
 // Edges will return the four lines which make up the edges of the rectangle.
@@ -158,9 +163,9 @@ func (r Rect) Moved(delta Vec) Rect {
 // Resized returns the Rect resized to the given size while keeping the position of the given
 // anchor.
 //
-//   r.Resized(r.Min, size)      // resizes while keeping the position of the lower-left corner
-//   r.Resized(r.Max, size)      // same with the top-right corner
-//   r.Resized(r.Center(), size) // resizes around the center
+//	r.Resized(r.Min, size)      // resizes while keeping the position of the lower-left corner
+//	r.Resized(r.Max, size)      // same with the top-right corner
+//	r.Resized(r.Center(), size) // resizes around the center
 //
 // This function does not make sense for resizing a rectangle of zero area and will panic. Use
 // ResizedMin in the case of zero area.
@@ -233,8 +238,8 @@ func (r Rect) Intersects(s Rect) bool {
 // the perimeters touch.
 //
 // This function will return a non-zero vector if:
-//  - The Rect contains the Circle, partially or fully
-//  - The Circle contains the Rect, partially of fully
+//   - The Rect contains the Circle, partially or fully
+//   - The Circle contains the Rect, partially of fully
 func (r Rect) IntersectCircle(c Circle) Vec {
 	return c.IntersectRect(r).Scaled(-1)
 }
