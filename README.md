@@ -1,6 +1,11 @@
 <p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE.png"></p>
 
-# Pixel [![Build Status](https://travis-ci.org/faiface/pixel.svg?branch=master)](https://travis-ci.org/faiface/pixel) [![GoDoc](https://godoc.org/github.com/faiface/pixel?status.svg)](https://godoc.org/github.com/faiface/pixel) [![Go Report Card](https://goreportcard.com/badge/github.com/faiface/pixel)](https://goreportcard.com/report/github.com/faiface/pixel) [![Join the chat at https://gitter.im/pixellib/Lobby](https://badges.gitter.im/pixellib/Lobby.svg)](https://gitter.im/pixellib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord Chat](https://img.shields.io/discord/699679031603494954)](https://discord.gg/q2DK4MP)  
+
+# **Important Notice **
+Revived fork of the original long-dead [Pixel](https://github.com/faiface/pixel) library by [faiface](https://github.com/faiface). This fork is intended to be a community-driven effort to continue the development of the library. We were unable to get a hold of the original author, to take ownership of the original repository to carry on the legacy of the wonderful work. If you are interested in contributing, please join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
+
+
+# Pixel 2 [![Build Status](https://travis-ci.org/faiface/pixel.svg?branch=master)](https://travis-ci.org/faiface/pixel) [![GoDoc](https://godoc.org/github.com/faiface/pixel?status.svg)](https://godoc.org/github.com/faiface/pixel) [![Go Report Card](https://goreportcard.com/badge/github.com/faiface/pixel)](https://goreportcard.com/report/github.com/faiface/pixel) [![Join the chat at https://gitter.im/pixellib/Lobby](https://badges.gitter.im/pixellib/Lobby.svg)](https://gitter.im/pixellib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord Chat](https://img.shields.io/discord/699679031603494954)](https://discord.gg/q2DK4MP)  
 
 A hand-crafted 2D game library in Go. Take a look into the [features](#features) to see what it can
 do.
@@ -155,7 +160,7 @@ The OpenGL version used is **OpenGL 3.3**.
 
 ## Contributing
 
-Join us in the [Discord Chat!](https://discord.gg/q2DK4MP)
+Join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
 
 Pixel is in, let's say, mid-stage of development. Many of the important features are here, some are
 missing. That's why **contributions are very important and welcome!** All alone, I will be able to
