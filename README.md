@@ -1,4 +1,4 @@
-<p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE.png"></p>
+<p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE2.png"></p>
 
 
 # **Important Notice **
