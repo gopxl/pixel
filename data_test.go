@@ -3,7 +3,7 @@ package pixel_test
 import (
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 func BenchmarkMakeTrianglesData(b *testing.B) {

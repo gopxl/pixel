@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 	"github.com/stretchr/testify/assert"
 )
 

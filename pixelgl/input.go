@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/faiface/mainthread"
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 

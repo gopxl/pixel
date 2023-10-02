@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 func TestC(t *testing.T) {

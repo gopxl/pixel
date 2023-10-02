@@ -6,7 +6,7 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 // IMDraw is an immediate-mode-like shape drawer and BasicTarget. IMDraw supports TrianglesPosition,

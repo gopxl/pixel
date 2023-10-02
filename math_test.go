@@ -5,7 +5,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 // closeEnough will shift the decimal point by the accuracy required, truncates the results and compares them.
