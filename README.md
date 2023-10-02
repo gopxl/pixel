@@ -18,7 +18,7 @@ If you are using Modules (Go 1.11 or higher) and want a mutable copy of the sour
 
 ```
 git clone https://github.com/duysqubix/pixel2 # clone outside of $GOPATH
-cd pixel
+cd pixel2
 go install ./...
 ```
 
