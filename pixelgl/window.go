@@ -6,9 +6,9 @@ import (
 	"image/color"
 	"runtime"
 
+	pixel "github.com/duysqubix/pixel2"
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
-	"github.com/duysqubix/pixel2"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/pkg/errors"
@@ -232,7 +232,7 @@ func (w *Window) ClipboardText() string {
 }
 
 // SetClipboardText passes the given string to the underlying glfw window to set the
-//	systems clipboard.
+// systems clipboard.
 func (w *Window) SetClipboardText(text string) {
 	w.window.SetClipboardString(text)
 }
@@ -527,6 +527,15 @@ func (w *Window) Show() {
 	})
 }
 
+// Hide hides the window, if it was previously visible. If the window is already
+// hidden or is in full screen mode, this function does nothing.
+
+func (w *Window) Hide() {
+	mainthread.Call(func() {
+		w.window.Hide()
+	})
+}
+
 // Clipboard returns the contents of the system clipboard.
 func (w *Window) Clipboard() string {
 	var clipboard string
@@ -536,7 +545,7 @@ func (w *Window) Clipboard() string {
 	return clipboard
 }
 
-// SetClipboardString sets the system clipboard to the specified UTF-8 encoded string.
+// SetClipboard sets the system clipboard to the specified UTF-8 encoded string.
 func (w *Window) SetClipboard(str string) {
 	mainthread.Call(func() {
 		w.window.SetClipboardString(str)
