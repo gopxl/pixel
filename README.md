@@ -66,6 +66,9 @@ Here are some screenshots from the examples!
 | --- | --- |
 | ![Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
 
+## Release Schedule
+We aim to release a new version the 1st of every month.
+
 ## Features
 
 Here's the list of the main features in Pixel. Although Pixel is still under heavy development,
