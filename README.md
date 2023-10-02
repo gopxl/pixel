@@ -54,17 +54,17 @@ $ go run main.go
 
 Here are some screenshots from the examples!
 
-| [Lights](https://github.com/duysqubix/pixel2-examples/blob/master/lights) | [Platformer](https://github.com/duysqubix/pixel2-examples/blob/master/platformer) |
+| [Lights](https://github.com/faiface/pixel-examples/blob/master/lights) | [Platformer](https://github.com/faiface/pixel-examples/blob/master/platformer) |
 | --- | --- |
-| ![Lights](https://github.com/duysqubix/pixel2-examples/blob/master/lights/screenshot.png) | ![Platformer](https://github.com/duysqubix/pixel2-examples/blob/master/platformer/screenshot.png) |
+| ![Lights](https://github.com/faiface/pixel-examples/blob/master/lights/screenshot.png) | ![Platformer](https://github.com/faiface/pixel-examples/blob/master/platformer/screenshot.png) |
 
-| [Smoke](https://github.com/duysqubix/pixel2-examples/blob/master/smoke) | [Typewriter](https://github.com/duysqubix/pixel2-examples/blob/master/typewriter) |
+| [Smoke](https://github.com/faiface/pixel-examples/blob/master/smoke) | [Typewriter](https://github.com/faiface/pixel-examples/blob/master/typewriter) |
 | --- | --- |
-| ![Smoke](https://github.com/duysqubix/pixel2-examples/blob/master/smoke/screenshot.png) | ![Typewriter](https://github.com/duysqubix/pixel2-examples/blob/master/typewriter/screenshot.png) |
+| ![Smoke](https://github.com/faiface/pixel-examples/blob/master/smoke/screenshot.png) | ![Typewriter](https://github.com/faiface/pixel-examples/blob/master/typewriter/screenshot.png) |
 
-| [Raycaster](https://github.com/duysqubix/pixel2-examples/blob/master/community/raycaster) | [Gizmo](https://github.com/Lallassu/gizmo) |
+| [Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster) | [Gizmo](https://github.com/Lallassu/gizmo) |
 | --- | --- |
-| ![Raycaster](https://github.com/duysqubix/pixel2-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
+| ![Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
 
 ## Features
 
