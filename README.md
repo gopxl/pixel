@@ -165,20 +165,16 @@ The OpenGL version used is **OpenGL 3.3**.
 
 Join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
 
-Pixel is in, let's say, mid-stage of development. Many of the important features are here, some are
-missing. That's why **contributions are very important and welcome!** All alone, I will be able to
-finish the library, but it'll take a lot of time. With your help, it'll take much less. I encourage
-everyone to contribute, even with just an idea. Especially welcome are **issues** and **pull
-requests**.
+Pixel is currently in a developmental phase, with many of its key features already in place, while others are still in the works. 
+We genuinely appreciate and value contributions, as they can significantly expedite the development process. I am confident in my
+ability to complete the library on my own, but with your assistance, we can achieve this much more quickly. I invite everyone to 
+contribute in any way they can, even if it's just sharing an idea. We especially value the submission of issues and pull requests.
 
-**However, I won't accept everything. Pixel is being developed with thought and care.** Each
-component was designed and re-designed multiple times. Code and API quality is very important here.
-API is focused on simplicity and expressiveness.
-
-When contributing, keep these goals in mind. It doesn't mean that I'll only accept perfect pull
-requests. It just means that I might not like your idea. Or that your pull requests could need some
-rewriting. That's perfectly fine, don't let it put you off. In the end, we'll just end up with a
-better result.
+That said, it's **important to remember that Pixel is being developed with a great deal of thought and attention to detail**. Each component 
+has gone through numerous design iterations to ensure quality. We place a high premium on code and API quality, with an emphasis on simplicity and expressiveness.
+When contributing, please bear these goals in mind. This doesn't mean that only flawless pull requests will be accepted. Rather, it 
+means that there may be times when a proposal might not align with our vision, or when a pull request might require some revisions. 
+This is completely normal and should not discourage you. After all, our shared goal is to achieve the best end result possible.
 
 Take a look at [CONTRIBUTING.md](CONTRIBUTING.md) for further information.
 
