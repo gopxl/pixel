@@ -180,3 +180,13 @@ Take a look at [CONTRIBUTING.md](CONTRIBUTING.md) for further information.
 ## License
 
 [MIT](LICENSE)
+
+## Special Contributions
+
+- A significant shoutout to the original author [faiface](https://github.com/faiface) for starting and growing the Pixel community. We would not be here if not for him.
+- The active/inactive maintainers of the original Pixel repo:
+    - [dusk125](https://github.com/dusk125)
+    - [cebarks](https://github.com/cebarks)
+    - [Benjyclay](https://github.com/Benjyclay)
+    - [delp](https://github.com/delp)
+    - [roipoussiere](https://github.com/roipoussiere)
