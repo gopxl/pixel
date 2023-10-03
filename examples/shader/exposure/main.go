@@ -12,9 +12,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/faiface/pixel"
-	"github.com/faiface/pixel/imdraw"
-	"github.com/faiface/pixel/pixelgl"
+	"github.com/duysqubix/pixel2"
+	"github.com/duysqubix/pixel2/imdraw"
+	"github.com/duysqubix/pixel2/pixelgl"
 )
 
 var (

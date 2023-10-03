@@ -13,8 +13,8 @@ import (
 
 	_ "image/png"
 
-	"github.com/faiface/pixel"
-	"github.com/faiface/pixel/pixelgl"
+	"github.com/duysqubix/pixel2"
+	"github.com/duysqubix/pixel2/pixelgl"
 	"golang.org/x/image/colornames"
 )
 
