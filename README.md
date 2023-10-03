@@ -166,8 +166,7 @@ The OpenGL version used is **OpenGL 3.3**.
 Join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
 
 Pixel is currently in a developmental phase, with many of its key features already in place, while others are still in the works. 
-We genuinely appreciate and value contributions, as they can significantly expedite the development process. I am confident in my
-ability to complete the library on my own, but with your assistance, we can achieve this much more quickly. I invite everyone to 
+We genuinely appreciate and value contributions, as they can significantly expedite the development process. I invite everyone to 
 contribute in any way they can, even if it's just sharing an idea. We especially value the submission of issues and pull requests.
 
 That said, it's **important to remember that Pixel is being developed with a great deal of thought and attention to detail**. Each component 
