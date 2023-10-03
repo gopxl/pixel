@@ -1,6 +1,6 @@
 # Contributing to Pixel
 
-:tada: Hi! I'm really glad you're considering contributing to Pixel! :tada:
+:tada: Hi! I'm really glad you're considering contributing to Pixel2! :tada:
 
 ## Here are a few ways you can contribute
 
@@ -11,6 +11,6 @@
 
 ## How to make a pull request
 
-Go gives you a nice surprise when attempting to make a PR on Github. The thing is, that when user _xyz_ forks Pixel on Github, it ends up in _github.com/xyz/pixel_, which fucks up your import paths. Here's how you deal with that: https://www.reddit.com/r/golang/comments/2jdcw1/how_do_you_deal_with_github_forking/.
+Go gives you a nice surprise when attempting to make a PR on Github. The thing is, that when user _xyz_ forks Pixel on Github, it ends up in _github.com/xyz/pixel_, which conflicts with your import paths. Here's how you deal with that: https://www.reddit.com/r/golang/comments/2jdcw1/how_do_you_deal_with_github_forking/.
 
-[examples]: https://github.com/faiface/pixel-examples/tree/master/community
+[examples]: https://github.com/duysqubix/pixel2/tree/master/examples/community
