@@ -24,7 +24,7 @@ go install ./...
 
 See [requirements](#requirements) for the list of libraries necessary for compilation.
 
-All significant changes are documented in [CHANGELOG.md](CHANGELOG.md).
+Take a look at [CHANGELOG.md](CHANGELOG.md) for upcoming releases and history.
 
 ## Tutorial
 
