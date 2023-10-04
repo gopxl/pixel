@@ -4,7 +4,7 @@ import (
 	"image"
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 func BenchmarkSpriteDrawBatch(b *testing.B) {

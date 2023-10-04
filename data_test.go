@@ -3,7 +3,7 @@ package pixel_test
 import (
 	"testing"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 )
 
 func BenchmarkMakeTrianglesData(b *testing.B) {
@@ -262,6 +262,38 @@ func BenchmarkTrianglesData_Picture(b *testing.B) {
 		b.Run(tt.name, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				_, _ = tt.tData.Picture(tt.position)
+			}
+		})
+	}
+}
+
+func BenchmarkTrianglesData_ClipRect(b *testing.B) {
+	tests := []struct {
+		name     string
+		tData    *pixel.TrianglesData
+		position int
+	}{
+		{
+			name:     "Getting beginning position",
+			tData:    pixel.MakeTrianglesData(1000),
+			position: 2,
+		},
+		{
+			name:     "Getting middle position",
+			tData:    pixel.MakeTrianglesData(1000),
+			position: 500,
+		},
+		{
+			name:     "Getting end position",
+			tData:    pixel.MakeTrianglesData(1000),
+			position: 999,
+		},
+	}
+
+	for _, tt := range tests {
+		b.Run(tt.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				_, _ = tt.tData.ClipRect(tt.position)
 			}
 		})
 	}

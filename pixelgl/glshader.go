@@ -7,10 +7,10 @@ import (
 	"github.com/pkg/errors"
 )
 
-// glShader is a type to assist with managing a canvas's underlying
+// GLShader is a type to assist with managing a canvas's underlying
 // shader configuration. This allows for customization of shaders on
 // a per canvas basis.
-type glShader struct {
+type GLShader struct {
 	s      *glhf.Shader
 	vf, uf glhf.AttrFormat
 	vs, fs string
@@ -22,6 +22,7 @@ type glShader struct {
 		colormask mgl32.Vec4
 		bounds    mgl32.Vec4
 		texbounds mgl32.Vec4
+		cliprect  mgl32.Vec4
 	}
 }
 
@@ -32,15 +33,52 @@ type gsUniformAttr struct {
 	ispointer bool
 }
 
-// reinitialize GLShader data and recompile the underlying gl shader object
-func (gs *glShader) update() {
-	gs.uf = nil
-	for _, u := range gs.uniforms {
-		gs.uf = append(gs.uf, glhf.Attr{
-			Name: u.Name,
-			Type: u.Type,
-		})
+const (
+	canvasPosition int = iota
+	canvasColor
+	canvasTexCoords
+	canvasIntensity
+	canvasClip
+)
+
+var defaultCanvasVertexFormat = glhf.AttrFormat{
+	canvasPosition:  glhf.Attr{Name: "aPosition", Type: glhf.Vec2},
+	canvasColor:     glhf.Attr{Name: "aColor", Type: glhf.Vec4},
+	canvasTexCoords: glhf.Attr{Name: "aTexCoords", Type: glhf.Vec2},
+	canvasIntensity: glhf.Attr{Name: "aIntensity", Type: glhf.Float},
+	canvasClip:      glhf.Attr{Name: "aClipRect", Type: glhf.Vec4},
+}
+
+// NewGLShader sets up a base shader with everything needed for a Pixel
+// canvas to render correctly. The defaults can be overridden
+// by simply using the SetUniform function.
+func NewGLShader(fragmentShader string) *GLShader {
+	gs := &GLShader{
+		vf: defaultCanvasVertexFormat,
+		vs: baseCanvasVertexShader,
+		fs: fragmentShader,
 	}
+
+	gs.SetUniform("uTransform", &gs.uniformDefaults.transform)
+	gs.SetUniform("uColorMask", &gs.uniformDefaults.colormask)
+	gs.SetUniform("uBounds", &gs.uniformDefaults.bounds)
+	gs.SetUniform("uTexBounds", &gs.uniformDefaults.texbounds)
+
+	gs.Update()
+
+	return gs
+}
+
+// Update reinitialize GLShader data and recompile the underlying gl shader object
+func (gs *GLShader) Update() {
+	gs.uf = make([]glhf.Attr, len(gs.uniforms))
+	for idx := range gs.uniforms {
+		gs.uf[idx] = glhf.Attr{
+			Name: gs.uniforms[idx].Name,
+			Type: gs.uniforms[idx].Type,
+		}
+	}
+
 	var shader *glhf.Shader
 	mainthread.Call(func() {
 		var err error
@@ -59,7 +97,7 @@ func (gs *glShader) update() {
 }
 
 // gets the uniform index from GLShader
-func (gs *glShader) getUniform(Name string) int {
+func (gs *GLShader) getUniform(Name string) int {
 	for i, u := range gs.uniforms {
 		if u.Name == Name {
 			return i
@@ -71,11 +109,11 @@ func (gs *glShader) getUniform(Name string) int {
 // SetUniform appends a custom uniform name and value to the shader.
 // if the uniform already exists, it will simply be overwritten.
 //
-// example:
+// Example:
 //
-//   utime := float32(time.Since(starttime)).Seconds())
-//   mycanvas.shader.AddUniform("u_time", &utime)
-func (gs *glShader) setUniform(name string, value interface{}) {
+//		utime := float32(time.Since(starttime)).Seconds())
+//		mycanvas.shader.AddUniform("u_time", &utime)
+func (gs *GLShader) SetUniform(name string, value interface{}) {
 	t, p := getAttrType(value)
 	if loc := gs.getUniform(name); loc > -1 {
 		gs.uniforms[loc].Name = name
@@ -90,24 +128,6 @@ func (gs *glShader) setUniform(name string, value interface{}) {
 		ispointer: p,
 		value:     value,
 	})
-}
-
-// Sets up a base shader with everything needed for a Pixel
-// canvas to render correctly. The defaults can be overridden
-// by simply using the SetUniform function.
-func baseShader(c *Canvas) {
-	gs := &glShader{
-		vf: defaultCanvasVertexFormat,
-		vs: baseCanvasVertexShader,
-		fs: baseCanvasFragmentShader,
-	}
-
-	gs.setUniform("uTransform", &gs.uniformDefaults.transform)
-	gs.setUniform("uColorMask", &gs.uniformDefaults.colormask)
-	gs.setUniform("uBounds", &gs.uniformDefaults.bounds)
-	gs.setUniform("uTexBounds", &gs.uniformDefaults.texbounds)
-
-	c.shader = gs
 }
 
 // Value returns the attribute's concrete value. If the stored value
@@ -222,11 +242,14 @@ in vec2  aPosition;
 in vec4  aColor;
 in vec2  aTexCoords;
 in float aIntensity;
+in vec4  aClipRect;
+in float aIsClipped;
 
 out vec4  vColor;
 out vec2  vTexCoords;
 out float vIntensity;
 out vec2  vPosition;
+out vec4  vClipRect;
 
 uniform mat3 uTransform;
 uniform vec4 uBounds;
@@ -235,10 +258,12 @@ void main() {
 	vec2 transPos = (uTransform * vec3(aPosition, 1.0)).xy;
 	vec2 normPos = (transPos - uBounds.xy) / uBounds.zw * 2 - vec2(1, 1);
 	gl_Position = vec4(normPos, 0.0, 1.0);
+
 	vColor = aColor;
 	vPosition = aPosition;
 	vTexCoords = aTexCoords;
 	vIntensity = aIntensity;
+	vClipRect = aClipRect;
 }
 `
 
@@ -248,6 +273,7 @@ var baseCanvasFragmentShader = `
 in vec4  vColor;
 in vec2  vTexCoords;
 in float vIntensity;
+in vec4  vClipRect;
 
 out vec4 fragColor;
 
@@ -256,6 +282,9 @@ uniform vec4 uTexBounds;
 uniform sampler2D uTexture;
 
 void main() {
+	if ((vClipRect != vec4(0,0,0,0)) && (gl_FragCoord.x < vClipRect.x || gl_FragCoord.y < vClipRect.y || gl_FragCoord.x > vClipRect.z || gl_FragCoord.y > vClipRect.w))
+		discard;
+
 	if (vIntensity == 0) {
 		fragColor = uColorMask * vColor;
 	} else {

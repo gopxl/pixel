@@ -9,8 +9,8 @@ import (
 	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"github.com/faiface/pixel"
-	"github.com/faiface/pixel/text"
+	"github.com/duysqubix/pixel2"
+	"github.com/duysqubix/pixel2/text"
 	"github.com/golang/freetype/truetype"
 )
 
@@ -76,7 +76,7 @@ func BenchmarkTextWrite(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", len(chunk)), func(b *testing.B) {
 			txt := text.New(pixel.ZV, atlas)
 			for i := 0; i < b.N; i++ {
-				txt.Write(chunk)
+				_, _ = txt.Write(chunk)
 			}
 		})
 	}

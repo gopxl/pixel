@@ -23,9 +23,11 @@ package pixel
 type Drawer struct {
 	Triangles Triangles
 	Picture   Picture
+	Cached    bool
 
-	targets map[Target]*drawerTarget
-	inited  bool
+	targets    map[Target]*drawerTarget
+	allTargets []*drawerTarget
+	inited     bool
 }
 
 type drawerTarget struct {
@@ -46,7 +48,7 @@ func (d *Drawer) lazyInit() {
 func (d *Drawer) Dirty() {
 	d.lazyInit()
 
-	for _, t := range d.targets {
+	for _, t := range d.allTargets {
 		t.clean = false
 	}
 }
@@ -68,6 +70,7 @@ func (d *Drawer) Draw(t Target) {
 			pics: make(map[Picture]TargetPicture),
 		}
 		d.targets[t] = dt
+		d.allTargets = append(d.allTargets, dt)
 	}
 
 	if dt.tris == nil {
@@ -89,7 +92,10 @@ func (d *Drawer) Draw(t Target) {
 	pic := dt.pics[d.Picture]
 	if pic == nil {
 		pic = t.MakePicture(d.Picture)
-		dt.pics[d.Picture] = pic
+
+		if d.Cached {
+			dt.pics[d.Picture] = pic
+		}
 	}
 
 	pic.Draw(dt.tris)

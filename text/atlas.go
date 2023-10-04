@@ -1,13 +1,12 @@
 package text
 
 import (
-	"fmt"
 	"image"
 	"image/draw"
 	"sort"
 	"unicode"
 
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )
@@ -60,8 +59,9 @@ func NewAtlas(face font.Face, runeSets ...[]rune) *Atlas {
 	))
 
 	for r, fg := range fixedMapping {
-		dr, mask, maskp, _, _ := face.Glyph(fg.dot, r)
-		draw.Draw(atlasImg, dr, mask, maskp, draw.Src)
+		if dr, mask, maskp, _, ok := face.Glyph(fg.dot, r); ok {
+			draw.Draw(atlasImg, dr, mask, maskp, draw.Src)
+		}
 	}
 
 	bounds := pixel.R(
@@ -203,7 +203,6 @@ func makeMapping(face font.Face, runes []rune, padding, width fixed.Int26_6) (ma
 	for _, r := range runes {
 		b, advance, ok := face.GlyphBounds(r)
 		if !ok {
-			fmt.Println(r)
 			continue
 		}
 

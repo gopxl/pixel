@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/faiface/mainthread"
-	"github.com/faiface/pixel"
+	"github.com/duysqubix/pixel2"
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
@@ -13,14 +13,14 @@ func (w *Window) Pressed(button Button) bool {
 	return w.currInp.buttons[button]
 }
 
-// JustPressed returns whether the Button has just been pressed down.
+// JustPressed returns whether the Button has been pressed in the last frame.
 func (w *Window) JustPressed(button Button) bool {
-	return w.currInp.buttons[button] && !w.prevInp.buttons[button]
+	return w.pressEvents[button]
 }
 
-// JustReleased returns whether the Button has just been released up.
+// JustReleased returns whether the Button has been released in the last frame.
 func (w *Window) JustReleased(button Button) bool {
-	return !w.currInp.buttons[button] && w.prevInp.buttons[button]
+	return w.releaseEvents[button]
 }
 
 // Repeated returns whether a repeat event has been triggered on button.
@@ -45,7 +45,7 @@ func (w *Window) SetMousePosition(v pixel.Vec) {
 	mainthread.Call(func() {
 		if (v.X >= 0 && v.X <= w.bounds.W()) &&
 			(v.Y >= 0 && v.Y <= w.bounds.H()) {
-			w.Window.SetCursorPos(
+			w.window.SetCursorPos(
 				v.X+w.bounds.Min.X,
 				(w.bounds.H()-v.Y)+w.bounds.Min.Y,
 			)
@@ -359,46 +359,50 @@ var buttonNames = map[Button]string{
 
 func (w *Window) initInput() {
 	mainthread.Call(func() {
-		w.Window.SetMouseButtonCallback(func(_ *glfw.Window, button glfw.MouseButton, action glfw.Action, mod glfw.ModifierKey) {
+		w.window.SetMouseButtonCallback(func(_ *glfw.Window, button glfw.MouseButton, action glfw.Action, mod glfw.ModifierKey) {
 			switch action {
 			case glfw.Press:
+				w.tempPressEvents[Button(button)] = true
 				w.tempInp.buttons[Button(button)] = true
 			case glfw.Release:
+				w.tempReleaseEvents[Button(button)] = true
 				w.tempInp.buttons[Button(button)] = false
 			}
 		})
 
-		w.Window.SetKeyCallback(func(_ *glfw.Window, key glfw.Key, scancode int, action glfw.Action, mods glfw.ModifierKey) {
+		w.window.SetKeyCallback(func(_ *glfw.Window, key glfw.Key, scancode int, action glfw.Action, mods glfw.ModifierKey) {
 			if key == glfw.KeyUnknown {
 				return
 			}
 			switch action {
 			case glfw.Press:
+				w.tempPressEvents[Button(key)] = true
 				w.tempInp.buttons[Button(key)] = true
 			case glfw.Release:
+				w.tempReleaseEvents[Button(key)] = true
 				w.tempInp.buttons[Button(key)] = false
 			case glfw.Repeat:
 				w.tempInp.repeat[Button(key)] = true
 			}
 		})
 
-		w.Window.SetCursorEnterCallback(func(_ *glfw.Window, entered bool) {
+		w.window.SetCursorEnterCallback(func(_ *glfw.Window, entered bool) {
 			w.cursorInsideWindow = entered
 		})
 
-		w.Window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
+		w.window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
 			w.tempInp.mouse = pixel.V(
 				x+w.bounds.Min.X,
 				(w.bounds.H()-y)+w.bounds.Min.Y,
 			)
 		})
 
-		w.Window.SetScrollCallback(func(_ *glfw.Window, xoff, yoff float64) {
+		w.window.SetScrollCallback(func(_ *glfw.Window, xoff, yoff float64) {
 			w.tempInp.scroll.X += xoff
 			w.tempInp.scroll.Y += yoff
 		})
 
-		w.Window.SetCharCallback(func(_ *glfw.Window, r rune) {
+		w.window.SetCharCallback(func(_ *glfw.Window, r rune) {
 			w.tempInp.typed += string(r)
 		})
 	})
@@ -431,6 +435,12 @@ func (w *Window) doUpdateInput() {
 	w.prevInp = w.currInp
 	w.currInp = w.tempInp
 
+	w.pressEvents = w.tempPressEvents
+	w.releaseEvents = w.tempReleaseEvents
+
+	// Clear last frame's temporary status
+	w.tempPressEvents = [KeyLast + 1]bool{}
+	w.tempReleaseEvents = [KeyLast + 1]bool{}
 	w.tempInp.repeat = [KeyLast + 1]bool{}
 	w.tempInp.scroll = pixel.ZV
 	w.tempInp.typed = ""

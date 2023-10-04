@@ -1,13 +1,15 @@
 package pixelgl
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"runtime"
 
+	pixel "github.com/duysqubix/pixel2"
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
-	"github.com/faiface/pixel"
+	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/pkg/errors"
 )
@@ -75,11 +77,14 @@ type WindowConfig struct {
 	// Invisible specifies whether the window will be initially hidden.
 	// You can make the window visible later using Window.Show().
 	Invisible bool
+
+	//SamplesMSAA specifies the level of MSAA to be used. Must be one of 0, 2, 4, 8, 16. 0 to disable.
+	SamplesMSAA int
 }
 
 // Window is a window handler. Use this type to manipulate a window (input, drawing, etc.).
 type Window struct {
-	*glfw.Window
+	window *glfw.Window
 
 	bounds             pixel.Rect
 	canvas             *Canvas
@@ -100,6 +105,9 @@ type Window struct {
 		typed   string
 	}
 
+	pressEvents, tempPressEvents     [KeyLast + 1]bool
+	releaseEvents, tempReleaseEvents [KeyLast + 1]bool
+
 	prevJoy, currJoy, tempJoy joystickState
 }
 
@@ -116,6 +124,17 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 
 	w := &Window{bounds: cfg.Bounds, cursorVisible: true}
 
+	flag := false
+	for _, v := range []int{0, 2, 4, 8, 16} {
+		if cfg.SamplesMSAA == v {
+			flag = true
+			break
+		}
+	}
+	if !flag {
+		return nil, fmt.Errorf("invalid value '%v' for msaaSamples", cfg.SamplesMSAA)
+	}
+
 	err := mainthread.CallErr(func() error {
 		var err error
 
@@ -131,6 +150,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		glfw.WindowHint(glfw.TransparentFramebuffer, bool2int[cfg.TransparentFramebuffer])
 		glfw.WindowHint(glfw.Maximized, bool2int[cfg.Maximized])
 		glfw.WindowHint(glfw.Visible, bool2int[!cfg.Invisible])
+		glfw.WindowHint(glfw.Samples, cfg.SamplesMSAA)
 
 		if cfg.Position.X != 0 || cfg.Position.Y != 0 {
 			glfw.WindowHint(glfw.Visible, glfw.False)
@@ -138,10 +158,10 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 
 		var share *glfw.Window
 		if currWin != nil {
-			share = currWin.Window
+			share = currWin.window
 		}
 		_, _, width, height := intBounds(cfg.Bounds)
-		w.Window, err = glfw.CreateWindow(
+		w.window, err = glfw.CreateWindow(
 			width,
 			height,
 			cfg.Title,
@@ -153,13 +173,14 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		}
 
 		if cfg.Position.X != 0 || cfg.Position.Y != 0 {
-			w.Window.SetPos(int(cfg.Position.X), int(cfg.Position.Y))
-			w.Window.Show()
+			w.window.SetPos(int(cfg.Position.X), int(cfg.Position.Y))
+			w.window.Show()
 		}
 
 		// enter the OpenGL context
 		w.begin()
 		glhf.Init()
+		gl.Enable(gl.MULTISAMPLE)
 		w.end()
 
 		return nil
@@ -175,7 +196,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 			imgs[i] = pic.Image()
 		}
 		mainthread.Call(func() {
-			w.Window.SetIcon(imgs)
+			w.window.SetIcon(imgs)
 		})
 	}
 
@@ -195,7 +216,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 // Destroy destroys the Window. The Window can't be used any further.
 func (w *Window) Destroy() {
 	mainthread.Call(func() {
-		w.Window.Destroy()
+		w.window.Destroy()
 	})
 }
 
@@ -205,12 +226,23 @@ func (w *Window) Update() {
 	w.UpdateInput()
 }
 
+// ClipboardText returns the current value of the systems clipboard.
+func (w *Window) ClipboardText() string {
+	return w.window.GetClipboardString()
+}
+
+// SetClipboardText passes the given string to the underlying glfw window to set the
+// systems clipboard.
+func (w *Window) SetClipboardText(text string) {
+	w.window.SetClipboardString(text)
+}
+
 // SwapBuffers swaps buffers. Call this to swap buffers without polling window events.
 // Note that Update invokes SwapBuffers.
 func (w *Window) SwapBuffers() {
 	mainthread.Call(func() {
 		_, _, oldW, oldH := intBounds(w.bounds)
-		newW, newH := w.Window.GetSize()
+		newW, newH := w.window.GetSize()
 		w.bounds = w.bounds.ResizedMin(w.bounds.Size().Add(pixel.V(
 			float64(newW-oldW),
 			float64(newH-oldH),
@@ -222,7 +254,7 @@ func (w *Window) SwapBuffers() {
 	mainthread.Call(func() {
 		w.begin()
 
-		framebufferWidth, framebufferHeight := w.Window.GetFramebufferSize()
+		framebufferWidth, framebufferHeight := w.window.GetFramebufferSize()
 		glhf.Bounds(0, 0, framebufferWidth, framebufferHeight)
 
 		glhf.Clear(0, 0, 0, 0)
@@ -239,7 +271,7 @@ func (w *Window) SwapBuffers() {
 		} else {
 			glfw.SwapInterval(0)
 		}
-		w.Window.SwapBuffers()
+		w.window.SwapBuffers()
 		w.end()
 	})
 }
@@ -250,7 +282,7 @@ func (w *Window) SwapBuffers() {
 // Window from within the program.
 func (w *Window) SetClosed(closed bool) {
 	mainthread.Call(func() {
-		w.Window.SetShouldClose(closed)
+		w.window.SetShouldClose(closed)
 	})
 }
 
@@ -260,7 +292,7 @@ func (w *Window) SetClosed(closed bool) {
 func (w *Window) Closed() bool {
 	var closed bool
 	mainthread.Call(func() {
-		closed = w.Window.ShouldClose()
+		closed = w.window.ShouldClose()
 	})
 	return closed
 }
@@ -268,7 +300,7 @@ func (w *Window) Closed() bool {
 // SetTitle changes the title of the Window.
 func (w *Window) SetTitle(title string) {
 	mainthread.Call(func() {
-		w.Window.SetTitle(title)
+		w.window.SetTitle(title)
 	})
 }
 
@@ -278,7 +310,7 @@ func (w *Window) SetBounds(bounds pixel.Rect) {
 	w.bounds = bounds
 	mainthread.Call(func() {
 		_, _, width, height := intBounds(bounds)
-		w.Window.SetSize(width, height)
+		w.window.SetSize(width, height)
 	})
 }
 
@@ -290,7 +322,7 @@ func (w *Window) SetBounds(bounds pixel.Rect) {
 func (w *Window) SetPos(pos pixel.Vec) {
 	mainthread.Call(func() {
 		left, top := int(pos.X), int(pos.Y)
-		w.Window.SetPos(left, top)
+		w.window.SetPos(left, top)
 	})
 }
 
@@ -299,7 +331,7 @@ func (w *Window) SetPos(pos pixel.Vec) {
 func (w *Window) GetPos() pixel.Vec {
 	var v pixel.Vec
 	mainthread.Call(func() {
-		x, y := w.Window.GetPos()
+		x, y := w.window.GetPos()
 		v = pixel.V(float64(x), float64(y))
 	})
 	return v
@@ -312,12 +344,12 @@ func (w *Window) Bounds() pixel.Rect {
 
 func (w *Window) setFullscreen(monitor *Monitor) {
 	mainthread.Call(func() {
-		w.restore.xpos, w.restore.ypos = w.Window.GetPos()
-		w.restore.width, w.restore.height = w.Window.GetSize()
+		w.restore.xpos, w.restore.ypos = w.window.GetPos()
+		w.restore.width, w.restore.height = w.window.GetSize()
 
 		mode := monitor.monitor.GetVideoMode()
 
-		w.Window.SetMonitor(
+		w.window.SetMonitor(
 			monitor.monitor,
 			0,
 			0,
@@ -330,7 +362,7 @@ func (w *Window) setFullscreen(monitor *Monitor) {
 
 func (w *Window) setWindowed() {
 	mainthread.Call(func() {
-		w.Window.SetMonitor(
+		w.window.SetMonitor(
 			nil,
 			w.restore.xpos,
 			w.restore.ypos,
@@ -361,7 +393,7 @@ func (w *Window) SetMonitor(monitor *Monitor) {
 func (w *Window) Monitor() *Monitor {
 	var monitor *glfw.Monitor
 	mainthread.Call(func() {
-		monitor = w.Window.GetMonitor()
+		monitor = w.window.GetMonitor()
 	})
 	if monitor == nil {
 		return nil
@@ -375,7 +407,7 @@ func (w *Window) Monitor() *Monitor {
 func (w *Window) Focused() bool {
 	var focused bool
 	mainthread.Call(func() {
-		focused = w.Window.GetAttrib(glfw.Focused) == glfw.True
+		focused = w.window.GetAttrib(glfw.Focused) == glfw.True
 	})
 	return focused
 }
@@ -395,9 +427,9 @@ func (w *Window) SetCursorVisible(visible bool) {
 	w.cursorVisible = visible
 	mainthread.Call(func() {
 		if visible {
-			w.Window.SetInputMode(glfw.CursorMode, glfw.CursorNormal)
+			w.window.SetInputMode(glfw.CursorMode, glfw.CursorNormal)
 		} else {
-			w.Window.SetInputMode(glfw.CursorMode, glfw.CursorHidden)
+			w.window.SetInputMode(glfw.CursorMode, glfw.CursorHidden)
 		}
 	})
 }
@@ -407,7 +439,7 @@ func (w *Window) SetCursorVisible(visible bool) {
 func (w *Window) SetCursorDisabled() {
 	w.cursorVisible = false
 	mainthread.Call(func() {
-		w.Window.SetInputMode(glfw.CursorMode, glfw.CursorDisabled)
+		w.window.SetInputMode(glfw.CursorMode, glfw.CursorDisabled)
 	})
 }
 
@@ -419,7 +451,7 @@ func (w *Window) CursorVisible() bool {
 // Note: must be called inside the main thread.
 func (w *Window) begin() {
 	if currWin != w {
-		w.Window.MakeContextCurrent()
+		w.window.MakeContextCurrent()
 		currWin = w
 	}
 }
@@ -491,6 +523,31 @@ func (w *Window) Canvas() *Canvas {
 // already visible or is in full screen mode, this function does nothing.
 func (w *Window) Show() {
 	mainthread.Call(func() {
-		w.Window.Show()
+		w.window.Show()
+	})
+}
+
+// Hide hides the window, if it was previously visible. If the window is already
+// hidden or is in full screen mode, this function does nothing.
+
+func (w *Window) Hide() {
+	mainthread.Call(func() {
+		w.window.Hide()
+	})
+}
+
+// Clipboard returns the contents of the system clipboard.
+func (w *Window) Clipboard() string {
+	var clipboard string
+	mainthread.Call(func() {
+		clipboard = w.window.GetClipboardString()
+	})
+	return clipboard
+}
+
+// SetClipboard sets the system clipboard to the specified UTF-8 encoded string.
+func (w *Window) SetClipboard(str string) {
+	mainthread.Call(func() {
+		w.window.SetClipboardString(str)
 	})
 }
