@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/pixelgl"
-	"github.com/duysqubix/pixel2/text"
+	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel2/pixelgl"
+	"github.com/gopxl/pixel2/text"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/colornames"
 	"golang.org/x/image/font"

@@ -3,9 +3,9 @@ package main
 import (
 	"math"
 
-	"github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/imdraw"
-	"github.com/duysqubix/pixel2/pixelgl"
+	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel2/imdraw"
+	"github.com/gopxl/pixel2/pixelgl"
 	"golang.org/x/image/colornames"
 )
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/pixelgl"
+	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel2/pixelgl"
 	"golang.org/x/image/colornames"
 )
 

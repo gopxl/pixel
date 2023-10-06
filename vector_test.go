@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/duysqubix/pixel2"
+	"github.com/gopxl/pixel2"
 )
 
 type floorTest struct {

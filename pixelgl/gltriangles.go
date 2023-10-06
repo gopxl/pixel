@@ -5,7 +5,7 @@ import (
 
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
-	"github.com/duysqubix/pixel2"
+	"github.com/gopxl/pixel2"
 )
 
 // GLTriangles are OpenGL triangles implemented using glhf.VertexSlice.

@@ -3,7 +3,7 @@ package pixel_test
 import (
 	"testing"
 
-	pixel "github.com/duysqubix/pixel2"
+	pixel "github.com/gopxl/pixel2"
 )
 
 type sub struct {
