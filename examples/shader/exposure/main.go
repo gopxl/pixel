@@ -12,9 +12,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/gopxl/pixel2"
-	"github.com/gopxl/pixel2/imdraw"
-	"github.com/gopxl/pixel2/pixelgl"
+	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/imdraw"
+	"github.com/gopxl/pixel/pixelgl"
 )
 
 var (

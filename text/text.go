@@ -6,7 +6,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel"
 	"golang.org/x/image/font/basicfont"
 )
 

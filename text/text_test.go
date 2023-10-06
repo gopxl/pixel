@@ -9,8 +9,8 @@ import (
 	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"github.com/gopxl/pixel2"
-	"github.com/gopxl/pixel2/text"
+	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/text"
 	"github.com/golang/freetype/truetype"
 )
 

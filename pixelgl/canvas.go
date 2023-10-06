@@ -6,7 +6,7 @@ import (
 
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
-	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/pkg/errors"
 )

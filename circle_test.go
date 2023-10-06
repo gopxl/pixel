@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/gopxl/pixel2"
+	"github.com/gopxl/pixel"
 )
 
 func TestC(t *testing.T) {

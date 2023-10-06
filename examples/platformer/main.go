@@ -13,9 +13,9 @@ import (
 
 	_ "image/png"
 
-	pixel "github.com/gopxl/pixel2"
-	"github.com/gopxl/pixel2/imdraw"
-	"github.com/gopxl/pixel2/pixelgl"
+	pixel "github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/imdraw"
+	"github.com/gopxl/pixel/pixelgl"
 	"github.com/pkg/errors"
 	"golang.org/x/image/colornames"
 )

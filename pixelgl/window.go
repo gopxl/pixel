@@ -6,7 +6,7 @@ import (
 	"image/color"
 	"runtime"
 
-	pixel "github.com/gopxl/pixel2"
+	pixel "github.com/gopxl/pixel"
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
 	"github.com/go-gl/gl/v3.3-core/gl"
