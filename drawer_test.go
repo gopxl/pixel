@@ -4,7 +4,7 @@ import (
 	"image"
 	"testing"
 
-	"github.com/duysqubix/pixel2"
+	"github.com/gopxl/pixel"
 )
 
 func BenchmarkSpriteDrawBatch(b *testing.B) {

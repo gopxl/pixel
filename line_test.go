@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/duysqubix/pixel2"
+	"github.com/gopxl/pixel"
 )
 
 func TestLine_Bounds(t *testing.T) {
