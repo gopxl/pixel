@@ -67,7 +67,7 @@ Here are some screenshots from the examples!
 | ![Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
 
 ## Release Schedule
-We aim to release a new version the 1st of every month.
+We aim to release a new version the 1st of every month. Checkout [CHANGELOG.md](CHANGELOG.md) for upcoming features.
 
 ## Features
 
