@@ -1,5 +1,5 @@
 # __**Important Notice **__
-Revived fork of the original [Pixel](https://github.com/faiface/pixel) library by [faiface](https://github.com/faiface). This fork is intended to be a community-driven effort to continue the development of the library. We were unable to get a hold of the original author, to take ownership of the original repository to carry on the legacy of the wonderful work. If you are interested in contributing, please join us in the [Discord Chat!](https://discord.gg/rxEHeqr5)
+Revived fork of the original [Pixel](https://github.com/faiface/pixel) library by [faiface](https://github.com/faiface). This fork is intended to be a community-driven effort to continue the development of the library. We were unable to get a hold of the original author, to take ownership of the original repository to carry on the legacy of the wonderful work. If you are interested in contributing, please join us in the [Discord Chat!](https://discord.gg/cnX3qaws66)
 
 
 <p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE2.png"></p>
@@ -163,7 +163,7 @@ The OpenGL version used is **OpenGL 3.3**.
 
 ## Contributing
 
-Join us in the [Discord Chat!](https://discord.gg/D6mQ8Pnm)
+Join us in the [Discord Chat!](https://discord.gg/cnX3qaws66)
 
 Pixel is currently in a developmental phase, with many of its key features already in place, while others are still in the works. 
 We genuinely appreciate and value contributions, as they can significantly expedite the development process. I invite everyone to 
