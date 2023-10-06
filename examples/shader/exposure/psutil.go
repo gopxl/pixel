@@ -3,8 +3,8 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/pixelgl"
+	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/pixelgl"
 )
 
 // Pixel Shader utility functions

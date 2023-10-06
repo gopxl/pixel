@@ -10,9 +10,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/imdraw"
-	"github.com/duysqubix/pixel2/pixelgl"
+	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/imdraw"
+	"github.com/gopxl/pixel/pixelgl"
 	"github.com/go-gl/mathgl/mgl32"
 )
 

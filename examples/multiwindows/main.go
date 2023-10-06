@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	pixel "github.com/duysqubix/pixel2"
-	"github.com/duysqubix/pixel2/pixelgl"
-	"github.com/duysqubix/pixel2/text"
+	pixel "github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/pixelgl"
+	"github.com/gopxl/pixel/text"
 )
 
 type EasyWindow1 struct {
