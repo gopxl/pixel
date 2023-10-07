@@ -13,7 +13,7 @@ import (
 
 	_ "image/png"
 
-	pixel "github.com/gopxl/pixel/v2"
+	"github.com/gopxl/pixel/v2"
 	"github.com/gopxl/pixel/v2/imdraw"
 	"github.com/gopxl/pixel/v2/pixelgl"
 	"github.com/pkg/errors"
