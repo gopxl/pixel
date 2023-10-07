@@ -4,9 +4,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/gopxl/pixel"
-	"github.com/gopxl/pixel/imdraw"
-	"github.com/gopxl/pixel/pixelgl"
+	"github.com/gopxl/pixel/v2"
+	"github.com/gopxl/pixel/v2/imdraw"
+	"github.com/gopxl/pixel/v2/pixelgl"
 	"golang.org/x/image/colornames"
 )
 

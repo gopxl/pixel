@@ -1,4 +1,4 @@
-module github.com/gopxl/pixel
+module github.com/gopxl/pixel/v2
 
 go 1.21
 

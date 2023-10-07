@@ -6,7 +6,7 @@ import (
 	"sort"
 	"unicode"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )

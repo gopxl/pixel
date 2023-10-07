@@ -3,7 +3,7 @@ package pixelgl
 import (
 	"math"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 func intBounds(bounds pixel.Rect) (x, y, w, h int) {

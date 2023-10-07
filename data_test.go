@@ -3,7 +3,7 @@ package pixel_test
 import (
 	"testing"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 func BenchmarkMakeTrianglesData(b *testing.B) {
