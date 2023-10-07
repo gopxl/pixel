@@ -17,8 +17,8 @@ go get github.com/gopxl/pixel/v2
 If you are using Modules (Go 1.11 or higher) and want a mutable copy of the source code:
 
 ```
-git clone https://github.com/gopxl/pixel/v2 # clone outside of $GOPATH
-cd pixel2
+git clone https://github.com/gopxl/pixel # clone outside of $GOPATH
+cd pixel
 go install ./...
 ```
 
