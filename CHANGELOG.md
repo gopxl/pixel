@@ -59,8 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Changelog for this and older versions can be found on the corresponding [GitHub
 releases](https://github.com/faiface/pixel/releases).
 
-[Unreleased]: https://github.com/gopxl/pixel/compare/v0.12.0...HEAD
-[v0.12.0]: https://github.com/gopxl/pixel/compare/v0.12.0...dev
+[Unreleased]: https://github.com/gopxl/pixel/v2/compare/v0.12.0...HEAD
+[v0.12.0]: https://github.com/gopxl/pixel/v2/compare/v0.12.0...dev
 [v0.10.0]: https://github.com/faiface/pixel/compare/v0.10.0-beta...v0.10.0
 [v0.10.0-beta]: https://github.com/faiface/pixel/compare/v0.10.0-alpha...v0.10.0-beta
 [v0.10.0-alpha]: https://github.com/faiface/pixel/compare/v0.9.0...v0.10.0-alpha

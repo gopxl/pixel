@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 func TestRect_Resize(t *testing.T) {

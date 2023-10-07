@@ -1,6 +1,6 @@
 ## Pixel 2 Examples
 
-This repository contains a few examples demonstrating [Pixel2](https://github.com/gopxl/pixel)'s functionality.
+This repository contains a few examples demonstrating [Pixel2](https://github.com/gopxl/pixel/v2)'s functionality.
 
 **To run an example**, navigate to its directory, then `go run` the `main.go` file. For example:
 

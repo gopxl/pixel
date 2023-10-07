@@ -5,7 +5,7 @@ import (
 
 	"github.com/faiface/glhf"
 	"github.com/faiface/mainthread"
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 // GLPicture is a pixel.PictureColor with a Texture. All OpenGL Targets should implement and accept

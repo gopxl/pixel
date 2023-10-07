@@ -6,7 +6,7 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 // IMDraw is an immediate-mode-like shape drawer and BasicTarget. IMDraw supports TrianglesPosition,
