@@ -5,7 +5,7 @@ Revived fork of the original [Pixel](https://github.com/faiface/pixel) library b
 <p align="center"><img src="logo/LOGOTYPE-HORIZONTAL-BLUE2.png"></p>
 
 
-# Pixel 2 [![Build Status](https://travis-ci.org/faiface/pixel.svg?branch=master)](https://travis-ci.org/faiface/pixel) [![GoDoc](https://godoc.org/github.com/gopxl/pixel/v2?status.svg)](https://godoc.org/github.com/gopxl/pixel/v2) [![Go Report Card](https://goreportcard.com/badge/github.com/gopxl/pixel/v2)](https://goreportcard.com/report/github.com/gopxl/pixel/v2) [![Join the chat at https://gitter.im/pixellib/Lobby](https://badges.gitter.im/pixellib/Lobby.svg)](https://gitter.im/pixellib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord Chat](https://img.shields.io/discord/699679031603494954)](https://discord.gg/q2DK4MP)  
+# Pixel 2 [![Build Status](https://travis-ci.org/faiface/pixel.svg?branch=master)](https://travis-ci.org/faiface/pixel) [![GoDoc](https://godoc.org/github.com/gopxl/pixel/v2?status.svg)](https://godoc.org/github.com/gopxl/pixel/v2) [![Go Report Card](https://goreportcard.com/badge/github.com/gopxl/pixel/v2)](https://goreportcard.com/report/github.com/gopxl/pixel/v2) [![Join the chat at https://gitter.im/pixellib/Lobby](https://badges.gitter.im/pixellib/Lobby.svg)](https://gitter.im/pixellib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Discord Chat](https://img.shields.io/discord/1158461233121468496)](https://discord.gg/q2DK4MP)  
 
 A hand-crafted 2D game library in Go. Take a look into the [features](#features) to see what it can
 do.
