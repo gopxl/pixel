@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.0.0]
+## [v1.0.0](https://github.com/gopxl/pixel/v2/compare/v1.0.0...dev)
 - Multiple Window Management Framework
 - Adding Bezier Curve Support for Interpolation (See original [PR](https://github.com/faiface/pixel/pull/266))
 
-## [v0.12.0] 2023-10-02
+## [v0.12.0](https://github.com/gopxl/pixel/v2/compare/v0.12.0...dev) 2023-10-02
 - Add AnchorPos struct and functions #252
 - Add Clipboard Support
 - Fix SIGSEGV on text.NewAtlas if glyph absent 
