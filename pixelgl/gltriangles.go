@@ -3,9 +3,9 @@ package pixelgl
 import (
 	"fmt"
 
-	"github.com/faiface/glhf"
-	"github.com/faiface/mainthread"
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/glhf"
+	"github.com/gopxl/mainthread"
+	"github.com/gopxl/pixel/v2"
 )
 
 // GLTriangles are OpenGL triangles implemented using glhf.VertexSlice.
@@ -26,7 +26,7 @@ var (
 )
 
 // The following is a helper so that the indices of
-// 	each of these items is easier to see/debug.
+// each of these items is easier to see/debug.
 const (
 	triPosX = iota
 	triPosY
@@ -227,7 +227,7 @@ func (gt *GLTriangles) Copy() pixel.Triangles {
 }
 
 // index is a helper function that returns the index in the data
-//	slice given the i-th vertex and the item index.
+// slice given the i-th vertex and the item index.
 func (gt *GLTriangles) index(i, idx int) int {
 	return i*gt.vs.Stride() + idx
 }

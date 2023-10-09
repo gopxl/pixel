@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/gopxl/pixel"
+	"github.com/gopxl/pixel/v2"
 )
 
 type floorTest struct {

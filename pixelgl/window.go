@@ -6,11 +6,11 @@ import (
 	"image/color"
 	"runtime"
 
-	pixel "github.com/gopxl/pixel"
-	"github.com/faiface/glhf"
-	"github.com/faiface/mainthread"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/gopxl/glhf"
+	"github.com/gopxl/mainthread"
+	"github.com/gopxl/pixel/v2"
 	"github.com/pkg/errors"
 )
 

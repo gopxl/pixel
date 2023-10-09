@@ -5,10 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v1.0.0](https://github.com/gopxl/pixel/v2/compare/v1.0.0...dev)
 - Multiple Window Management Framework
 - Adding Bezier Curve Support for Interpolation (See original [PR](https://github.com/faiface/pixel/pull/266))
 
-## [v0.12.0] 2023-10-02
+## [v0.12.0](https://github.com/gopxl/pixel/v2/compare/v0.12.0...dev) 2023-10-02
 - Add AnchorPos struct and functions #252
 - Add Clipboard Support
 - Fix SIGSEGV on text.NewAtlas if glyph absent 
@@ -59,8 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Changelog for this and older versions can be found on the corresponding [GitHub
 releases](https://github.com/faiface/pixel/releases).
 
-[Unreleased]: https://github.com/gopxl/pixel/compare/v0.12.0...HEAD
-[v0.12.0]: https://github.com/gopxl/pixel/compare/v0.12.0...dev
+[Unreleased]: https://github.com/gopxl/pixel/v2/compare/v0.12.0...HEAD
+[v0.12.0]: https://github.com/gopxl/pixel/v2/compare/v0.12.0...dev
 [v0.10.0]: https://github.com/faiface/pixel/compare/v0.10.0-beta...v0.10.0
 [v0.10.0-beta]: https://github.com/faiface/pixel/compare/v0.10.0-alpha...v0.10.0-beta
 [v0.10.0-alpha]: https://github.com/faiface/pixel/compare/v0.9.0...v0.10.0-alpha

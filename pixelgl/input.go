@@ -3,9 +3,9 @@ package pixelgl
 import (
 	"time"
 
-	"github.com/faiface/mainthread"
-	"github.com/gopxl/pixel"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/gopxl/mainthread"
+	"github.com/gopxl/pixel/v2"
 )
 
 // Pressed returns whether the Button is currently pressed down.
