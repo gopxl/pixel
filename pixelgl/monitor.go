@@ -2,7 +2,7 @@ package pixelgl
 
 import (
 	"github.com/go-gl/glfw/v3.3/glfw"
-	"github.com/gopxl/mainthread"
+	"github.com/gopxl/mainthread/v2"
 )
 
 // Monitor represents a physical display attached to your computer.

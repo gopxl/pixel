@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
-	"github.com/gopxl/mainthread"
+	"github.com/gopxl/mainthread/v2"
 	"github.com/gopxl/pixel/v2"
 )
 
