@@ -3,8 +3,8 @@ package pixelgl
 import (
 	"math"
 
-	"github.com/faiface/glhf"
-	"github.com/faiface/mainthread"
+	"github.com/gopxl/glhf"
+	"github.com/gopxl/mainthread"
 	"github.com/gopxl/pixel/v2"
 )
 

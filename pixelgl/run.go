@@ -1,8 +1,8 @@
 package pixelgl
 
 import (
-	"github.com/faiface/mainthread"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/gopxl/mainthread"
 	"github.com/pkg/errors"
 )
 
@@ -13,13 +13,13 @@ import (
 // Call this function from the main function of your application. This is necessary, so that Run
 // runs on the main thread.
 //
-//   func run() {
-//       // interact with Pixel and PixelGL from here (even concurrently)
-//   }
+//	func run() {
+//	    // interact with Pixel and PixelGL from here (even concurrently)
+//	}
 //
-//   func main() {
-//       pixel.Run(run)
-//   }
+//	func main() {
+//	    pixel.Run(run)
+//	}
 //
 // You can spawn any number of goroutines from your run function and interact with PixelGL
 // concurrently. The only condition is that the Run function is called from your main function.
