@@ -1,8 +1,8 @@
 package pixelgl
 
 import (
-	"github.com/faiface/mainthread"
 	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/gopxl/mainthread"
 )
 
 // Monitor represents a physical display attached to your computer.

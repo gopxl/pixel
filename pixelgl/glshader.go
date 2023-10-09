@@ -1,9 +1,9 @@
 package pixelgl
 
 import (
-	"github.com/faiface/glhf"
-	"github.com/faiface/mainthread"
 	"github.com/go-gl/mathgl/mgl32"
+	"github.com/gopxl/glhf"
+	"github.com/gopxl/mainthread"
 	"github.com/pkg/errors"
 )
 
@@ -111,8 +111,8 @@ func (gs *GLShader) getUniform(Name string) int {
 //
 // Example:
 //
-//		utime := float32(time.Since(starttime)).Seconds())
-//		mycanvas.shader.AddUniform("u_time", &utime)
+//	utime := float32(time.Since(starttime)).Seconds())
+//	mycanvas.shader.AddUniform("u_time", &utime)
 func (gs *GLShader) SetUniform(name string, value interface{}) {
 	t, p := getAttrType(value)
 	if loc := gs.getUniform(name); loc > -1 {
