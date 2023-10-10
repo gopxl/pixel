@@ -2,8 +2,8 @@ package pixelgl
 
 import (
 	"github.com/go-gl/mathgl/mgl32"
-	"github.com/gopxl/glhf"
-	"github.com/gopxl/mainthread"
+	"github.com/gopxl/glhf/v2"
+	"github.com/gopxl/mainthread/v2"
 	"github.com/pkg/errors"
 )
 
