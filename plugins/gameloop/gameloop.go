@@ -1,15 +1,17 @@
-package pixelgl
+package gameloop
 
 import (
 	"errors"
 	"time"
+
+	"github.com/gopxl/pixel/v2/pixelgl"
 )
 
 type EasyWindow interface {
-	Win() *Window  // get underlying GLFW window
-	Setup() error  // setup window
-	Update() error // update window
-	Draw() error   // draw to window
+	Win() *pixelgl.Window // get underlying GLFW window
+	Setup() error         // setup window
+	Update() error        // update window
+	Draw() error          // draw to window
 }
 
 type WindowManager struct {
@@ -26,7 +28,6 @@ func (wm *WindowManager) SetFPS(fps int) error {
 	if fps <= 0 {
 		return errors.New("FPS must be greater than 0")
 	}
-	// ms := 1.0 / float64(fps) * 1000000.0
 	us := 1.0 / float64(fps) * 1000000.0
 	wm.targetDuration = time.Duration(us) * time.Microsecond
 	return nil
