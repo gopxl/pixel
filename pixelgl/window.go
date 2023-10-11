@@ -527,6 +527,14 @@ func (w *Window) Show() {
 	})
 }
 
+// Focus makes the window focused, brings the specified window to front and sets input focus.
+// The window should already be visible and not iconified.
+func (w *Window) Focus() {
+	mainthread.Call(func() {
+		w.window.Focus()
+	})
+}
+
 // Hide hides the window, if it was previously visible. If the window is already
 // hidden or is in full screen mode, this function does nothing.
 
