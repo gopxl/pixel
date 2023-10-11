@@ -12,6 +12,8 @@ github.com/gopxl/glhf/v2 v2.0.0-20231010004459-fc58b4a8f7d0 h1:QCfBCpS1GprFdtyKy
 github.com/gopxl/glhf/v2 v2.0.0-20231010004459-fc58b4a8f7d0/go.mod h1:2TW8DIqHAPiQhv6EAXThEA/fgl+Ky8Lgd3XevyJqmSY=
 github.com/gopxl/glhf/v2 v2.0.0-20231011010357-90c5b7c2543d h1:DK2rpfmPeqdYlvdypfE5B7PTwkkKAAlCvzoBNZuwxWc=
 github.com/gopxl/glhf/v2 v2.0.0-20231011010357-90c5b7c2543d/go.mod h1:InKwj5OoVdOAkpzsS0ILwpB+RrWBLw1i7aFefiGmrp8=
+github.com/gopxl/glhf/v2 v2.0.0 h1:SJtNy+TXuTBRjMersNx722VDJ0XHIooMH2+7+99LPIc=
+github.com/gopxl/glhf/v2 v2.0.0/go.mod h1:InKwj5OoVdOAkpzsS0ILwpB+RrWBLw1i7aFefiGmrp8=
 github.com/gopxl/mainthread/v2 v2.0.0-20231010001939-73dfba06ae92 h1:+17VMm30TmRoIlA/S29R29A7Sqbak/6OLKjq6iX/I7U=
 github.com/gopxl/mainthread/v2 v2.0.0-20231010001939-73dfba06ae92/go.mod h1:/uFQhUiSP53SSU/RQ5w0FFkljRArJlaQkDPza3zE2V8=
 github.com/gopxl/mainthread/v2 v2.0.0 h1:jRbeWFzX6/UyhRab00xS3xIVYywBgc0DgwPgwS6EVYw=
