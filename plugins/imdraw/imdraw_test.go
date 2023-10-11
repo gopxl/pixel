@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/gopxl/pixel/v2"
-	"github.com/gopxl/pixel/v2/imdraw"
+	"github.com/gopxl/pixel/v2/plugins/imdraw"
 )
 
 func BenchmarkPush(b *testing.B) {
