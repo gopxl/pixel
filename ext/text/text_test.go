@@ -11,7 +11,7 @@ import (
 
 	"github.com/golang/freetype/truetype"
 	"github.com/gopxl/pixel/v2"
-	"github.com/gopxl/pixel/v2/plugins/text"
+	"github.com/gopxl/pixel/v2/ext/text"
 )
 
 func TestClear(t *testing.T) {

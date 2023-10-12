@@ -1,14 +1,16 @@
-# Plugins
+# Extensions
 
 ## Introduction
 
-Plugins are a way to extend the features and functionality of Pixel. They are the communities contribution
+Extensions are a way to *extend* the features and functionality of Pixel. They are the communities contribution
 to pushing Pixel to the next level.
 
 
-## Plugin List
+## Extension List
 
 * [gameloop](gameloop/README.md) - A plugin that allows you to run a game loop in Pixel.
+* [imdraw](imdraw/README.md) - A plugin that allows you to draw primitives in Pixel.
+* [text](text/README.md) - A plugin that allows you to draw text in Pixel.
 
 
 ## Creating a Plugin
