@@ -9,7 +9,7 @@ import (
 	_ "image/png"
 
 	"github.com/gopxl/pixel/v2"
-	"github.com/gopxl/pixel/v2/pixelgl"
+	pixelgl "github.com/gopxl/pixel/v2/backends/opengl"
 )
 
 // onePixelImage is the byte representation of a 1x1 solid white png file
