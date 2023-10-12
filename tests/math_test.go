@@ -1,7 +1,6 @@
 package pixel_test
 
 import (
-	"fmt"
 	"math"
 	"testing"
 
@@ -10,10 +9,11 @@ import (
 
 // closeEnough will shift the decimal point by the accuracy required, truncates the results and compares them.
 // Effectively this compares two floats to a given decimal point.
-//  Example:
-//  closeEnough(100.125342432, 100.125, 2) == true
-//  closeEnough(math.Pi, 3.14, 2) == true
-//  closeEnough(0.1234, 0.1245, 3) == false
+//
+//	Example:
+//	closeEnough(100.125342432, 100.125, 2) == true
+//	closeEnough(math.Pi, 3.14, 2) == true
+//	closeEnough(0.1234, 0.1245, 3) == false
 func closeEnough(got, expected float64, decimalAccuracy int) bool {
 	gotShifted := got * math.Pow10(decimalAccuracy)
 	expectedShifted := expected * math.Pow10(decimalAccuracy)
@@ -40,7 +40,7 @@ func TestClamp(t *testing.T) {
 	for _, tc := range tests {
 		result := pixel.Clamp(tc.number, tc.min, tc.max)
 		if result != tc.expected {
-			t.Error(fmt.Sprintf("Clamping %v with min %v and max %v should have given %v, but gave %v", tc.number, tc.min, tc.max, tc.expected, result))
+			t.Errorf("Clamping %v with min %v and max %v should have given %v, but gave %v", tc.number, tc.min, tc.max, tc.expected, result)
 		}
 	}
 }

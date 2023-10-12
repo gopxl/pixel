@@ -4,14 +4,14 @@ import (
 	"errors"
 	"time"
 
-	"github.com/gopxl/pixel/v2/pixelgl"
+	"github.com/gopxl/pixel/v2/backends/opengl"
 )
 
 type EasyWindow interface {
-	Win() *pixelgl.Window // get underlying GLFW window
-	Setup() error         // setup window
-	Update() error        // update window
-	Draw() error          // draw to window
+	Win() *opengl.Window // get underlying GLFW window
+	Setup() error        // setup window
+	Update() error       // update window
+	Draw() error         // draw to window
 }
 
 type WindowManager struct {

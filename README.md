@@ -144,8 +144,7 @@ If you're using Windows and having trouble building Pixel, please check [this
 guide](https://github.com/gopxl/pixel/v2/wiki/Building-Pixel-on-Windows) on the
 [wiki](https://github.com/gopxl/pixel/v2/wiki).
 
-[PixelGL](https://godoc.org/github.com/gopxl/pixel/v2/pixelgl) backend uses OpenGL to render
-graphics. Because of that, OpenGL development libraries are needed for compilation. The dependencies
+OpenGL development libraries are needed for compilation. The dependencies
 are same as for [GLFW](https://github.com/go-gl/glfw).
 
 The OpenGL version used is **OpenGL 3.3**.

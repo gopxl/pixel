@@ -9,7 +9,7 @@ import (
 	_ "image/png"
 
 	"github.com/gopxl/pixel/v2"
-	"github.com/gopxl/pixel/v2/pixelgl"
+	"github.com/gopxl/pixel/v2/backends/opengl"
 )
 
 // onePixelImage is the byte representation of a 1x1 solid white png file
@@ -39,7 +39,7 @@ var onePixelImage = []byte{
 }
 
 func TestMain(m *testing.M) {
-	pixelgl.Run(func() {
+	opengl.Run(func() {
 		os.Exit(m.Run())
 	})
 }
@@ -53,13 +53,13 @@ func TestSprite_Draw(t *testing.T) {
 
 	sprite := pixel.NewSprite(pic, pic.Bounds())
 
-	cfg := pixelgl.WindowConfig{
+	cfg := opengl.WindowConfig{
 		Title:     "testing",
 		Bounds:    pixel.R(0, 0, 150, 150),
 		Invisible: true,
 	}
 
-	win, err := pixelgl.NewWindow(cfg)
+	win, err := opengl.NewWindow(cfg)
 	if err != nil {
 		t.Fatalf("Could not create window: %v", err)
 	}

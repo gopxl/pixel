@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Adding `Focus()` method to `Window` to focus the window via API.
+- Restructure Pixel Project
+  - Converted `imdraw` and `text` packages to `extensions`
+  - moved all `*_test.go` files to `test` package
+  - moved `pixelgl` package to `backends/opengl`
 
 ## [v1.0.0](https://github.com/gopxl/pixel/v2/compare/v1.0.0...dev)
 - Multiple Window Management Framework

@@ -1,7 +1,6 @@
 package pixel_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/gopxl/pixel/v2"
@@ -21,7 +20,7 @@ func TestFloor(t *testing.T) {
 	for _, tc := range tests {
 		result := tc.input.Floor()
 		if result != tc.expected {
-			t.Error(fmt.Sprintf("Expected %v but got %v", tc.expected, result))
+			t.Errorf("Expected %v but got %v", tc.expected, result)
 		}
 	}
 }
