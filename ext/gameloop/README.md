@@ -6,7 +6,7 @@ Defines an `EasyWindow` interface with the following methods
 
 ```go
 type EasyWindow interface {
-	Win() *pixelgl.Window // get underlying GLFW window
+	Win() *opengl.Window // get underlying GLFW window
 	Setup() error         // setup window
 	Update() error        // update window
 	Draw() error          // draw to window
@@ -38,7 +38,7 @@ window1 := MyNewWindow() // assume MyNewWindow implements EasyWindow interface
 window2 := MyOtherWindow() // assume MyOtherWindow implements EasyWindow interface
 
 manager := NewWindowManager()
-manager.InsertWindows([]pixelgl.EasyWindow{
+manager.InsertWindows([]opengl.EasyWindow{
     window1,
     window2,
 })
