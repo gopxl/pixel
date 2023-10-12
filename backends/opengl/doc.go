@@ -2,4 +2,4 @@
 // library, specifically Window and Canvas.
 //
 // It also contains a few additional utilities to help extend Pixel with OpenGL graphical effects.
-package pixelgl
+package opengl

@@ -1,4 +1,4 @@
-package pixelgl
+package opengl
 
 import (
 	"fmt"
