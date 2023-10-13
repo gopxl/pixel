@@ -22,16 +22,19 @@ const (
 	MouseButton7
 	MouseButton8
 
+	// Last iota
+	numMouseButtons
+	NumMouseButtons = int(numMouseButtons)
+
 	// Aliases
 	MouseButtonLeft   = MouseButton1
 	MouseButtonRight  = MouseButton2
 	MouseButtonMiddle = MouseButton3
-	MouseButtonLast   = MouseButton8
 )
 
 const (
 	// List of all keyboard buttons.
-	KeyUnknown Button = iota + Button(MouseButtonLast) + 1
+	KeyUnknown Button = iota + numMouseButtons
 	KeySpace
 	KeyApostrophe
 	KeyComma
@@ -153,8 +156,9 @@ const (
 	KeyRightSuper
 	KeyMenu
 
-	// Aliases
-	KeyLast = KeyMenu
+	// Last iota
+	numKeys
+	NumKeys = int(numKeys)
 )
 
 var buttonNames = map[Button]string{
@@ -320,8 +324,9 @@ const (
 	Joystick15
 	Joystick16
 
-	// Aliases
-	JoystickLast = Joystick16
+	// Last iota
+	numJoysticks
+	NumJoysticks = int(numJoysticks)
 )
 
 var joystickNames = map[Joystick]string{
@@ -364,8 +369,9 @@ const (
 	AxisLeftTrigger
 	AxisRightTrigger
 
-	// Aliases
-	AxisLast = AxisRightTrigger
+	// Last iota
+	numAxes
+	NumAxes = int(numAxes)
 )
 
 var gamepadAxisNames = map[GamepadAxis]string{
@@ -407,12 +413,15 @@ const (
 	GamepadDpadDown
 	GamepadDpadLeft
 
+	// Last iota
+	numGamepadButtons
+	NumGamepadButtons = int(numGamepadButtons)
+
 	// Aliases
 	GamepadCross    = GamepadA
 	GamepadCircle   = GamepadB
 	GamepadSquare   = GamepadX
 	GamepadTriangle = GamepadY
-	GamepadLast     = GamepadDpadLeft
 )
 
 var gamepadButtonNames = map[GamepadButton]string{

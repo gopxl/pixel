@@ -154,10 +154,10 @@ func (w *Window) updateJoystickInput() {
 }
 
 type joystickState struct {
-	connected [pixel.JoystickLast + 1]bool
-	name      [pixel.JoystickLast + 1]string
-	buttons   [pixel.JoystickLast + 1][]glfw.Action
-	axis      [pixel.JoystickLast + 1][]float32
+	connected [pixel.NumJoysticks]bool
+	name      [pixel.NumJoysticks]string
+	buttons   [pixel.NumJoysticks][]glfw.Action
+	axis      [pixel.NumJoysticks][]float32
 }
 
 // Returns if a button on a joystick is down, returning false if the button or joystick is invalid.

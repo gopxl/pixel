@@ -298,9 +298,9 @@ func (w *Window) doUpdateInput() {
 	w.releaseEvents = w.tempReleaseEvents
 
 	// Clear last frame's temporary status
-	w.tempPressEvents = [pixel.KeyLast + 1]bool{}
-	w.tempReleaseEvents = [pixel.KeyLast + 1]bool{}
-	w.tempInp.repeat = [pixel.KeyLast + 1]bool{}
+	w.tempPressEvents = [pixel.NumKeys]bool{}
+	w.tempReleaseEvents = [pixel.NumKeys]bool{}
+	w.tempInp.repeat = [pixel.NumKeys]bool{}
 	w.tempInp.scroll = pixel.ZV
 	w.tempInp.typed = ""
 
