@@ -11,6 +11,8 @@ func (b Button) String() string {
 	return name
 }
 
+const ButtonUnknown Button = -1
+
 const (
 	// List of all mouse buttons.
 	MouseButton1 Button = iota
@@ -34,8 +36,7 @@ const (
 
 const (
 	// List of all keyboard buttons.
-	KeyUnknown Button = iota + Button(NumMouseButtons)
-	KeySpace
+	KeySpace = iota + Button(NumMouseButtons)
 	KeyApostrophe
 	KeyComma
 	KeyMinus
@@ -162,6 +163,7 @@ const (
 )
 
 var buttonNames = map[Button]string{
+	ButtonUnknown:     "Unknown",
 	MouseButton4:      "MouseButton4",
 	MouseButton5:      "MouseButton5",
 	MouseButton6:      "MouseButton6",
@@ -170,7 +172,6 @@ var buttonNames = map[Button]string{
 	MouseButtonLeft:   "MouseButtonLeft",
 	MouseButtonRight:  "MouseButtonRight",
 	MouseButtonMiddle: "MouseButtonMiddle",
-	KeyUnknown:        "Unknown",
 	KeySpace:          "Space",
 	KeyApostrophe:     "Apostrophe",
 	KeyComma:          "Comma",

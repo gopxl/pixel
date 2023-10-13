@@ -83,7 +83,7 @@ var mouseButtonMapping = map[glfw.MouseButton]pixel.Button{
 }
 
 var keyButtonMapping = map[glfw.Key]pixel.Button{
-	glfw.KeyUnknown:      pixel.KeyUnknown,
+	glfw.KeyUnknown:      pixel.ButtonUnknown,
 	glfw.KeySpace:        pixel.KeySpace,
 	glfw.KeyApostrophe:   pixel.KeyApostrophe,
 	glfw.KeyComma:        pixel.KeyComma,
