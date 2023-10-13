@@ -23,8 +23,8 @@ const (
 	MouseButton8
 
 	// Last iota
-	numMouseButtons
-	NumMouseButtons = int(numMouseButtons)
+	// NOTE: These will be unexported in the future when Window is move to the pixel package.
+	NumMouseButtons int = iota
 
 	// Aliases
 	MouseButtonLeft   = MouseButton1
@@ -34,7 +34,7 @@ const (
 
 const (
 	// List of all keyboard buttons.
-	KeyUnknown Button = iota + numMouseButtons
+	KeyUnknown Button = iota + Button(NumMouseButtons)
 	KeySpace
 	KeyApostrophe
 	KeyComma
@@ -157,8 +157,8 @@ const (
 	KeyMenu
 
 	// Last iota
-	numKeys
-	NumKeys = int(numKeys)
+	// NOTE: These will be unexported in the future when Window is move to the pixel package.
+	NumKeys int = iota
 )
 
 var buttonNames = map[Button]string{
@@ -325,8 +325,8 @@ const (
 	Joystick16
 
 	// Last iota
-	numJoysticks
-	NumJoysticks = int(numJoysticks)
+	// NOTE: These will be unexported in the future when Window is move to the pixel package.
+	NumJoysticks int = iota
 )
 
 var joystickNames = map[Joystick]string{
@@ -369,9 +369,9 @@ const (
 	AxisLeftTrigger
 	AxisRightTrigger
 
-	// Last iota
-	numAxes
-	NumAxes = int(numAxes)
+	// Last iota.
+	// NOTE: These will be unexported in the future when Window is move to the pixel package.
+	NumAxes int = iota
 )
 
 var gamepadAxisNames = map[GamepadAxis]string{
