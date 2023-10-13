@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Converted `imdraw` and `text` packages to `extensions`
   - moved all `*_test.go` files to `test` package
   - moved `pixelgl` package to `backends/opengl`
+  - moved input types to package `pixel` and mapped to backend types in `opengl`
 
 ## [v1.0.0](https://github.com/gopxl/pixel/v2/compare/v1.0.0...dev)
 - Multiple Window Management Framework
