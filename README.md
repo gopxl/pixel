@@ -24,8 +24,6 @@ go install ./...
 
 See [requirements](#requirements) for the list of libraries necessary for compilation.
 
-Take a look at [CHANGELOG.md](CHANGELOG.md) for upcoming releases and history.
-
 ## Tutorial
 
 The [Wiki of this repo](https://github.com/gopxl/pixel/v2/wiki) contains an extensive tutorial
@@ -67,7 +65,7 @@ Here are some screenshots from the examples!
 | ![Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
 
 ## Release Schedule
-We aim to release a new version the 1st of every month. Checkout [CHANGELOG.md](CHANGELOG.md) for upcoming features.
+We aim to release a new version the 1st of every month.
 
 ## Features
 
