@@ -55,62 +55,62 @@ var _ = map[glfw.GamepadButton]pixel.GamepadButton{
 // JoystickPresent returns if the joystick is currently connected.
 //
 // This API is experimental.
-func (w *Window) JoystickPresent(js pixel.Joystick) bool {
-	return w.currJoy.connected[js]
+func (w *Window) JoystickPresent(js glfw.Joystick) bool {
+	return w.currJoy[js].Connected()
 }
 
 // JoystickName returns the name of the joystick. A disconnected joystick will return an
 // empty string.
 //
 // This API is experimental.
-func (w *Window) JoystickName(js pixel.Joystick) string {
-	return w.currJoy.name[js]
+func (w *Window) JoystickName(js glfw.Joystick) string {
+	return w.currJoy[js].Name()
 }
 
 // JoystickButtonCount returns the number of buttons a connected joystick has.
 //
 // This API is experimental.
-func (w *Window) JoystickButtonCount(js pixel.Joystick) int {
-	return len(w.currJoy.buttons[js])
+func (w *Window) JoystickButtonCount(js glfw.Joystick) int {
+	return w.currJoy[js].NumButtons()
 }
 
 // JoystickAxisCount returns the number of axes a connected joystick has.
 //
 // This API is experimental.
-func (w *Window) JoystickAxisCount(js pixel.Joystick) int {
-	return len(w.currJoy.axis[js])
+func (w *Window) JoystickAxisCount(js glfw.Joystick) int {
+	return w.currJoy[js].NumAxes()
 }
 
 // JoystickPressed returns whether the joystick Button is currently pressed down.
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
-	return w.currJoy.getButton(js, int(button))
+func (w *Window) JoystickPressed(js glfw.Joystick, button glfw.GamepadButton) bool {
+	return w.currJoy[js].Button(button) == glfw.Press
 }
 
 // JoystickJustPressed returns whether the joystick Button has just been pressed down.
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickJustPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
-	return w.currJoy.getButton(js, int(button)) && !w.prevJoy.getButton(js, int(button))
+func (w *Window) JoystickJustPressed(js glfw.Joystick, button glfw.GamepadButton) bool {
+	return w.currJoy[js].Button(button) == glfw.Press && w.prevJoy[js].Button(button) != glfw.Press
 }
 
 // JoystickJustReleased returns whether the joystick Button has just been released up.
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickJustReleased(js pixel.Joystick, button pixel.GamepadButton) bool {
-	return !w.currJoy.getButton(js, int(button)) && w.prevJoy.getButton(js, int(button))
+func (w *Window) JoystickJustReleased(js glfw.Joystick, button glfw.GamepadButton) bool {
+	return w.currJoy[js].Button(button) != glfw.Press && w.prevJoy[js].Button(button) == glfw.Press
 }
 
 // JoystickAxis returns the value of a joystick axis at the last call to Window.Update.
 // If the axis index is out of range, this will return 0.
 //
 // This API is experimental.
-func (w *Window) JoystickAxis(js pixel.Joystick, axis pixel.GamepadAxis) float64 {
-	return w.currJoy.getAxis(js, int(axis))
+func (w *Window) JoystickAxis(js glfw.Joystick, axis glfw.GamepadAxis) float64 {
+	return float64(w.currJoy[js].Axis(axis))
 }
 
 // Used internally during Window.UpdateInput to update the state of the joysticks.
@@ -122,58 +122,33 @@ func (w *Window) updateJoystickInput() {
 		}
 		// Determine and store if the joystick was connected
 		joystickPresent := joystick.Present()
-		w.tempJoy.connected[js] = joystickPresent
+		w.tempJoy[js].SetConnected(joystickPresent)
 
 		if joystickPresent {
 			if joystick.IsGamepad() {
 				gamepadInputs := joystick.GetGamepadState()
 
-				w.tempJoy.buttons[js] = gamepadInputs.Buttons[:]
-				w.tempJoy.axis[js] = gamepadInputs.Axes[:]
+				w.tempJoy[js].SetButtons(gamepadInputs.Buttons[:])
+				w.tempJoy[js].SetAxes(gamepadInputs.Axes[:])
 			} else {
-				w.tempJoy.buttons[js] = joystick.GetButtons()
-				w.tempJoy.axis[js] = joystick.GetAxes()
+				w.tempJoy[js].SetButtons(joystick.GetButtons())
+				w.tempJoy[js].SetAxes(joystick.GetAxes())
 			}
 
-			if !w.currJoy.connected[js] {
+			if !w.currJoy[js].Connected() {
 				// The joystick was recently connected, we get the name
-				w.tempJoy.name[js] = joystick.GetName()
+				w.tempJoy[js].SetName(joystick.GetName())
 			} else {
 				// Use the name from the previous one
-				w.tempJoy.name[js] = w.currJoy.name[js]
+				w.tempJoy[js].SetName(w.currJoy[js].Name())
 			}
 		} else {
-			w.tempJoy.buttons[js] = []glfw.Action{}
-			w.tempJoy.axis[js] = []float32{}
-			w.tempJoy.name[js] = ""
+			w.tempJoy[js].SetButtons([]glfw.Action{})
+			w.tempJoy[js].SetAxes([]float32{})
+			w.tempJoy[js].SetName("")
 		}
 	}
 
 	w.prevJoy = w.currJoy
 	w.currJoy = w.tempJoy
-}
-
-type joystickState struct {
-	connected [pixel.NumJoysticks]bool
-	name      [pixel.NumJoysticks]string
-	buttons   [pixel.NumJoysticks][]glfw.Action
-	axis      [pixel.NumJoysticks][]float32
-}
-
-// Returns if a button on a joystick is down, returning false if the button or joystick is invalid.
-func (js *joystickState) getButton(joystick pixel.Joystick, button int) bool {
-	// Check that the joystick and button is valid, return false by default
-	if js.buttons[joystick] == nil || button >= len(js.buttons[joystick]) || button < 0 {
-		return false
-	}
-	return js.buttons[joystick][byte(button)] == glfw.Press
-}
-
-// Returns the value of a joystick axis, returning 0 if the button or joystick is invalid.
-func (js *joystickState) getAxis(joystick pixel.Joystick, axis int) float64 {
-	// Check that the joystick and axis is valid, return 0 by default.
-	if js.axis[joystick] == nil || axis >= len(js.axis[joystick]) || axis < 0 {
-		return 0
-	}
-	return float64(js.axis[joystick][axis])
 }
