@@ -6,7 +6,7 @@ type Button int
 func (b Button) String() string {
 	name, ok := buttonNames[b]
 	if !ok {
-		return "Invalid"
+		return "InvalidButton"
 	}
 	return name
 }
@@ -295,7 +295,7 @@ type Joystick int
 func (j Joystick) String() string {
 	name, ok := joystickNames[j]
 	if !ok {
-		return "Invalid"
+		return "InvalidJoystick"
 	}
 	return name
 }
@@ -350,7 +350,7 @@ type GamepadAxis int
 func (ga GamepadAxis) String() string {
 	name, ok := gamepadAxisNames[ga]
 	if !ok {
-		return "Invalid"
+		return "InvalidGamepadAxis"
 	}
 	return name
 }
@@ -385,7 +385,7 @@ type GamepadButton int
 func (gb GamepadButton) String() string {
 	name, ok := gamepadButtonNames[gb]
 	if !ok {
-		return "Invalid"
+		return "InvalidGamepadButton"
 	}
 	return name
 }
