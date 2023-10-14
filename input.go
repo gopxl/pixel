@@ -432,8 +432,7 @@ const (
 	GamepadDpadLeft
 
 	// Last iota
-	numGamepadButtons
-	NumGamepadButtons = int(numGamepadButtons)
+	NumGamepadButtons int = iota
 
 	// Aliases
 	GamepadCross    = GamepadA
