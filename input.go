@@ -24,19 +24,8 @@ const (
 	MouseButton7
 	MouseButton8
 
-	// Last iota
-	// NOTE: These will be unexported in the future when Window is move to the pixel package.
-	NumMouseButtons int = iota
-
-	// Aliases
-	MouseButtonLeft   = MouseButton1
-	MouseButtonRight  = MouseButton2
-	MouseButtonMiddle = MouseButton3
-)
-
-const (
 	// List of all keyboard buttons.
-	KeySpace = iota + Button(NumMouseButtons)
+	KeySpace
 	KeyApostrophe
 	KeyComma
 	KeyMinus
@@ -159,7 +148,12 @@ const (
 
 	// Last iota
 	// NOTE: These will be unexported in the future when Window is move to the pixel package.
-	NumKeys int = iota
+	NumButtons int = iota
+
+	// Aliases
+	MouseButtonLeft   = MouseButton1
+	MouseButtonRight  = MouseButton2
+	MouseButtonMiddle = MouseButton3
 )
 
 var buttonNames = map[Button]string{

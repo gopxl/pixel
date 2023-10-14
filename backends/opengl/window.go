@@ -99,14 +99,14 @@ type Window struct {
 
 	prevInp, currInp, tempInp struct {
 		mouse   pixel.Vec
-		buttons [pixel.NumKeys]bool
-		repeat  [pixel.NumKeys]bool
+		buttons [pixel.NumButtons]bool
+		repeat  [pixel.NumButtons]bool
 		scroll  pixel.Vec
 		typed   string
 	}
 
-	pressEvents, tempPressEvents     [pixel.NumKeys]bool
-	releaseEvents, tempReleaseEvents [pixel.NumKeys]bool
+	pressEvents, tempPressEvents     [pixel.NumButtons]bool
+	releaseEvents, tempReleaseEvents [pixel.NumButtons]bool
 
 	prevJoy, currJoy, tempJoy joystickState
 }
