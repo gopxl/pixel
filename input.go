@@ -1,5 +1,28 @@
 package pixel
 
+type Action int
+
+// String returns a human-readable string describing the Button.
+func (a Action) String() string {
+	name, ok := actionNames[a]
+	if !ok {
+		return "InvalidAction"
+	}
+	return name
+}
+
+const (
+	Release Action = iota
+	Press
+	Repeat
+)
+
+var actionNames = map[Action]string{
+	Release: "Release",
+	Press:   "Press",
+	Repeat:  "Repeat",
+}
+
 type Button int
 
 // String returns a human-readable string describing the Button.
