@@ -86,8 +86,10 @@ func (w *Window) JoystickAxisCount(js pixel.Joystick) int {
 //
 // This API is experimental.
 func (w *Window) JoystickPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
-	b := gamepadButtonMapping[button]
-	return w.currJoy[js].Button(b) == glfw.Press
+	if b, ok := gamepadButtonMapping[button]; ok {
+		return w.currJoy[js].Button(b) == glfw.Press
+	}
+	return false
 }
 
 // JoystickJustPressed returns whether the joystick Button has just been pressed down.
@@ -95,8 +97,10 @@ func (w *Window) JoystickPressed(js pixel.Joystick, button pixel.GamepadButton) 
 //
 // This API is experimental.
 func (w *Window) JoystickJustPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
-	b := gamepadButtonMapping[button]
-	return w.currJoy[js].Button(b) == glfw.Press && w.prevJoy[js].Button(b) != glfw.Press
+	if b, ok := gamepadButtonMapping[button]; ok {
+		return w.currJoy[js].Button(b) == glfw.Press && w.prevJoy[js].Button(b) != glfw.Press
+	}
+	return false
 }
 
 // JoystickJustReleased returns whether the joystick Button has just been released up.
@@ -104,8 +108,10 @@ func (w *Window) JoystickJustPressed(js pixel.Joystick, button pixel.GamepadButt
 //
 // This API is experimental.
 func (w *Window) JoystickJustReleased(js pixel.Joystick, button pixel.GamepadButton) bool {
-	b := gamepadButtonMapping[button]
-	return w.currJoy[js].Button(b) != glfw.Press && w.prevJoy[js].Button(b) == glfw.Press
+	if b, ok := gamepadButtonMapping[button]; ok {
+		return w.currJoy[js].Button(b) != glfw.Press && w.prevJoy[js].Button(b) == glfw.Press
+	}
+	return false
 }
 
 // JoystickAxis returns the value of a joystick axis at the last call to Window.Update.
@@ -113,8 +119,10 @@ func (w *Window) JoystickJustReleased(js pixel.Joystick, button pixel.GamepadBut
 //
 // This API is experimental.
 func (w *Window) JoystickAxis(js pixel.Joystick, axis pixel.GamepadAxis) float64 {
-	a := gamepadAxisMapping[axis]
-	return float64(w.currJoy[js].Axis(a))
+	if a, ok := gamepadAxisMapping[axis]; ok {
+		return float64(w.currJoy[js].Axis(a))
+	}
+	return 0
 }
 
 // Used internally during Window.UpdateInput to update the state of the joysticks.
