@@ -26,17 +26,17 @@ See [requirements](#requirements) for the list of libraries necessary for compil
 
 ## Tutorial
 
-The [Wiki of this repo](https://github.com/gopxl/pixel/v2/wiki) contains an extensive tutorial
+The [Wiki of this repo](https://github.com/gopxl/pixel/wiki) contains an extensive tutorial
 covering several topics of Pixel. Here's the content of the tutorial parts so far:
 
-- [Creating a Window](https://github.com/gopxl/pixel/v2/wiki/Creating-a-Window)
-- [Drawing a Sprite](https://github.com/gopxl/pixel/v2/wiki/Drawing-a-Sprite)
-- [Moving, scaling and rotating with Matrix](https://github.com/gopxl/pixel/v2/wiki/Moving,-scaling-and-rotating-with-Matrix)
-- [Pressing keys and clicking mouse](https://github.com/gopxl/pixel/v2/wiki/Pressing-keys-and-clicking-mouse)
-- [Drawing efficiently with Batch](https://github.com/gopxl/pixel/v2/wiki/Drawing-efficiently-with-Batch)
-- [Drawing shapes with IMDraw](https://github.com/gopxl/pixel/v2/wiki/Drawing-shapes-with-IMDraw)
-- [Typing text on the screen](https://github.com/gopxl/pixel/v2/wiki/Typing-text-on-the-screen)
-- [Using a custom fragment shader](https://github.com/gopxl/pixel/v2/wiki/Using-a-custom-fragment-shader)
+- [Creating a Window](https://github.com/gopxl/pixel/wiki/Creating-a-Window)
+- [Drawing a Sprite](https://github.com/gopxl/pixel/wiki/Drawing-a-Sprite)
+- [Moving, scaling and rotating with Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
+- [Pressing keys and clicking mouse](https://github.com/gopxl/pixel/wiki/Pressing-keys-and-clicking-mouse)
+- [Drawing efficiently with Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
+- [Drawing shapes with IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw)
+- [Typing text on the screen](https://github.com/gopxl/pixel/wiki/Typing-text-on-the-screen)
+- [Using a custom fragment shader](https://github.com/gopxl/pixel/wiki/Using-a-custom-fragment-shader)
 
 ## [Examples](https://github.com/faiface/pixel-examples)
 
@@ -75,11 +75,11 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
 - Fast 2D graphics
   - Sprites
   - Primitive shapes with immediate mode style
-    [IMDraw](https://github.com/gopxl/pixel/v2/wiki/Drawing-shapes-with-IMDraw) (circles, rectangles,
+    [IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw) (circles, rectangles,
     lines, ...)
-  - Optimized drawing with [Batch](https://github.com/gopxl/pixel/v2/wiki/Drawing-efficiently-with-Batch)
+  - Optimized drawing with [Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
   - Text drawing with [text](https://godoc.org/github.com/gopxl/pixel/v2/text) package
-- Audio through a separate [Beep](https://github.com/faiface/beep) library.
+- Audio through a separate [Beep](https://github.com/gopxl/beep) library.
 - Simple and convenient API
   - Drawing a sprite to a window is as simple as `sprite.Draw(window, matrix)`
   - Wanna know where the center of a window is? `window.Bounds().Center()`
@@ -95,7 +95,7 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
     multiplication and a few more features
   - Pixel uses `float64` throughout the library, compatible with `"math"` package
 - Geometry transformations with
-  [Matrix](https://github.com/gopxl/pixel/v2/wiki/Moving,-scaling-and-rotating-with-Matrix)
+  [Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
   - Moving, scaling, rotating
   - Easy camera implementation
 - Off-screen drawing to Canvas or any other target (Batch, IMDraw, ...)
@@ -139,8 +139,8 @@ possible!
 ## Requirements
 
 If you're using Windows and having trouble building Pixel, please check [this
-guide](https://github.com/gopxl/pixel/v2/wiki/Building-Pixel-on-Windows) on the
-[wiki](https://github.com/gopxl/pixel/v2/wiki).
+guide](https://github.com/gopxl/pixel/wiki/Building-Pixel-on-Windows) on the
+[wiki](https://github.com/gopxl/pixel/wiki).
 
 OpenGL development libraries are needed for compilation. The dependencies
 are same as for [GLFW](https://github.com/go-gl/glfw).
