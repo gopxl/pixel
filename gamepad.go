@@ -1,11 +1,5 @@
 package pixel
 
-func NewGamepad[Action, Axis, Button ~int, AxisValue comparable](name string) *Gamepad[Action, Axis, Button, AxisValue] {
-	return &Gamepad[Action, Axis, Button, AxisValue]{
-		name: name,
-	}
-}
-
 type Gamepad[Action, Axis, Button ~int, AxisValue comparable] struct {
 	connected bool
 	name      string
