@@ -108,7 +108,7 @@ type Window struct {
 	pressEvents, tempPressEvents     [pixel.NumButtons]bool
 	releaseEvents, tempReleaseEvents [pixel.NumButtons]bool
 
-	prevJoy, currJoy, tempJoy [glfw.JoystickLast + 1]pixel.Gamepad[glfw.Action, glfw.GamepadAxis, glfw.GamepadButton, float32]
+	prevJoy, currJoy, tempJoy [pixel.NumJoysticks]pixel.Gamepad[glfw.Action, glfw.GamepadAxis, glfw.GamepadButton, float32]
 }
 
 var currWin *Window

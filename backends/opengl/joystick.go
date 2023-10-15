@@ -5,57 +5,57 @@ import (
 	"github.com/gopxl/pixel/v2"
 )
 
-var joystickMapping = map[glfw.Joystick]pixel.Joystick{
-	glfw.Joystick1:  pixel.Joystick1,
-	glfw.Joystick2:  pixel.Joystick2,
-	glfw.Joystick3:  pixel.Joystick3,
-	glfw.Joystick4:  pixel.Joystick4,
-	glfw.Joystick5:  pixel.Joystick5,
-	glfw.Joystick6:  pixel.Joystick6,
-	glfw.Joystick7:  pixel.Joystick7,
-	glfw.Joystick8:  pixel.Joystick8,
-	glfw.Joystick9:  pixel.Joystick9,
-	glfw.Joystick10: pixel.Joystick10,
-	glfw.Joystick11: pixel.Joystick11,
-	glfw.Joystick12: pixel.Joystick12,
-	glfw.Joystick13: pixel.Joystick13,
-	glfw.Joystick14: pixel.Joystick14,
-	glfw.Joystick15: pixel.Joystick15,
-	glfw.Joystick16: pixel.Joystick16,
+var joystickMapping = map[pixel.Joystick]glfw.Joystick{
+	pixel.Joystick1:  glfw.Joystick1,
+	pixel.Joystick2:  glfw.Joystick2,
+	pixel.Joystick3:  glfw.Joystick3,
+	pixel.Joystick4:  glfw.Joystick4,
+	pixel.Joystick5:  glfw.Joystick5,
+	pixel.Joystick6:  glfw.Joystick6,
+	pixel.Joystick7:  glfw.Joystick7,
+	pixel.Joystick8:  glfw.Joystick8,
+	pixel.Joystick9:  glfw.Joystick9,
+	pixel.Joystick10: glfw.Joystick10,
+	pixel.Joystick11: glfw.Joystick11,
+	pixel.Joystick12: glfw.Joystick12,
+	pixel.Joystick13: glfw.Joystick13,
+	pixel.Joystick14: glfw.Joystick14,
+	pixel.Joystick15: glfw.Joystick15,
+	pixel.Joystick16: glfw.Joystick16,
 }
 
 // Not currently used because Gamepad Axis/Button input works a bit different than others
-var _ = map[glfw.GamepadAxis]pixel.GamepadAxis{
-	glfw.AxisLeftX:        pixel.AxisLeftX,
-	glfw.AxisLeftY:        pixel.AxisLeftY,
-	glfw.AxisRightX:       pixel.AxisRightX,
-	glfw.AxisRightY:       pixel.AxisRightY,
-	glfw.AxisLeftTrigger:  pixel.AxisLeftTrigger,
-	glfw.AxisRightTrigger: pixel.AxisRightTrigger,
+var gamepadAxisMapping = map[pixel.GamepadAxis]glfw.GamepadAxis{
+	pixel.AxisLeftX:        glfw.AxisLeftX,
+	pixel.AxisLeftY:        glfw.AxisLeftY,
+	pixel.AxisRightX:       glfw.AxisRightX,
+	pixel.AxisRightY:       glfw.AxisRightY,
+	pixel.AxisLeftTrigger:  glfw.AxisLeftTrigger,
+	pixel.AxisRightTrigger: glfw.AxisRightTrigger,
 }
 
-var _ = map[glfw.GamepadButton]pixel.GamepadButton{
-	glfw.ButtonA:           pixel.GamepadA,
-	glfw.ButtonB:           pixel.GamepadB,
-	glfw.ButtonX:           pixel.GamepadX,
-	glfw.ButtonY:           pixel.GamepadY,
-	glfw.ButtonLeftBumper:  pixel.GamepadLeftBumper,
-	glfw.ButtonRightBumper: pixel.GamepadRightBumper,
-	glfw.ButtonBack:        pixel.GamepadBack,
-	glfw.ButtonStart:       pixel.GamepadStart,
-	glfw.ButtonGuide:       pixel.GamepadGuide,
-	glfw.ButtonLeftThumb:   pixel.GamepadLeftThumb,
-	glfw.ButtonRightThumb:  pixel.GamepadRightThumb,
-	glfw.ButtonDpadUp:      pixel.GamepadDpadUp,
-	glfw.ButtonDpadRight:   pixel.GamepadDpadRight,
-	glfw.ButtonDpadDown:    pixel.GamepadDpadDown,
-	glfw.ButtonDpadLeft:    pixel.GamepadDpadLeft,
+var gamepadButtonMapping = map[pixel.GamepadButton]glfw.GamepadButton{
+	pixel.GamepadA:           glfw.ButtonA,
+	pixel.GamepadB:           glfw.ButtonB,
+	pixel.GamepadX:           glfw.ButtonX,
+	pixel.GamepadY:           glfw.ButtonY,
+	pixel.GamepadLeftBumper:  glfw.ButtonLeftBumper,
+	pixel.GamepadRightBumper: glfw.ButtonRightBumper,
+	pixel.GamepadBack:        glfw.ButtonBack,
+	pixel.GamepadStart:       glfw.ButtonStart,
+	pixel.GamepadGuide:       glfw.ButtonGuide,
+	pixel.GamepadLeftThumb:   glfw.ButtonLeftThumb,
+	pixel.GamepadRightThumb:  glfw.ButtonRightThumb,
+	pixel.GamepadDpadUp:      glfw.ButtonDpadUp,
+	pixel.GamepadDpadRight:   glfw.ButtonDpadRight,
+	pixel.GamepadDpadDown:    glfw.ButtonDpadDown,
+	pixel.GamepadDpadLeft:    glfw.ButtonDpadLeft,
 }
 
 // JoystickPresent returns if the joystick is currently connected.
 //
 // This API is experimental.
-func (w *Window) JoystickPresent(js glfw.Joystick) bool {
+func (w *Window) JoystickPresent(js pixel.Joystick) bool {
 	return w.currJoy[js].Connected()
 }
 
@@ -63,21 +63,21 @@ func (w *Window) JoystickPresent(js glfw.Joystick) bool {
 // empty string.
 //
 // This API is experimental.
-func (w *Window) JoystickName(js glfw.Joystick) string {
+func (w *Window) JoystickName(js pixel.Joystick) string {
 	return w.currJoy[js].Name()
 }
 
 // JoystickButtonCount returns the number of buttons a connected joystick has.
 //
 // This API is experimental.
-func (w *Window) JoystickButtonCount(js glfw.Joystick) int {
+func (w *Window) JoystickButtonCount(js pixel.Joystick) int {
 	return w.currJoy[js].NumButtons()
 }
 
 // JoystickAxisCount returns the number of axes a connected joystick has.
 //
 // This API is experimental.
-func (w *Window) JoystickAxisCount(js glfw.Joystick) int {
+func (w *Window) JoystickAxisCount(js pixel.Joystick) int {
 	return w.currJoy[js].NumAxes()
 }
 
@@ -85,38 +85,42 @@ func (w *Window) JoystickAxisCount(js glfw.Joystick) int {
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickPressed(js glfw.Joystick, button glfw.GamepadButton) bool {
-	return w.currJoy[js].Button(button) == glfw.Press
+func (w *Window) JoystickPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
+	b := gamepadButtonMapping[button]
+	return w.currJoy[js].Button(b) == glfw.Press
 }
 
 // JoystickJustPressed returns whether the joystick Button has just been pressed down.
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickJustPressed(js glfw.Joystick, button glfw.GamepadButton) bool {
-	return w.currJoy[js].Button(button) == glfw.Press && w.prevJoy[js].Button(button) != glfw.Press
+func (w *Window) JoystickJustPressed(js pixel.Joystick, button pixel.GamepadButton) bool {
+	b := gamepadButtonMapping[button]
+	return w.currJoy[js].Button(b) == glfw.Press && w.prevJoy[js].Button(b) != glfw.Press
 }
 
 // JoystickJustReleased returns whether the joystick Button has just been released up.
 // If the button index is out of range, this will return false.
 //
 // This API is experimental.
-func (w *Window) JoystickJustReleased(js glfw.Joystick, button glfw.GamepadButton) bool {
-	return w.currJoy[js].Button(button) != glfw.Press && w.prevJoy[js].Button(button) == glfw.Press
+func (w *Window) JoystickJustReleased(js pixel.Joystick, button pixel.GamepadButton) bool {
+	b := gamepadButtonMapping[button]
+	return w.currJoy[js].Button(b) != glfw.Press && w.prevJoy[js].Button(b) == glfw.Press
 }
 
 // JoystickAxis returns the value of a joystick axis at the last call to Window.Update.
 // If the axis index is out of range, this will return 0.
 //
 // This API is experimental.
-func (w *Window) JoystickAxis(js glfw.Joystick, axis glfw.GamepadAxis) float64 {
-	return float64(w.currJoy[js].Axis(axis))
+func (w *Window) JoystickAxis(js pixel.Joystick, axis pixel.GamepadAxis) float64 {
+	a := gamepadAxisMapping[axis]
+	return float64(w.currJoy[js].Axis(a))
 }
 
 // Used internally during Window.UpdateInput to update the state of the joysticks.
 func (w *Window) updateJoystickInput() {
-	for joystick := glfw.Joystick1; joystick <= glfw.JoystickLast; joystick++ {
-		js, ok := joystickMapping[joystick]
+	for js := pixel.Joystick1; js < pixel.Joystick(pixel.NumJoysticks); js++ {
+		joystick, ok := joystickMapping[js]
 		if !ok {
 			return
 		}
