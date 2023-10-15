@@ -130,7 +130,7 @@ func (w *Window) updateJoystickInput() {
 	for js := pixel.Joystick1; js < pixel.Joystick(pixel.NumJoysticks); js++ {
 		joystick, ok := joystickMapping[js]
 		if !ok {
-			return
+			continue
 		}
 		// Determine and store if the joystick was connected
 		joystickPresent := joystick.Present()
