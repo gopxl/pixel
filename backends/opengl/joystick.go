@@ -34,7 +34,7 @@ var _ = map[glfw.GamepadAxis]pixel.GamepadAxis{
 	glfw.AxisRightTrigger: pixel.AxisRightTrigger,
 }
 
-var _ = map[glfw.GamepadButton]pixel.GamepadButton{
+var gamepadButtonMapping = map[glfw.GamepadButton]pixel.GamepadButton{
 	glfw.ButtonA:           pixel.GamepadA,
 	glfw.ButtonB:           pixel.GamepadB,
 	glfw.ButtonX:           pixel.GamepadX,
@@ -128,10 +128,10 @@ func (w *Window) updateJoystickInput() {
 			if joystick.IsGamepad() {
 				gamepadInputs := joystick.GetGamepadState()
 
-				w.tempJoy.buttons[js] = gamepadInputs.Buttons[:]
+				w.tempJoy.buttons[js] = convertGamepadButtons(gamepadInputs.Buttons)
 				w.tempJoy.axis[js] = gamepadInputs.Axes[:]
 			} else {
-				w.tempJoy.buttons[js] = joystick.GetButtons()
+				w.tempJoy.buttons[js] = convertJoystickButtons(joystick.GetButtons())
 				w.tempJoy.axis[js] = joystick.GetAxes()
 			}
 
@@ -143,7 +143,7 @@ func (w *Window) updateJoystickInput() {
 				w.tempJoy.name[js] = w.currJoy.name[js]
 			}
 		} else {
-			w.tempJoy.buttons[js] = []glfw.Action{}
+			w.tempJoy.buttons[js] = []pixel.Action{}
 			w.tempJoy.axis[js] = []float32{}
 			w.tempJoy.name[js] = ""
 		}
@@ -156,7 +156,7 @@ func (w *Window) updateJoystickInput() {
 type joystickState struct {
 	connected [pixel.NumJoysticks]bool
 	name      [pixel.NumJoysticks]string
-	buttons   [pixel.NumJoysticks][]glfw.Action
+	buttons   [pixel.NumJoysticks][]pixel.Action
 	axis      [pixel.NumJoysticks][]float32
 }
 
@@ -166,7 +166,7 @@ func (js *joystickState) getButton(joystick pixel.Joystick, button int) bool {
 	if js.buttons[joystick] == nil || button >= len(js.buttons[joystick]) || button < 0 {
 		return false
 	}
-	return js.buttons[joystick][byte(button)] == glfw.Press
+	return js.buttons[joystick][byte(button)] == pixel.Press
 }
 
 // Returns the value of a joystick axis, returning 0 if the button or joystick is invalid.
@@ -176,4 +176,40 @@ func (js *joystickState) getAxis(joystick pixel.Joystick, axis int) float64 {
 		return 0
 	}
 	return float64(js.axis[joystick][axis])
+}
+
+// Convert buttons from a GLFW gamepad mapping to pixel format
+func convertGamepadButtons(buttons [glfw.ButtonLast + 1]glfw.Action) []pixel.Action {
+	pixelButtons := make([]pixel.Action, pixel.NumGamepadButtons)
+	for i, a := range buttons {
+		var action pixel.Action
+		var button pixel.GamepadButton
+		var ok bool
+		if action, ok = actionMapping[a]; !ok {
+			// Unknown action
+			continue
+		}
+		if button, ok = gamepadButtonMapping[glfw.GamepadButton(i)]; !ok {
+			// Unknown gamepad button
+			continue
+		}
+		pixelButtons[button] = action
+	}
+	return pixelButtons
+}
+
+// Convert buttons of unknown length and arrangement to pixel format
+// Used when a joystick has an unknown mapping in GLFW
+func convertJoystickButtons(buttons []glfw.Action) []pixel.Action {
+	pixelButtons := make([]pixel.Action, len(buttons))
+	for i, a := range buttons {
+		var action pixel.Action
+		var ok bool
+		if action, ok = actionMapping[a]; !ok {
+			// Unknown action
+			continue
+		}
+		pixelButtons[pixel.GamepadButton(i)] = action
+	}
+	return pixelButtons
 }

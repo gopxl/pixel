@@ -71,6 +71,12 @@ func (w *Window) Typed() string {
 	return w.currInp.typed
 }
 
+var actionMapping = map[glfw.Action]pixel.Action{
+	glfw.Release: pixel.Release,
+	glfw.Press:   pixel.Press,
+	glfw.Repeat:  pixel.Repeat,
+}
+
 var mouseButtonMapping = map[glfw.MouseButton]pixel.Button{
 	glfw.MouseButton1: pixel.MouseButton1,
 	glfw.MouseButton2: pixel.MouseButton2,
@@ -83,7 +89,7 @@ var mouseButtonMapping = map[glfw.MouseButton]pixel.Button{
 }
 
 var keyButtonMapping = map[glfw.Key]pixel.Button{
-	glfw.KeyUnknown:      pixel.ButtonUnknown,
+	glfw.KeyUnknown:      pixel.UnknownButton,
 	glfw.KeySpace:        pixel.KeySpace,
 	glfw.KeyApostrophe:   pixel.KeyApostrophe,
 	glfw.KeyComma:        pixel.KeyComma,

@@ -1,18 +1,42 @@
 package pixel
 
+type Action int
+
+// String returns a human-readable string describing the Button.
+func (a Action) String() string {
+	name, ok := actionNames[a]
+	if !ok {
+		return actionNames[UnknownAction]
+	}
+	return name
+}
+
+const UnknownAction Action = -1
+const (
+	Release Action = iota
+	Press
+	Repeat
+)
+
+var actionNames = map[Action]string{
+	Release:       "Release",
+	Press:         "Press",
+	Repeat:        "Repeat",
+	UnknownAction: "UnknownAction",
+}
+
 type Button int
 
 // String returns a human-readable string describing the Button.
 func (b Button) String() string {
 	name, ok := buttonNames[b]
 	if !ok {
-		return "Invalid"
+		return buttonNames[UnknownButton]
 	}
 	return name
 }
 
-const ButtonUnknown Button = -1
-
+const UnknownButton Button = -1
 const (
 	// List of all mouse buttons.
 	MouseButton1 Button = iota
@@ -147,7 +171,6 @@ const (
 	KeyMenu
 
 	// Last iota
-	// NOTE: These will be unexported in the future when Window is move to the pixel package.
 	NumButtons int = iota
 
 	// Aliases
@@ -157,7 +180,6 @@ const (
 )
 
 var buttonNames = map[Button]string{
-	ButtonUnknown:     "Unknown",
 	MouseButton4:      "MouseButton4",
 	MouseButton5:      "MouseButton5",
 	MouseButton6:      "MouseButton6",
@@ -286,6 +308,7 @@ var buttonNames = map[Button]string{
 	KeyRightAlt:       "RightAlt",
 	KeyRightSuper:     "RightSuper",
 	KeyMenu:           "Menu",
+	UnknownButton:     "UnknownButton",
 }
 
 // Joystick is a joystick or controller (gamepad).
@@ -295,12 +318,13 @@ type Joystick int
 func (j Joystick) String() string {
 	name, ok := joystickNames[j]
 	if !ok {
-		return "Invalid"
+		return joystickNames[UnknownJoystick]
 	}
 	return name
 }
 
 // List all of the joysticks.
+const UnknownJoystick Joystick = -1
 const (
 	Joystick1 Joystick = iota
 	Joystick2
@@ -320,27 +344,27 @@ const (
 	Joystick16
 
 	// Last iota
-	// NOTE: These will be unexported in the future when Window is move to the pixel package.
 	NumJoysticks int = iota
 )
 
 var joystickNames = map[Joystick]string{
-	Joystick1:  "Joystick1",
-	Joystick2:  "Joystick2",
-	Joystick3:  "Joystick3",
-	Joystick4:  "Joystick4",
-	Joystick5:  "Joystick5",
-	Joystick6:  "Joystick6",
-	Joystick7:  "Joystick7",
-	Joystick8:  "Joystick8",
-	Joystick9:  "Joystick9",
-	Joystick10: "Joystick10",
-	Joystick11: "Joystick11",
-	Joystick12: "Joystick12",
-	Joystick13: "Joystick13",
-	Joystick14: "Joystick14",
-	Joystick15: "Joystick15",
-	Joystick16: "Joystick16",
+	Joystick1:       "Joystick1",
+	Joystick2:       "Joystick2",
+	Joystick3:       "Joystick3",
+	Joystick4:       "Joystick4",
+	Joystick5:       "Joystick5",
+	Joystick6:       "Joystick6",
+	Joystick7:       "Joystick7",
+	Joystick8:       "Joystick8",
+	Joystick9:       "Joystick9",
+	Joystick10:      "Joystick10",
+	Joystick11:      "Joystick11",
+	Joystick12:      "Joystick12",
+	Joystick13:      "Joystick13",
+	Joystick14:      "Joystick14",
+	Joystick15:      "Joystick15",
+	Joystick16:      "Joystick16",
+	UnknownJoystick: "UnknownJoystick",
 }
 
 // GamepadAxis corresponds to a gamepad axis.
@@ -350,12 +374,13 @@ type GamepadAxis int
 func (ga GamepadAxis) String() string {
 	name, ok := gamepadAxisNames[ga]
 	if !ok {
-		return "Invalid"
+		return gamepadAxisNames[UnknownGamepadAxis]
 	}
 	return name
 }
 
 // Gamepad axis IDs.
+const UnknownGamepadAxis GamepadAxis = -1
 const (
 	AxisLeftX GamepadAxis = iota
 	AxisLeftY
@@ -365,17 +390,17 @@ const (
 	AxisRightTrigger
 
 	// Last iota.
-	// NOTE: These will be unexported in the future when Window is move to the pixel package.
 	NumAxes int = iota
 )
 
 var gamepadAxisNames = map[GamepadAxis]string{
-	AxisLeftX:        "AxisLeftX",
-	AxisLeftY:        "AxisLeftY",
-	AxisRightX:       "AxisRightX",
-	AxisRightY:       "AxisRightY",
-	AxisLeftTrigger:  "AxisLeftTrigger",
-	AxisRightTrigger: "AxisRightTrigger",
+	AxisLeftX:          "AxisLeftX",
+	AxisLeftY:          "AxisLeftY",
+	AxisRightX:         "AxisRightX",
+	AxisRightY:         "AxisRightY",
+	AxisLeftTrigger:    "AxisLeftTrigger",
+	AxisRightTrigger:   "AxisRightTrigger",
+	UnknownGamepadAxis: "UnknownGamepadAxis",
 }
 
 // GamepadButton corresponds to a gamepad button.
@@ -385,12 +410,13 @@ type GamepadButton int
 func (gb GamepadButton) String() string {
 	name, ok := gamepadButtonNames[gb]
 	if !ok {
-		return "Invalid"
+		return gamepadButtonNames[UnknownGampadButton]
 	}
 	return name
 }
 
 // Gamepad button IDs.
+const UnknownGampadButton GamepadButton = -1
 const (
 	GamepadA GamepadButton = iota
 	GamepadB
@@ -409,8 +435,7 @@ const (
 	GamepadDpadLeft
 
 	// Last iota
-	numGamepadButtons
-	NumGamepadButtons = int(numGamepadButtons)
+	NumGamepadButtons int = iota
 
 	// Aliases
 	GamepadCross    = GamepadA
@@ -420,19 +445,20 @@ const (
 )
 
 var gamepadButtonNames = map[GamepadButton]string{
-	GamepadA:           "GamepadA",
-	GamepadB:           "GamepadB",
-	GamepadX:           "GamepadX",
-	GamepadY:           "GamepadY",
-	GamepadLeftBumper:  "GamepadLeftBumper",
-	GamepadRightBumper: "GamepadRightBumper",
-	GamepadBack:        "GamepadBack",
-	GamepadStart:       "GamepadStart",
-	GamepadGuide:       "GamepadGuide",
-	GamepadLeftThumb:   "GamepadLeftThumb",
-	GamepadRightThumb:  "GamepadRightThumb",
-	GamepadDpadUp:      "GamepadDpadUp",
-	GamepadDpadRight:   "GamepadDpadRight",
-	GamepadDpadDown:    "GamepadDpadDown",
-	GamepadDpadLeft:    "GamepadDpadLeft",
+	GamepadA:            "GamepadA",
+	GamepadB:            "GamepadB",
+	GamepadX:            "GamepadX",
+	GamepadY:            "GamepadY",
+	GamepadLeftBumper:   "GamepadLeftBumper",
+	GamepadRightBumper:  "GamepadRightBumper",
+	GamepadBack:         "GamepadBack",
+	GamepadStart:        "GamepadStart",
+	GamepadGuide:        "GamepadGuide",
+	GamepadLeftThumb:    "GamepadLeftThumb",
+	GamepadRightThumb:   "GamepadRightThumb",
+	GamepadDpadUp:       "GamepadDpadUp",
+	GamepadDpadRight:    "GamepadDpadRight",
+	GamepadDpadDown:     "GamepadDpadDown",
+	GamepadDpadLeft:     "GamepadDpadLeft",
+	UnknownGampadButton: "UnknownGampadButton",
 }
