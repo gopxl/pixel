@@ -38,9 +38,9 @@ covering several topics of Pixel. Here's the content of the tutorial parts so fa
 - [Typing text on the screen](https://github.com/gopxl/pixel/wiki/Typing-text-on-the-screen)
 - [Using a custom fragment shader](https://github.com/gopxl/pixel/wiki/Using-a-custom-fragment-shader)
 
-## [Examples](https://github.com/faiface/pixel-examples)
+## [Examples](https://github.com/gopxl/pixel-examples)
 
-The [examples](https://github.com/faiface/pixel-examples) repository contains a few
+The [examples](https://github.com/gopxl/pixel-examples) repository contains a few
 examples demonstrating Pixel's functionality.
 
 **To run an example**, navigate to it's directory, then `go run` the `main.go` file. For example:
@@ -52,17 +52,17 @@ $ go run main.go
 
 Here are some screenshots from the examples!
 
-| [Lights](https://github.com/faiface/pixel-examples/blob/master/lights) | [Platformer](https://github.com/faiface/pixel-examples/blob/master/platformer) |
+| [Lights](https://github.com/gopxl/pixel-examples/blob/main/lights) | [Platformer](https://github.com/gopxl/pixel-examples/blob/main/platformer) |
 | --- | --- |
-| ![Lights](https://github.com/faiface/pixel-examples/blob/master/lights/screenshot.png) | ![Platformer](https://github.com/faiface/pixel-examples/blob/master/platformer/screenshot.png) |
+| ![Lights](https://github.com/gopxl/pixel-examples/blob/main/lights/screenshot.png) | ![Platformer](https://github.com/gopxl/pixel-examples/blob/main/platformer/screenshot.png) |
 
-| [Smoke](https://github.com/faiface/pixel-examples/blob/master/smoke) | [Typewriter](https://github.com/faiface/pixel-examples/blob/master/typewriter) |
+| [Smoke](https://github.com/gopxl/pixel-examples/blob/main/smoke) | [Typewriter](https://github.com/gopxl/pixel-examples/blob/main/typewriter) |
 | --- | --- |
-| ![Smoke](https://github.com/faiface/pixel-examples/blob/master/smoke/screenshot.png) | ![Typewriter](https://github.com/faiface/pixel-examples/blob/master/typewriter/screenshot.png) |
+| ![Smoke](https://github.com/gopxl/pixel-examples/blob/main/smoke/screenshot.png) | ![Typewriter](https://github.com/gopxl/pixel-examples/blob/main/typewriter/screenshot.png) |
 
-| [Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster) | [Gizmo](https://github.com/Lallassu/gizmo) |
+| [Raycaster](https://github.com/gopxl/pixel-examples/blob/main/community/raycaster) | [Gizmo](https://github.com/Lallassu/gizmo) |
 | --- | --- |
-| ![Raycaster](https://github.com/faiface/pixel-examples/blob/master/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
+| ![Raycaster](https://github.com/gopxl/pixel-examples/blob/main/community/raycaster/screenshot.png) | ![Gizmo](https://github.com/Lallassu/gizmo/blob/master/preview.png) |
 
 ## Release Schedule
 We aim to release a new version the 1st of every month.
