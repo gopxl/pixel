@@ -32,6 +32,8 @@ jobs:
         run: go build -v ./...
 
       - name: Test
+        # Run the test suite using the "virtual framebuffer X server for X Version 11" (xvfb)
+        # to allow tests to make windows within the server environment of GitHub Actions.
         run: xvfb-run go test -v -covermode atomic -coverprofile=covprofile ./...
 
       - name: Gofmt
