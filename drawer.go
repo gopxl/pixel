@@ -8,7 +8,7 @@ package pixel
 //
 // To create a Drawer, just assign it's Triangles and Picture fields:
 //
-//   d := pixel.Drawer{Triangles: t, Picture: p}
+//	d := pixel.Drawer{Triangles: t, Picture: p}
 //
 // If Triangles is nil, nothing will be drawn. If Picture is nil, Triangles will be drawn without a
 // Picture.

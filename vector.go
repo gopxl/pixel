@@ -9,20 +9,20 @@ import (
 //
 // Create vectors with the V constructor:
 //
-//   u := pixel.V(1, 2)
-//   v := pixel.V(8, -3)
+//	u := pixel.V(1, 2)
+//	v := pixel.V(8, -3)
 //
 // Use various methods to manipulate them:
 //
-//   w := u.Add(v)
-//   fmt.Println(w)        // Vec(9, -1)
-//   fmt.Println(u.Sub(v)) // Vec(-7, 5)
-//   u = pixel.V(2, 3)
-//   v = pixel.V(8, 1)
-//   if u.X < 0 {
-//	     fmt.Println("this won't happen")
-//   }
-//   x := u.Unit().Dot(v.Unit())
+//	  w := u.Add(v)
+//	  fmt.Println(w)        // Vec(9, -1)
+//	  fmt.Println(u.Sub(v)) // Vec(-7, 5)
+//	  u = pixel.V(2, 3)
+//	  v = pixel.V(8, 1)
+//	  if u.X < 0 {
+//		     fmt.Println("this won't happen")
+//	  }
+//	  x := u.Unit().Dot(v.Unit())
 type Vec struct {
 	X, Y float64
 }
@@ -69,9 +69,9 @@ func Unit(angle float64) Vec {
 
 // String returns the string representation of the vector u.
 //
-//   u := pixel.V(4.5, -1.3)
-//   u.String()     // returns "Vec(4.5, -1.3)"
-//   fmt.Println(u) // Vec(4.5, -1.3)
+//	u := pixel.V(4.5, -1.3)
+//	u.String()     // returns "Vec(4.5, -1.3)"
+//	fmt.Println(u) // Vec(4.5, -1.3)
 func (u Vec) String() string {
 	return fmt.Sprintf("Vec(%v, %v)", u.X, u.Y)
 }
@@ -181,8 +181,8 @@ func (u Vec) Project(v Vec) Vec {
 // Map applies the function f to both x and y components of the vector u and returns the modified
 // vector.
 //
-//   u := pixel.V(10.5, -1.5)
-//   v := u.Map(math.Floor)   // v is Vec(10, -2), both components of u floored
+//	u := pixel.V(10.5, -1.5)
+//	v := u.Map(math.Floor)   // v is Vec(10, -2), both components of u floored
 func (u Vec) Map(f func(float64) float64) Vec {
 	return Vec{
 		f(u.X),
