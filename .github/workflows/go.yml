@@ -26,7 +26,7 @@ jobs:
         run: go install github.com/mattn/goveralls@latest
 
       - name: Install dependencies
-        run: sudo apt install xorg-dev
+        run: sudo apt install xorg-dev libgl1-mesa-dev
 
       - name: Build
         run: go build -v ./...
