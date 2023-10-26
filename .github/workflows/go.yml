@@ -26,13 +26,13 @@ jobs:
         run: go install github.com/mattn/goveralls@latest
 
       - name: Install dependencies
-        run: sudo apt install xorg-dev libgl1-mesa-dev
+        run: sudo apt install xorg-dev libgl1-mesa-dev xvfb
 
       - name: Build
         run: go build -v ./...
 
       - name: Test
-        run: go test -v -covermode atomic -coverprofile=covprofile ./...
+        run: xvfb-run go test -v -covermode atomic -coverprofile=covprofile ./...
 
       - name: Gofmt
         run: gofmt -d ./
