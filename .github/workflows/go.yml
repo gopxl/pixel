@@ -38,7 +38,7 @@ jobs:
 
       - name: Gofmt
         run: |
-          OUTPUT=$(gofmt -l ./)
+          OUTPUT=$(gofmt -d ./)
           echo "$OUTPUT"
           test -z "$OUTPUT"
 
