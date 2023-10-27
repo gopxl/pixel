@@ -97,17 +97,7 @@ type Window struct {
 		xpos, ypos, width, height int
 	}
 
-	prevInp, currInp, tempInp struct {
-		mouse   pixel.Vec
-		buttons [pixel.NumButtons]bool
-		repeat  [pixel.NumButtons]bool
-		scroll  pixel.Vec
-		typed   string
-	}
-
-	pressEvents, tempPressEvents     [pixel.NumButtons]bool
-	releaseEvents, tempReleaseEvents [pixel.NumButtons]bool
-
+	input                     *pixel.InputHandler
 	prevJoy, currJoy, tempJoy joystickState
 }
 
@@ -122,7 +112,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		false: glfw.False,
 	}
 
-	w := &Window{bounds: cfg.Bounds, cursorVisible: true}
+	w := &Window{bounds: cfg.Bounds, cursorVisible: true, input: &pixel.InputHandler{}}
 
 	flag := false
 	for _, v := range []int{0, 2, 4, 8, 16} {

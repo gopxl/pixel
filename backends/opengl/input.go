@@ -10,34 +10,34 @@ import (
 
 // Pressed returns whether the Button is currently pressed down.
 func (w *Window) Pressed(button pixel.Button) bool {
-	return w.currInp.buttons[button]
+	return w.input.Pressed(button)
 }
 
 // JustPressed returns whether the Button has been pressed in the last frame.
 func (w *Window) JustPressed(button pixel.Button) bool {
-	return w.pressEvents[button]
+	return w.input.JustPressed(button)
 }
 
 // JustReleased returns whether the Button has been released in the last frame.
 func (w *Window) JustReleased(button pixel.Button) bool {
-	return w.releaseEvents[button]
+	return w.input.JustReleased(button)
 }
 
 // Repeated returns whether a repeat event has been triggered on button.
 //
 // Repeat event occurs repeatedly when a button is held down for some time.
 func (w *Window) Repeated(button pixel.Button) bool {
-	return w.currInp.repeat[button]
+	return w.input.Repeated(button)
 }
 
 // MousePosition returns the current mouse position in the Window's Bounds.
 func (w *Window) MousePosition() pixel.Vec {
-	return w.currInp.mouse
+	return w.input.MousePosition()
 }
 
 // MousePreviousPosition returns the previous mouse position in the Window's Bounds.
 func (w *Window) MousePreviousPosition() pixel.Vec {
-	return w.prevInp.mouse
+	return w.input.MousePreviousPosition()
 }
 
 // SetMousePosition positions the mouse cursor anywhere within the Window's Bounds.
@@ -49,26 +49,24 @@ func (w *Window) SetMousePosition(v pixel.Vec) {
 				v.X+w.bounds.Min.X,
 				(w.bounds.H()-v.Y)+w.bounds.Min.Y,
 			)
-			w.prevInp.mouse = v
-			w.currInp.mouse = v
-			w.tempInp.mouse = v
+			w.input.SetMousePosition(v)
 		}
 	})
 }
 
 // MouseInsideWindow returns true if the mouse position is within the Window's Bounds.
 func (w *Window) MouseInsideWindow() bool {
-	return w.cursorInsideWindow
+	return w.input.MouseInsideWindow()
 }
 
 // MouseScroll returns the mouse scroll amount (in both axes) since the last call to Window.Update.
 func (w *Window) MouseScroll() pixel.Vec {
-	return w.currInp.scroll
+	return w.input.MouseScroll()
 }
 
 // Typed returns the text typed on the keyboard since the last call to Window.Update.
 func (w *Window) Typed() string {
-	return w.currInp.typed
+	return w.input.Typed()
 }
 
 var actionMapping = map[glfw.Action]pixel.Action{
@@ -215,18 +213,10 @@ var keyButtonMapping = map[glfw.Key]pixel.Button{
 func (w *Window) initInput() {
 	mainthread.Call(func() {
 		w.window.SetMouseButtonCallback(func(_ *glfw.Window, button glfw.MouseButton, action glfw.Action, mod glfw.ModifierKey) {
-			mb, ok := mouseButtonMapping[button]
-			if !ok {
-				return
-			}
-
-			switch action {
-			case glfw.Press:
-				w.tempPressEvents[mb] = true
-				w.tempInp.buttons[mb] = true
-			case glfw.Release:
-				w.tempReleaseEvents[mb] = true
-				w.tempInp.buttons[mb] = false
+			if b, buttonOk := mouseButtonMapping[button]; buttonOk {
+				if a, actionOk := actionMapping[action]; actionOk {
+					w.input.SetButton(b, a)
+				}
 			}
 		})
 
@@ -234,20 +224,10 @@ func (w *Window) initInput() {
 			if key == glfw.KeyUnknown {
 				return
 			}
-			kb, ok := keyButtonMapping[key]
-			if !ok {
-				return
-			}
-
-			switch action {
-			case glfw.Press:
-				w.tempPressEvents[kb] = true
-				w.tempInp.buttons[kb] = true
-			case glfw.Release:
-				w.tempReleaseEvents[kb] = true
-				w.tempInp.buttons[kb] = false
-			case glfw.Repeat:
-				w.tempInp.repeat[kb] = true
+			if b, buttonOk := keyButtonMapping[key]; buttonOk {
+				if a, actionOk := actionMapping[action]; actionOk {
+					w.input.SetButton(b, a)
+				}
 			}
 		})
 
@@ -256,19 +236,20 @@ func (w *Window) initInput() {
 		})
 
 		w.window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
-			w.tempInp.mouse = pixel.V(
-				x+w.bounds.Min.X,
-				(w.bounds.H()-y)+w.bounds.Min.Y,
+			w.input.MouseMoveEvent(
+				pixel.V(
+					x+w.bounds.Min.X,
+					(w.bounds.H()-y)+w.bounds.Min.Y,
+				),
 			)
 		})
 
 		w.window.SetScrollCallback(func(_ *glfw.Window, xoff, yoff float64) {
-			w.tempInp.scroll.X += xoff
-			w.tempInp.scroll.Y += yoff
+			w.input.MouseScrollEvent(xoff, yoff)
 		})
 
 		w.window.SetCharCallback(func(_ *glfw.Window, r rune) {
-			w.tempInp.typed += string(r)
+			w.input.CharEvent(r)
 		})
 	})
 }
@@ -297,18 +278,6 @@ func (w *Window) UpdateInputWait(timeout time.Duration) {
 
 // internal input bookkeeping
 func (w *Window) doUpdateInput() {
-	w.prevInp = w.currInp
-	w.currInp = w.tempInp
-
-	w.pressEvents = w.tempPressEvents
-	w.releaseEvents = w.tempReleaseEvents
-
-	// Clear last frame's temporary status
-	w.tempPressEvents = [pixel.NumButtons]bool{}
-	w.tempReleaseEvents = [pixel.NumButtons]bool{}
-	w.tempInp.repeat = [pixel.NumButtons]bool{}
-	w.tempInp.scroll = pixel.ZV
-	w.tempInp.typed = ""
-
+	w.input.Update()
 	w.updateJoystickInput()
 }
