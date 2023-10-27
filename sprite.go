@@ -7,7 +7,7 @@ import "image/color"
 // Frame specifies a rectangular portion of the Picture that will be drawn. For example, this
 // creates a Sprite that draws the whole Picture:
 //
-//   sprite := pixel.NewSprite(pic, pic.Bounds())
+//	sprite := pixel.NewSprite(pic, pic.Bounds())
 //
 // Note, that Sprite caches the results of MakePicture from Targets it's drawn to for each Picture
 // it's set to. What it means is that using a Sprite with an unbounded number of Pictures leads to a
