@@ -64,6 +64,10 @@ func (w *Window) MouseScroll() pixel.Vec {
 	return w.input.MouseScroll()
 }
 
+func (w *Window) MousePreviousScroll() pixel.Vec {
+	return w.input.MousePreviousScroll()
+}
+
 // Typed returns the text typed on the keyboard since the last call to Window.Update.
 func (w *Window) Typed() string {
 	return w.input.Typed()
