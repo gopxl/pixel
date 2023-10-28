@@ -219,7 +219,7 @@ func (w *Window) initInput() {
 		w.window.SetMouseButtonCallback(func(_ *glfw.Window, button glfw.MouseButton, action glfw.Action, mod glfw.ModifierKey) {
 			if b, buttonOk := mouseButtonMapping[button]; buttonOk {
 				if a, actionOk := actionMapping[action]; actionOk {
-					w.input.SetButton(b, a)
+					w.input.ButtonEvent(b, a)
 				}
 			}
 		})
@@ -230,7 +230,7 @@ func (w *Window) initInput() {
 			}
 			if b, buttonOk := keyButtonMapping[key]; buttonOk {
 				if a, actionOk := actionMapping[action]; actionOk {
-					w.input.SetButton(b, a)
+					w.input.ButtonEvent(b, a)
 				}
 			}
 		})

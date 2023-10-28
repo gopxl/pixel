@@ -37,20 +37,6 @@ func (ih *InputHandler) Repeated(button Button) bool {
 	return ih.currInp.repeat[button]
 }
 
-// SetButton sets the action state of a button for the next update
-func (ih *InputHandler) SetButton(button Button, action Action) {
-	switch action {
-	case Press:
-		ih.tempPressEvents[button] = true
-		ih.tempInp.buttons[button] = true
-	case Release:
-		ih.tempReleaseEvents[button] = true
-		ih.tempInp.buttons[button] = false
-	case Repeat:
-		ih.tempInp.repeat[button] = true
-	}
-}
-
 // MousePosition returns the current mouse position in the Window's Bounds
 func (ih *InputHandler) MousePosition() Vec {
 	return ih.currInp.mouse
@@ -87,6 +73,20 @@ func (ih *InputHandler) SetMousePosition(pos Vec) {
 	ih.prevInp.mouse = pos
 	ih.currInp.mouse = pos
 	ih.tempInp.mouse = pos
+}
+
+// ButtonEvent sets the action state of a button for the next update
+func (ih *InputHandler) ButtonEvent(button Button, action Action) {
+	switch action {
+	case Press:
+		ih.tempPressEvents[button] = true
+		ih.tempInp.buttons[button] = true
+	case Release:
+		ih.tempReleaseEvents[button] = true
+		ih.tempInp.buttons[button] = false
+	case Repeat:
+		ih.tempInp.repeat[button] = true
+	}
 }
 
 // MouseMoveEvent sets the mouse position for the next update
