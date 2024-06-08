@@ -236,7 +236,7 @@ func (w *Window) initInput() {
 		})
 
 		w.window.SetCursorEnterCallback(func(_ *glfw.Window, entered bool) {
-			w.cursorInsideWindow = entered
+			w.input.MouseEnteredEvent(entered)
 		})
 
 		w.window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
