@@ -214,12 +214,35 @@ var keyButtonMapping = map[glfw.Key]pixel.Button{
 	glfw.KeyMenu:         pixel.KeyMenu,
 }
 
+func (w *Window) SetButtonCallback(callback func(win *Window, button pixel.Button, action pixel.Action)) {
+	w.buttonCallback = callback
+}
+
+func (w *Window) SetCharCallback(callback func(win *Window, r rune)) {
+	w.charCallback = callback
+}
+
+func (w *Window) SetMouseEnteredCallback(callback func(win *Window, entered bool)) {
+	w.mouseEnteredCallback = callback
+}
+
+func (w *Window) SetMouseMovedCallback(callback func(win *Window, pos pixel.Vec)) {
+	w.mouseMovedCallback = callback
+}
+
+func (w *Window) SetScrollCallback(callback func(win *Window, scroll pixel.Vec)) {
+	w.scrollCallback = callback
+}
+
 func (w *Window) initInput() {
 	mainthread.Call(func() {
 		w.window.SetMouseButtonCallback(func(_ *glfw.Window, button glfw.MouseButton, action glfw.Action, mod glfw.ModifierKey) {
 			if b, buttonOk := mouseButtonMapping[button]; buttonOk {
 				if a, actionOk := actionMapping[action]; actionOk {
 					w.input.ButtonEvent(b, a)
+					if w.buttonCallback != nil {
+						w.buttonCallback(w, b, a)
+					}
 				}
 			}
 		})
@@ -231,29 +254,43 @@ func (w *Window) initInput() {
 			if b, buttonOk := keyButtonMapping[key]; buttonOk {
 				if a, actionOk := actionMapping[action]; actionOk {
 					w.input.ButtonEvent(b, a)
+					if w.buttonCallback != nil {
+						w.buttonCallback(w, b, a)
+					}
 				}
 			}
 		})
 
 		w.window.SetCursorEnterCallback(func(_ *glfw.Window, entered bool) {
 			w.input.MouseEnteredEvent(entered)
+			if w.mouseEnteredCallback != nil {
+				w.mouseEnteredCallback(w, entered)
+			}
 		})
 
 		w.window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
-			w.input.MouseMoveEvent(
-				pixel.V(
-					x+w.bounds.Min.X,
-					(w.bounds.H()-y)+w.bounds.Min.Y,
-				),
+			pos := pixel.V(
+				x+w.bounds.Min.X,
+				(w.bounds.H()-y)+w.bounds.Min.Y,
 			)
+			w.input.MouseMoveEvent(pos)
+			if w.mouseMovedCallback != nil {
+				w.mouseMovedCallback(w, pos)
+			}
 		})
 
 		w.window.SetScrollCallback(func(_ *glfw.Window, xoff, yoff float64) {
 			w.input.MouseScrollEvent(xoff, yoff)
+			if w.scrollCallback != nil {
+				w.scrollCallback(w, pixel.V(xoff, yoff))
+			}
 		})
 
 		w.window.SetCharCallback(func(_ *glfw.Window, r rune) {
 			w.input.CharEvent(r)
+			if w.charCallback != nil {
+				w.charCallback(w, r)
+			}
 		})
 	})
 }

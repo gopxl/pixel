@@ -98,6 +98,12 @@ type Window struct {
 
 	input                     *pixel.InputHandler
 	prevJoy, currJoy, tempJoy joystickState
+
+	buttonCallback       func(win *Window, button pixel.Button, action pixel.Action)
+	charCallback         func(win *Window, r rune)
+	mouseEnteredCallback func(win *Window, entered bool)
+	mouseMovedCallback   func(win *Window, pos pixel.Vec)
+	scrollCallback       func(win *Window, scroll pixel.Vec)
 }
 
 var currWin *Window
