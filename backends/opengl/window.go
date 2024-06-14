@@ -97,7 +97,7 @@ type Window struct {
 		xpos, ypos, width, height int
 	}
 
-	input                     *internal.InputHandler
+	input                     internal.InputHandler
 	prevJoy, currJoy, tempJoy internal.JoystickState
 
 	buttonCallback       func(win *Window, button pixel.Button, action pixel.Action)
@@ -118,7 +118,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		false: glfw.False,
 	}
 
-	w := &Window{bounds: cfg.Bounds, cursorVisible: true, input: &internal.InputHandler{}}
+	w := &Window{bounds: cfg.Bounds, cursorVisible: true}
 
 	flag := false
 	for _, v := range []int{0, 2, 4, 8, 16} {
