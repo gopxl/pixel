@@ -98,7 +98,7 @@ type Window struct {
 	}
 
 	input                     *internal.InputHandler
-	prevJoy, currJoy, tempJoy joystickState
+	prevJoy, currJoy, tempJoy internal.JoystickState
 
 	buttonCallback       func(win *Window, button pixel.Button, action pixel.Action)
 	charCallback         func(win *Window, r rune)
