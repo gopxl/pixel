@@ -10,34 +10,34 @@ import (
 
 // Pressed returns whether the Button is currently pressed down.
 func (w *Window) Pressed(button pixel.Button) bool {
-	return w.input.Pressed(button)
+	return w.input.Curr.Buttons[button]
 }
 
 // JustPressed returns whether the Button has been pressed in the last frame.
 func (w *Window) JustPressed(button pixel.Button) bool {
-	return w.input.JustPressed(button)
+	return w.input.PressEvents[button]
 }
 
 // JustReleased returns whether the Button has been released in the last frame.
 func (w *Window) JustReleased(button pixel.Button) bool {
-	return w.input.JustReleased(button)
+	return w.input.ReleaseEvents[button]
 }
 
 // Repeated returns whether a repeat event has been triggered on button.
 //
 // Repeat event occurs repeatedly when a button is held down for some time.
 func (w *Window) Repeated(button pixel.Button) bool {
-	return w.input.Repeated(button)
+	return w.input.Curr.Repeat[button]
 }
 
 // MousePosition returns the current mouse position in the Window's Bounds.
 func (w *Window) MousePosition() pixel.Vec {
-	return w.input.MousePosition()
+	return w.input.Curr.Mouse
 }
 
 // MousePreviousPosition returns the previous mouse position in the Window's Bounds.
 func (w *Window) MousePreviousPosition() pixel.Vec {
-	return w.input.MousePreviousPosition()
+	return w.input.Prev.Mouse
 }
 
 // SetMousePosition positions the mouse cursor anywhere within the Window's Bounds.
@@ -56,21 +56,21 @@ func (w *Window) SetMousePosition(v pixel.Vec) {
 
 // MouseInsideWindow returns true if the mouse position is within the Window's Bounds.
 func (w *Window) MouseInsideWindow() bool {
-	return w.input.MouseInsideWindow()
+	return w.input.MouseInsideWindow
 }
 
 // MouseScroll returns the mouse scroll amount (in both axes) since the last call to Window.Update.
 func (w *Window) MouseScroll() pixel.Vec {
-	return w.input.MouseScroll()
+	return w.input.Curr.Mouse
 }
 
 func (w *Window) MousePreviousScroll() pixel.Vec {
-	return w.input.MousePreviousScroll()
+	return w.input.Prev.Mouse
 }
 
 // Typed returns the text typed on the keyboard since the last call to Window.Update.
 func (w *Window) Typed() string {
-	return w.input.Typed()
+	return w.input.Curr.Typed
 }
 
 var actionMapping = map[glfw.Action]pixel.Action{

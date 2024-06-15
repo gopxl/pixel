@@ -11,6 +11,7 @@ import (
 	"github.com/gopxl/glhf/v2"
 	"github.com/gopxl/mainthread/v2"
 	"github.com/gopxl/pixel/v2"
+	"github.com/gopxl/pixel/v2/backends/internal"
 	"github.com/pkg/errors"
 )
 
@@ -96,8 +97,8 @@ type Window struct {
 		xpos, ypos, width, height int
 	}
 
-	input                     *pixel.InputHandler
-	prevJoy, currJoy, tempJoy joystickState
+	input                     internal.InputHandler
+	prevJoy, currJoy, tempJoy internal.JoystickState
 
 	buttonCallback       func(win *Window, button pixel.Button, action pixel.Action)
 	charCallback         func(win *Window, r rune)
@@ -117,7 +118,7 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		false: glfw.False,
 	}
 
-	w := &Window{bounds: cfg.Bounds, cursorVisible: true, input: &pixel.InputHandler{}}
+	w := &Window{bounds: cfg.Bounds, cursorVisible: true}
 
 	flag := false
 	for _, v := range []int{0, 2, 4, 8, 16} {
