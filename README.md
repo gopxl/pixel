@@ -6,11 +6,11 @@ Revived fork of the original [Pixel](https://github.com/faiface/pixel) library b
 
 
 # Pixel 2
-[![GoDoc](https://godoc.org/github.com/gopxl/pixel/v2?status.svg)](https://godoc.org/github.com/gopxl/pixel/v2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gopxl/pixel/v2.svg)](https://pkg.go.dev/github.com/gopxl/pixel/v2)
 [![Go build status](https://github.com/gopxl/pixel/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/gopxl/pixel/actions/workflows/go.yml?query=branch%3Amain)
 [![Coverage Status](https://coveralls.io/repos/github/gopxl/pixel/badge.svg?branch=main)](https://coveralls.io/github/gopxl/pixel?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gopxl/pixel/v2)](https://goreportcard.com/report/github.com/gopxl/pixel/v2) 
-[![Discord Chat](https://img.shields.io/discord/1158461233121468496)](https://discord.gg/q2DK4MP)  
+[![Discord Chat](https://img.shields.io/discord/1158461233121468496)](https://discord.gg/hPBTTXGDU3)  
 
 A hand-crafted 2D game library in Go. Take a look into the [features](#features) to see what it can
 do.
