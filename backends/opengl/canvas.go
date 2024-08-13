@@ -193,24 +193,20 @@ func setBlendFunc(cmp pixel.ComposeMethod) {
 func (c *Canvas) Clear(color color.Color) {
 	c.gf.Dirty()
 
-	rgba := pixel.ToRGBA(color)
-
-	// color masking
-	rgba = rgba.Mul(pixel.RGBA{
-		R: float64(c.col[0]),
-		G: float64(c.col[1]),
-		B: float64(c.col[2]),
-		A: float64(c.col[3]),
-	})
+	r, g, b, a := pixel.ColorToFloats[float32](
+		pixel.ToRGBA(color).Mul(
+			pixel.FloatsToColor(c.col[0], c.col[1], c.col[2], c.col[3]),
+		),
+	)
 
 	mainthread.CallNonBlock(func() {
 		c.setGlhfBounds()
 		c.gf.Frame().Begin()
 		glhf.Clear(
-			float32(rgba.R),
-			float32(rgba.G),
-			float32(rgba.B),
-			float32(rgba.A),
+			r,
+			g,
+			b,
+			a,
 		)
 		c.gf.Frame().End()
 	})

@@ -11,6 +11,7 @@ require (
 	github.com/gopxl/mainthread/v2 v2.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
 	golang.org/x/image v0.13.0
 )
 

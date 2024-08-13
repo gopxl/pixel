@@ -90,9 +90,9 @@ func (gp *glPicture) Color(at pixel.Vec) pixel.RGBA {
 	x, y := int(at.X)-bx, int(at.Y)-by
 	off := y*bw + x
 	return pixel.RGBA{
-		R: float64(gp.pixels[off*4+0]) / 255,
-		G: float64(gp.pixels[off*4+1]) / 255,
-		B: float64(gp.pixels[off*4+2]) / 255,
-		A: float64(gp.pixels[off*4+3]) / 255,
+		R: gp.pixels[off*4+0],
+		G: gp.pixels[off*4+1],
+		B: gp.pixels[off*4+2],
+		A: gp.pixels[off*4+3],
 	}
 }
