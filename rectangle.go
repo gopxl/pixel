@@ -50,6 +50,11 @@ func (r Rect) Norm() Rect {
 	}
 }
 
+// Empty returns whether the Rect's Min and Max vectors are equal to ZV.
+func (r Rect) Empty() bool {
+	return r.Min.Eq(ZV) && r.Max.Eq(ZV)
+}
+
 // W returns the width of the Rect.
 func (r Rect) W() float64 {
 	return r.Max.X - r.Min.X
