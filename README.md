@@ -73,9 +73,9 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
 - Fast 2D graphics
   - Sprites
   - Primitive shapes with immediate mode style
-    [IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw) (circles, rectangles,
+    [IMDraw](./docs/Basics/Drawing-shapes-with-IMDraw.md) (circles, rectangles,
     lines, ...)
-  - Optimized drawing with [Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
+  - Optimized drawing with [Batch](./docs/Basics/Drawing-efficiently-with-Batch.md)
   - Text drawing with [text](https://godoc.org/github.com/gopxl/pixel/v2/text) package
 - Audio through a separate [Beep](https://github.com/gopxl/beep) library.
 - Simple and convenient API
@@ -93,7 +93,7 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
     multiplication and a few more features
   - Pixel uses `float64` throughout the library, compatible with `"math"` package
 - Geometry transformations with
-  [Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
+  [Matrix](./docs/Basics/Moving,-scaling-and-rotating-with-Matrix.md)
   - Moving, scaling, rotating
   - Easy camera implementation
 - Off-screen drawing to Canvas or any other target (Batch, IMDraw, ...)
@@ -136,9 +136,7 @@ possible!
 
 ## Requirements
 
-If you're using Windows and having trouble building Pixel, please check [this
-guide](https://github.com/gopxl/pixel/wiki/Building-Pixel-on-Windows) on the
-[wiki](https://github.com/gopxl/pixel/wiki). Alternatively you can try running on WSL, as described [below](#windows-subsystem-for-linux).
+If you're using Windows and having trouble building Pixel, please check [this guide](./docs/Compilation/Building-Pixel-on-Windows.md) on the [wiki](./docs/README.md).
 
 OpenGL development libraries are needed for compilation. The dependencies
 are same as for [GLFW](https://github.com/go-gl/glfw).
