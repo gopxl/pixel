@@ -1,91 +1,97 @@
 package pixel
 
-import "image/color"
+import (
+	"image/color"
+
+	"golang.org/x/exp/constraints"
+)
 
 // RGBA represents an alpha-premultiplied RGBA color with components within range [0, 1].
 //
 // The difference between color.RGBA is that the value range is [0, 1] and the values are floats.
-type RGBA struct {
-	R, G, B, A float64
-}
+type RGBA color.RGBA
 
 // RGB returns a fully opaque RGBA color with the given RGB values.
 //
 // A common way to construct a transparent color is to create one with RGB constructor, then
 // multiply it by a color obtained from the Alpha constructor.
 func RGB(r, g, b float64) RGBA {
-	return RGBA{r, g, b, 1}
+	return RGBA{R: uint8(r * 255), G: uint8(g * 255), B: uint8(b * 255), A: 255}
 }
 
 // Alpha returns a white RGBA color with the given alpha component.
 func Alpha(a float64) RGBA {
-	return RGBA{a, a, a, a}
+	A := uint8(a * 255)
+	return RGBA{A, A, A, A}
 }
 
 // Add adds color d to color c component-wise and returns the result (the components are not
 // clamped).
-func (c RGBA) Add(d RGBA) RGBA {
+func (c RGBA) Add(d color.Color) RGBA {
+	rgba := ToRGBA(d)
 	return RGBA{
-		R: c.R + d.R,
-		G: c.G + d.G,
-		B: c.B + d.B,
-		A: c.A + d.A,
+		R: c.R + rgba.R,
+		G: c.G + rgba.G,
+		B: c.B + rgba.B,
+		A: c.A + rgba.A,
 	}
 }
 
 // Sub subtracts color d from color c component-wise and returns the result (the components
 // are not clamped).
-func (c RGBA) Sub(d RGBA) RGBA {
+func (c RGBA) Sub(d color.Color) RGBA {
+	rgba := ToRGBA(d)
 	return RGBA{
-		R: c.R - d.R,
-		G: c.G - d.G,
-		B: c.B - d.B,
-		A: c.A - d.A,
+		R: c.R - rgba.R,
+		G: c.G - rgba.G,
+		B: c.B - rgba.B,
+		A: c.A - rgba.A,
 	}
 }
 
 // Mul multiplies color c by color d component-wise (the components are not clamped).
-func (c RGBA) Mul(d RGBA) RGBA {
-	return RGBA{
-		R: c.R * d.R,
-		G: c.G * d.G,
-		B: c.B * d.B,
-		A: c.A * d.A,
-	}
+func (c RGBA) Mul(d color.Color) RGBA {
+	r1, g1, b1, a1 := ColorToFloats[float64](c)
+	r2, g2, b2, a2 := ColorToFloats[float64](d)
+	return FloatsToColor(r1*r2, g1*g2, b1*b2, a1*a2)
 }
 
-// Scaled multiplies each component of color c by scale and returns the result (the components
-// are not clamped).
+// Scaled multiplies each component of color c by scale and returns the result.
 func (c RGBA) Scaled(scale float64) RGBA {
+	r, g, b, a := ColorToFloats[float64](c)
 	return RGBA{
-		R: c.R * scale,
-		G: c.G * scale,
-		B: c.B * scale,
-		A: c.A * scale,
+		R: uint8(r * scale),
+		G: uint8(g * scale),
+		B: uint8(b * scale),
+		A: uint8(a * scale),
 	}
 }
 
-// RGBA returns alpha-premultiplied red, green, blue and alpha components of the RGBA color.
+// RGBA returns components of the color.
 func (c RGBA) RGBA() (r, g, b, a uint32) {
-	r = uint32(0xffff * c.R)
-	g = uint32(0xffff * c.G)
-	b = uint32(0xffff * c.B)
-	a = uint32(0xffff * c.A)
-	return
+	return color.RGBA(c).RGBA()
 }
 
-// ToRGBA converts a color to RGBA format. Using this function is preferred to using RGBAModel, for
-// performance (using RGBAModel introduces additional unnecessary allocations).
+// ColorToFloats converts a color to float32 or float64 components.
+func ColorToFloats[F constraints.Float](c color.Color) (r, g, b, a F) {
+	r1, g1, b1, a1 := c.RGBA()
+	return F(r1) / 0xffff, F(g1) / 0xffff, F(b1) / 0xffff, F(a1) / 0xffff
+}
+
+// FloatsToColor converts float32 or float64 components to a color.
+func FloatsToColor[F constraints.Float](r, g, b, a F) RGBA {
+	return RGBA{uint8(r * F(255)), uint8(g * F(255)), uint8(b * F(255)), uint8(a * F(255))}
+}
+
+// ToRGBA converts a color to RGBA format.
 func ToRGBA(c color.Color) RGBA {
-	if c, ok := c.(RGBA); ok {
+	switch c := c.(type) {
+	case RGBA:
 		return c
-	}
-	r, g, b, a := c.RGBA()
-	return RGBA{
-		float64(r) / 0xffff,
-		float64(g) / 0xffff,
-		float64(b) / 0xffff,
-		float64(a) / 0xffff,
+	case color.RGBA:
+		return RGBA(c)
+	default:
+		return RGBA(color.RGBAModel.Convert(c).(color.RGBA))
 	}
 }
 

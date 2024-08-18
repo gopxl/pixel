@@ -127,19 +127,20 @@ func (gt *GLTriangles) updateData(t pixel.Triangles) {
 	if t, ok := t.(*pixel.TrianglesData); ok {
 		for i := 0; i < length; i++ {
 			var (
-				px, py = (*t)[i].Position.XY()
-				col    = (*t)[i].Color
-				tx, ty = (*t)[i].Picture.XY()
-				in     = (*t)[i].Intensity
-				rec    = (*t)[i].ClipRect
+				px, py     = (*t)[i].Position.XY()
+				col        = (*t)[i].Color
+				tx, ty     = (*t)[i].Picture.XY()
+				in         = (*t)[i].Intensity
+				rec        = (*t)[i].ClipRect
+				r, g, b, a = pixel.ColorToFloats[float32](col)
 			)
 			d := gt.data[i*stride : i*stride+trisAttrLen]
 			d[triPosX] = float32(px)
 			d[triPosY] = float32(py)
-			d[triColorR] = float32(col.R)
-			d[triColorG] = float32(col.G)
-			d[triColorB] = float32(col.B)
-			d[triColorA] = float32(col.A)
+			d[triColorR] = r
+			d[triColorG] = g
+			d[triColorB] = b
+			d[triColorA] = a
 			d[triPicX] = float32(tx)
 			d[triPicY] = float32(ty)
 			d[triIntensity] = float32(in)
@@ -251,12 +252,7 @@ func (gt *GLTriangles) Color(i int) pixel.RGBA {
 	g := gt.data[gt.index(i, triColorG)]
 	b := gt.data[gt.index(i, triColorB)]
 	a := gt.data[gt.index(i, triColorA)]
-	return pixel.RGBA{
-		R: float64(r),
-		G: float64(g),
-		B: float64(b),
-		A: float64(a),
-	}
+	return pixel.FloatsToColor(r, g, b, a)
 }
 
 // SetColor sets the color property of the i-th vertex.

@@ -79,10 +79,10 @@ func (gf *GLFrame) Color(at pixel.Vec) pixel.RGBA {
 	x, y := int(at.X)-bx, int(at.Y)-by
 	off := y*bw + x
 	return pixel.RGBA{
-		R: float64(gf.pixels[off*4+0]) / 255,
-		G: float64(gf.pixels[off*4+1]) / 255,
-		B: float64(gf.pixels[off*4+2]) / 255,
-		A: float64(gf.pixels[off*4+3]) / 255,
+		R: gf.pixels[off*4+0],
+		G: gf.pixels[off*4+1],
+		B: gf.pixels[off*4+2],
+		A: gf.pixels[off*4+3],
 	}
 }
 

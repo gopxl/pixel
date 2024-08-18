@@ -1,6 +1,8 @@
 package pixel
 
-import "image/color"
+import (
+	"image/color"
+)
 
 // Sprite is a drawable frame of a Picture. It's anchored by the center of it's Picture's frame.
 //
