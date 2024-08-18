@@ -221,7 +221,7 @@ Now, let's go ahead and add a rotation.
 
 So, we first moved the sprite to the center of the window, then we rotated it around the center of the window by 45 degrees. Run the code and see for yourself!
 
-[[images/03_moving_scaling_and_rotating_with_matrix_rotate.png]]
+![moving scaling and rotating with matrix rotate](./images/03_moving_scaling_and_rotating_with_matrix_rotate.png)
 
 Ugh, what's those pixely artifacts? The picture is no longer as smooth as it was before. That's no good. To fix this, we need to tell the window, that we want our pictures be drawn smoothly and not pixely, this is no pixel art. To do that, add this line.
 
@@ -236,7 +236,7 @@ Ugh, what's those pixely artifacts? The picture is no longer as smooth as it was
 
 When we run the program now, our picture is perfectly smooth, crisp, beautiful!
 
-[[images/03_moving_scaling_and_rotating_with_matrix_smooth.png]]
+![moving scaling and rotating with matrix smooth](./images/03_moving_scaling_and_rotating_with_matrix_smooth.png)
 
 ## Scaling
 
@@ -252,7 +252,7 @@ Let's add some crazy scaling!
 	sprite.Draw(win, mat)
 ```
 
-[[images/03_moving_scaling_and_rotating_with_matrix_scaled_xy.png]]
+![moving scaling and rotating with matrix scaled xy](./images/03_moving_scaling_and_rotating_with_matrix_scaled_xy.png)
 
 Well, that looks weird. Let's swap the rotation and scaling.
 
@@ -264,7 +264,7 @@ Well, that looks weird. Let's swap the rotation and scaling.
 	sprite.Draw(win, mat)
 ```
 
-[[images/03_moving_scaling_and_rotating_with_matrix_scale_then_rotate.png]]
+![](./images/03_moving_scaling_and_rotating_with_matrix_scale_then_rotate.png)
 
 Notice the difference. The order of transformations matters a lot.
 
@@ -342,7 +342,7 @@ Now, we're going to make our gopher rotate round the clock. To accomplish that, 
 
 At the beginning, the angle will be 0, no rotation. In each frame, we increase the angle by 0.05 radians and draw the rotated sprite, easy. Let's run the code!
 
-[[images/03_moving_scaling_and_rotating_with_matrix_no_clear.png]]
+![moving scaling and rotating with matrix no clear](./images/03_moving_scaling_and_rotating_with_matrix_no_clear.png)
 
 Oh, that's surprisingly beautiful! Not what we wanted though. The problem is, that we successively draw the sprite, but only clear the window once, before the main loop. We need to clear it before every frame this time.
 
@@ -367,7 +367,7 @@ Oh, that's surprisingly beautiful! Not what we wanted though. The problem is, th
 
 Now everything works as expected.
 
-[[images/03_moving_scaling_and_rotating_with_matrix_clear.png]]
+![moving scaling and rotating with matrix clear](./images/03_moving_scaling_and_rotating_with_matrix_clear.png)
 
 ## Delta time
 

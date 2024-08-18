@@ -138,7 +138,7 @@ And draw the result to the screen:
 
 And heya, here we go!
 
-[[images/07_typing_text_on_the_screen_first.png]]
+![typing text on the screen first](./images/07_typing_text_on_the_screen_first.png)
 
 That text is a bit small, let's scale it up!
 
@@ -150,7 +150,7 @@ That text is a bit small, let's scale it up!
 	}
 ```
 
-[[images/07_typing_text_on_the_screen_scaled.png]]
+![typing text on the screen scaled](./images/07_typing_text_on_the_screen_scaled.png)
 
 Much better!
 
@@ -213,7 +213,7 @@ With this:
 
 And here we go!
 
-[[images/07_typing_text_on_the_screen_color.png]]
+![typing text on the screen color](./images/07_typing_text_on_the_screen_color.png)
 
 Another property that we can set it `LineHeight`. This property is simply the number of pixels `Dot` travels downwards when it encounters a newline. We could set it to a fixed number of pixels, or we could set it to a multiple of the standard line height of the atlas, like this:
 
@@ -229,7 +229,7 @@ Another property that we can set it `LineHeight`. This property is simply the nu
 
 And take a look, wider line spacing!
 
-[[images/07_typing_text_on_the_screen_line_height.png]]
+![typing text on the screen lin height](./images/07_typing_text_on_the_screen_line_height.png)
 
 The last property is `TabWidth`, you can tell what it does. Experiment with it yourself!
 
@@ -319,7 +319,7 @@ with this:
 
 Just look at it! Isn't it beautiful?
 
-[[images/07_typing_text_on_the_screen_truetype.png]]
+![typing text on the screen truetype](./images/07_typing_text_on_the_screen_truetype.png)
 
 We can do an even bigger font, just to fully admire it!
 
@@ -345,7 +345,7 @@ In case you notice little artifacts on the letters, just set the smooth drawing.
 
 Now, this is it!
 
-[[images/07_typing_text_on_the_screen_big.png]]
+![typing text on the screen big](./images/07_typing_text_on_the_screen_big.png)
 
 ## Aligning
 
@@ -425,7 +425,7 @@ and
 
 Now, let's run this!
 
-[[images/07_typing_text_on_the_screen_align_right.png]]
+![typing text on the screen align right](./images/07_typing_text_on_the_screen_align_right.png)
 
 Great! How about aligning to the center? Well, instead of moving the `Dot` back by the whole line width, we need to move it by the half of it instead.
 
@@ -445,7 +445,7 @@ And we need to move the `Orig` again.
 
 Works great!
 
-[[images/07_typing_text_on_the_screen_align_center.png]]
+![typing text on the screen align center](./images/07_typing_text_on_the_screen_align_center.png)
 
 ## Typed
 
@@ -506,7 +506,7 @@ Finally, let's put our text to the center of the screen. Note, that the text wil
 		win.Update()
 ```
 
-[[images/07_typing_text_on_the_screen_typed.png]]
+![typing text on the screen typed](./images/07_typing_text_on_the_screen_typed.png)
 
 Works like charm! You might notice though, that the typing is a bit lagging. That's because of VSync. VSync always makes input a little behind, that's the compromise you're making when using it. However, we don't like it here, so let's turn VSync off and manage the framerate at 120 FPS manually. This will allow for a very smooth typing experience.
 

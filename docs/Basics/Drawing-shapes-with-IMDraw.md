@@ -135,7 +135,7 @@ And here we draw the result to the screen.
 
 And here we go!
 
-[[images/06_drawing_shapes_with_imdraw_rgb_triangle.png]]
+![drawing shapes with imdraw rgb triangle](./images/06_drawing_shapes_with_imdraw_rgb_triangle.png)
 
 Ok, it works but we don't really know what's going on.
 
@@ -189,7 +189,7 @@ Here's how we draw lines. Particularly notice the [EndShape](https://godoc.org/g
 	imd.Line(30)
 ```
 
-[[images/06_drawing_shapes_with_imdraw_line.png]]
+![drawing shapes with imdraw line](./images/06_drawing_shapes_with_imdraw_line.png)
 
 Another shape is circles and ellipses.
 
@@ -202,7 +202,7 @@ Another shape is circles and ellipses.
 	imd.Ellipse(pixel.V(120, 80), 0)
 ```
 
-[[images/06_drawing_shapes_with_imdraw_ellipse.png]]
+![drawing shapes with imdraw ellipse](./images/06_drawing_shapes_with_imdraw_ellipse.png)
 
 And a circle arc (ellipse arc is possible too).
 
@@ -213,7 +213,7 @@ And a circle arc (ellipse arc is possible too).
 	imd.CircleArc(150, -math.Pi, 0, 30)
 ```
 
-[[images/06_drawing_shapes_with_imdraw_arc.png]]
+![drawing shapes with imdraw arc](./images/06_drawing_shapes_with_imdraw_arc.png)
 
 ## Ways to use `IMDraw`
 

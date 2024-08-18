@@ -61,7 +61,7 @@ func main() {
 
 Today, we'll be planting trees, but we'll get clever about it. Instead of having a separate PNG file for each type of tree, we're going to use this spritesheet.
 
-[[images/trees.png]]
+![trees](./images/trees.png)
 
 As you can see, a spritesheet is a single image file that contains multiple other images in it. In our case, the spritesheet looks really tiny, because it's pixel art. Don't worry, we'll scale them up so they look a lot better.
 
@@ -104,7 +104,7 @@ Here, we create a sprite that draws the lower-left tree from the spritesheet and
 
 Let's run the code!
 
-[[images/04_pressing_keys_and_clicking_mouse_tiny.png]]
+![pressing keys and clicking mouse tiny](./images/04_pressing_keys_and_clicking_mouse_tiny.png)
 
 Oh sure, the tree it very tiny because we didn't scale it up. Let's fix that right away!
 
@@ -112,7 +112,7 @@ Oh sure, the tree it very tiny because we didn't scale it up. Let's fix that rig
 		tree.Draw(win, pixel.IM.Scaled(pixel.ZV, 16).Moved(win.Bounds().Center()))
 ```
 
-[[images/04_pressing_keys_and_clicking_mouse_blurry.png]]
+![pressing keys and clicking mouse blurry](./images/04_pressing_keys_and_clicking_mouse_blurry.png)
 
 That's better, but it's not good either. The tree is really blurry. That's because we've told the window to draw pictures smoothly. When they get scaled up, they end up looking like this. With pixel art, this is far from appropriate. We need to disable it.
 
@@ -124,7 +124,7 @@ Just delete this line.
 
 Let's run the code now!
 
-[[images/04_pressing_keys_and_clicking_mouse_pixely.png]]
+![pressing keys and clicking mouse pixely](./images/04_pressing_keys_and_clicking_mouse_pixely.png)
 
 Much better! We'd like to be able to draw all types of trees, not just this one. For that we'll create a slice of rectangles. Each rectangle in this slice will be the portion of one of the trees. Since each tree is 32x32 pixels and they're packed together as tightly as possible, it's very easy.
 
@@ -229,7 +229,7 @@ One more thing, we need to draw the trees to the window.
 
 Perfect! Run the code and try clicking around to see that everything works!
 
-[[images/04_pressing_keys_and_clicking_mouse_planting.png]]
+![pressing keys and clicking mouse planting](./images/04_pressing_keys_and_clicking_mouse_planting.png)
 
 Finally, let's change that dull industrial background. We're in the forest man!
 
@@ -237,7 +237,7 @@ Finally, let's change that dull industrial background. We're in the forest man!
 		win.Clear(colornames.Forestgreen)
 ```
 
-[[images/04_pressing_keys_and_clicking_mouse_forestgreen.png]]
+![pressing keys and clicking mouse forestgreen](./images/04_pressing_keys_and_clicking_mouse_forestgreen.png)
 
 ## Game space and screen space
 
@@ -285,7 +285,7 @@ Let's add the camera matrix!
 
 All that the camera matrix does is that it moves the camera position to the center of the screen, which is what we want. Try running the code now!
 
-[[images/04_pressing_keys_and_clicking_mouse_no_unproject.png]]
+![pressing keys and clicking mouse no unproject](./images/04_pressing_keys_and_clicking_mouse_no_unproject.png)
 
 Ugh, the planting is now totally off, clicking does not plant under the mouse any more! That makes sense. The center of the screen is the positon (512, 384) in the screen space. The `win.MousePosition` method returns the position of the mouse in the screen space. However, we're planting the trees in the game space. Where in the game space is the position (512, 384) located. Well, exactly there, but since the position of the camera is at (0, 0), it's far from the center of the screen. We need to be able to take a screen position and determine it's equivalent in the game space. 
 With Pixel, this is very easy.
@@ -408,9 +408,9 @@ When the user scrolls the wheel by one unit, we want to multiply the zoom level 
 
 Let's run the code! Plant some trees and scroll the wheel!
 
-[[images/04_pressing_keys_and_clicking_mouse_zoom_in.png]]
+![pressing keys and clicking mouse zoom in](./images/04_pressing_keys_and_clicking_mouse_zoom_in.png)
 
-[[images/04_pressing_keys_and_clicking_mouse_zoom_out.png]]
+![pressing keys and clicking mouse zoom out](./images/04_pressing_keys_and_clicking_mouse_zoom_out.png)
 
 Here's the whole code of the program from this part.
 

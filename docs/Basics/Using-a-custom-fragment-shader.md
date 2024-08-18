@@ -65,7 +65,7 @@ func main() {
 
 This should simply display our favorite gopher:
 
-![](images/shaders-tutorial-1.png)
+![shaders tutorial 1](./images/shaders-tutorial-1.png)
 
 ## Creating the shader
 
@@ -148,7 +148,7 @@ void main() {
 
 Hey, check it out! We made it grayscale, completely on the GPU:
 
-![](images/shaders-tutorial-2.png)
+![shaders tutorial 2](images/shaders-tutorial-2.png)
 
 ## Advanced
 
@@ -231,6 +231,6 @@ func gameloop(win *opengl.Window) {
 
 ## Result
 
-![](images/shadertutorialwavy.gif)
+![shader tutorial wavy](./images/shadertutorialwavy.gif)
 
 And that's it for now! To grab the full source to each of these examples, check out the [examples repository](https://github.com/gopxl/pixel-examples).

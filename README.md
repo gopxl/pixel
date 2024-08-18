@@ -31,17 +31,10 @@ See [requirements](#requirements) for the list of libraries necessary for compil
 
 ## Tutorial
 
-The [Wiki of this repo](https://github.com/gopxl/pixel/wiki) contains an extensive tutorial
-covering several topics of Pixel. Here's the content of the tutorial parts so far:
+The [Wiki of this repo](./docs/README.md) contains an extensive tutorial
+covering several topics of Pixel. 
 
-- [Creating a Window](https://github.com/gopxl/pixel/wiki/Creating-a-Window)
-- [Drawing a Sprite](https://github.com/gopxl/pixel/wiki/Drawing-a-Sprite)
-- [Moving, scaling and rotating with Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
-- [Pressing keys and clicking mouse](https://github.com/gopxl/pixel/wiki/Pressing-keys-and-clicking-mouse)
-- [Drawing efficiently with Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
-- [Drawing shapes with IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw)
-- [Typing text on the screen](https://github.com/gopxl/pixel/wiki/Typing-text-on-the-screen)
-- [Using a custom fragment shader](https://github.com/gopxl/pixel/wiki/Using-a-custom-fragment-shader)
+For a tutorial walking through the basics of Pixel, check out [The Basics](./docs/Basics/Creating-a-Window.md)!
 
 ## [Examples](https://github.com/gopxl/pixel-examples)
 

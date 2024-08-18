@@ -6,7 +6,7 @@ In this part, we'll learn how draw pictures on the screen using sprites.
 
 [Sprite](https://en.wikipedia.org/wiki/Sprite_(computer_graphics)) is an ancient concept in video game development. In the old times, a sprite was usually a 16x16px or 32x32px "stamp" that could be stamped on the screen. One sprite could be the picture of the player, more sprites could be used to display enemies and platforms, and so on. This allowed efficient drawing of complicated scenes. Here's a screenshot from an old C64 game shamelessly stolen from [Wikipedia](https://en.wikipedia.org/wiki/Main_Page).
 
-[[images/sprites_c64_game.png]]
+![sprites c64 game](./images/sprites_c64_game.png)
 
 Today, sprites still follow the same concept, however, allow for much wider range of possibilities. A sprite is basically a picture, which can be drawn somewhere on the screen. In Pixel, as we'll learn later, sprites (alongside all other graphical objects) can be drawn not only to the screen, but onto an arbitrary [Target](https://godoc.org/github.com/gopxl/pixel/v2#Target).
 
@@ -97,7 +97,7 @@ _Pardon the rather complicated nature of loading a picture from a file in Pixel.
 
 Now, we need an actual PNG file to load a picture from. I'll use a beautiful hiking gopher from [this repo](https://github.com/egonelbre/gophers), which contains many free beautiful images of gophers in various situations of their life. You can download an image from there, or directly use this one, which I'll use.
 
-[[images/hiking.png]]
+![hiking](./images/hiking.png)
 
 Just download the PNG image file into the directory of your Go program. Now, we're ready to load it.
 
@@ -153,7 +153,7 @@ Target is obvious, it's where we want our sprite to be drawn. In our case, it's 
 
 Wonderful! Let's run the code now. If you didn't make any mistakes and you have the PNG file in the right directory, you should see this.
 
-[[images/02_drawing_a_sprite_lower_left.png]]
+![drawing a sprite lower left](./images/02_drawing_a_sprite_lower_left.png)
 
 ## Matrix
 
@@ -173,7 +173,7 @@ To move the sprite to a different position, we need to pass a different matrix. 
 
 Calling [pixel.IM.Moved](https://godoc.org/github.com/gopxl/pixel/v2#Matrix.Moved) adds a movement to the matrix. As you can tell, we moved the sprite to the center of the window's bounds, which is the center of the window. Let's run the code now!
 
-[[images/02_drawing_a_sprite_center.png]]
+![drawing a sprite center](./images/02_drawing_a_sprite_center.png)
 
 And just for the sake of freshness, let's change the background color.
 
@@ -181,7 +181,7 @@ And just for the sake of freshness, let's change the background color.
 	win.Clear(colornames.Greenyellow)
 ```
 
-[[images/02_drawing_a_sprite_greenyellow.png]]
+![drawing a sprite greenyellow](./images/02_drawing_a_sprite_greenyellow.png)
 
 In the next part, we'll learn how to move, rotate and scale sprites using the matrix and also how to add vectors using the + operator and many more things. Things will be moving, dynamically!
 

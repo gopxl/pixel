@@ -110,7 +110,7 @@ Here we run a loop that finishes when a user closes our window. We need to call 
 
 Now it's time to run the program. What you'll see is a black 1024x768 window. When we click on the close button, the window closes and the program exists. Congratulations, that's your first, fully working window with Pixel!
 
-[[images/01_creating_a_window_black.png]]
+![creating a window black](./images/01_creating_a_window_black.png)
 
 ## VSync
 
@@ -156,7 +156,7 @@ for !win.Closed() {
 }
 ```
 
-[[images/01_creating_a_window_skyblue.png]]
+![creating a window skyblue](./images/01_creating_a_window_skyblue.png)
 
 Here's the whole code of this program.
 

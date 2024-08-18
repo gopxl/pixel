@@ -161,11 +161,11 @@ Here, we just increment the `frames` counter. Then, if a second passed, we put t
 
 Let's run the program to see that this works!
 
-[[images/05_drawing_efficiently_with_batch_fps.png]]
+![drawing efficiently with batch fps](./images/05_drawing_efficiently_with_batch_fps.png)
 
 Now that we can measure the performance, let's plant many trees and see how the FPS goes down!
 
-[[images/05_drawing_efficiently_with_batch_low_fps.png]]
+![drawing efficiently with batch low fps](./images/05_drawing_efficiently_with_batch_low_fps.png)
 
 At about 500 trees, the FPS drops below 30 on my computer, which is not too bad, but not too good either.
 
@@ -230,7 +230,7 @@ with this
 
 Now we only need to hold the left mouse button and move the mouse around the screen! A tree brush, wonderful!
 
-[[images/05_drawing_efficiently_with_batch_batch.png]]
+![drawing efficiently with batch batch](./images/05_drawing_efficiently_with_batch_batch.png)
 
 This time, I needed to draw more than 7000 trees in order to get the FPS down to 30. That's much better!
 
