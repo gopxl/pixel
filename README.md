@@ -34,7 +34,7 @@ See [requirements](#requirements) for the list of libraries necessary for compil
 The [Wiki of this repo](./docs/README.md) contains an extensive tutorial
 covering several topics of Pixel. 
 
-For a tutorial walking through the basics of Pixel, check out [The Basics](./docs/Basics/Creating-a-Window.md)!
+For the tutorial walking through the basics of Pixel, check out [The Basics](./docs/Basics/Creating-a-Window.md)!
 
 ## [Examples](https://github.com/gopxl/pixel-examples)
 
