@@ -157,7 +157,7 @@ Wonderful! Let's run the code now. If you didn't make any mistakes and you have 
 
 ## Matrix
 
-That's not very good. Our sprite's got drawn to the lower-left corner of the window and we can't event see all of it. Why is that?
+That's not very good. Our sprite's got drawn to the lower-left corner of the window and we can't even see all of it. Why is that?
 
 Since we only passed `pixel.IM` as the matrix argument, we didn't apply any transformations. Because of that, the sprite got drawn to the default position (0, 0), which in our case is the lower-left corner of the window (the y-axis increases upwards). Also, sprites are anchored by their center, that's why we're able to see the upper-right quadrant of the sprite.
 
