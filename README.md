@@ -145,7 +145,7 @@ possible!
 
 If you're using Windows and having trouble building Pixel, please check [this
 guide](https://github.com/gopxl/pixel/wiki/Building-Pixel-on-Windows) on the
-[wiki](https://github.com/gopxl/pixel/wiki).
+[wiki](https://github.com/gopxl/pixel/wiki). Alternatively you can try running on WSL, as described [below](#windows-subsystem-for-linux).
 
 OpenGL development libraries are needed for compilation. The dependencies
 are same as for [GLFW](https://github.com/go-gl/glfw).
@@ -163,6 +163,17 @@ The OpenGL version used is **OpenGL 3.3**.
 **The combination of Go 1.8, macOS and latest XCode seems to be problematic** as mentioned in issue
 [#7](https://github.com/gopxl/pixel/v2/issues/7). This issue is probably not related to Pixel.
 **Upgrading to Go 1.8.1 fixes the issue.**
+
+### Windows Subsystem for Linux
+
+While pixel does run on Windows, you will likely have significantly better performance running in WSL2, which now has support for GUI applications built-in with WSLg.
+
+Installation instructions [here](https://github.com/microsoft/wslg?tab=readme-ov-file#installing-wslg). If you already have an old version of WSL installed, 
+make sure to follow the upgrade instructions to get WSL2 as well as update your distribution of choice to version 2. Additionally, if you have an old `DISPLAY` environment variable set in your ~/.bashrc (or equivalent) for WSL1, you should remove it. This is now configured automatically.
+
+Once WSL is setup, follow the usual Go and OpenGL installation instructions for your chosen distribution of linux.
+
+Finally, add `export LIBGL_ALWAYS_INDIRECT=0` to your ~/.bashrc (or equivalent) if you see an error like `Error: creating window failed: VersionUnavailable: GLX: Failed to create context: GLXBadFBConfig` when attempting to launch an OpenGL application from WSL.
 
 ## Contributing
 
