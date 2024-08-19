@@ -8,10 +8,10 @@ to pushing Pixel to the next level.
 
 ## Extension List
 
-* [atlas](atlas/README.md) - Texture atlasing for more efficient rendering.
-* [gameloop](gameloop/README.md) - An extension that allows you to run a game loop in Pixel.
-* [imdraw](imdraw/README.md) - An extension that allows you to draw primitives in Pixel.
-* [text](text/README.md) - An extension that allows you to draw text in Pixel.
+* [atlas](./atlas/README.md) - Texture atlasing for more efficient rendering.
+* [gameloop](./gameloop/README.md) - An extension that allows you to run a game loop in Pixel.
+* [imdraw](./imdraw/README.md) - An extension that allows you to draw primitives in Pixel.
+* [text](./text/README.md) - An extension that allows you to draw text in Pixel.
 
 
 ## Creating an Extension
