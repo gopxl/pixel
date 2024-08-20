@@ -26,7 +26,7 @@ func pixelRect[T constraints.Integer | constraints.Float](minX, minY, maxX, maxY
 }
 
 func image2PixelRect(r image.Rectangle) pixel.Rect {
-	return pixel.R(float64(r.Min.X), float64(r.Min.Y), float64(r.Max.X), float64(r.Max.Y))
+	return pixelRect(r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
 }
 
 func loadEmbedSprite(fs embed.FS, file string) (i image.Image, err error) {
