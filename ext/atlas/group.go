@@ -48,29 +48,6 @@ func (a *Atlas) Clear(groups ...Group) {
 		}
 	}
 
-	images := make([]*image.RGBA, len(a.internal))
-	for i, data := range a.internal {
-		images[i] = data.Image()
-	}
-
-	for id, loc := range a.idMap {
-		bounds := image.Rect(0, 0, loc.rect.Dx(), loc.rect.Dy())
-		rgba := image.NewRGBA(bounds)
-		i := images[loc.index]
-
-		for y := 0; y < bounds.Dy(); y++ {
-			for x := 0; x < bounds.Dx(); x++ {
-				rgba.Set(x, y, i.At(loc.rect.Min.X+x, loc.rect.Min.Y+y))
-			}
-		}
-
-		entry := imageEntry{data: rgba}
-		entry.id = id
-		entry.bounds = bounds
-
-		a.adding = append(a.adding, entry)
-	}
-
 	a.clean = false
 
 	a.Pack()

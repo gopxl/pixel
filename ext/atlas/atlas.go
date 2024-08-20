@@ -128,7 +128,37 @@ func (a *Atlas) SliceEmbed(fs embed.FS, path string, cellSize pixel.Vec) (id Sli
 // to the atlas can be used.
 func (a *Atlas) Pack() {
 	// If there's nothing to do, don't do anything
-	if a.clean || len(a.adding) == 0 {
+	if a.clean {
+		return
+	}
+
+	// If we've already packed the textures, we need to convert them back to images to repack them
+	if a.internal != nil && len(a.internal) > 0 {
+		images := make([]*image.RGBA, len(a.internal))
+		for i, data := range a.internal {
+			images[i] = data.Image()
+		}
+
+		for id, loc := range a.idMap {
+			bounds := image.Rect(0, 0, loc.rect.Dx(), loc.rect.Dy())
+			rgba := image.NewRGBA(bounds)
+			i := images[loc.index]
+
+			for y := 0; y < bounds.Dy(); y++ {
+				for x := 0; x < bounds.Dx(); x++ {
+					rgba.Set(x, y, i.At(loc.rect.Min.X+x, loc.rect.Min.Y+y))
+				}
+			}
+
+			entry := imageEntry{data: rgba}
+			entry.id = id
+			entry.bounds = bounds
+
+			a.adding = append(a.adding, entry)
+		}
+	}
+
+	if len(a.adding) == 0 {
 		return
 	}
 
