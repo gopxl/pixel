@@ -128,7 +128,7 @@ func (a *Atlas) SliceEmbed(fs embed.FS, path string, cellSize pixel.Vec) (id Sli
 // to the atlas can be used.
 func (a *Atlas) Pack() {
 	// If there's nothing to do, don't do anything
-	if a.clean || len(a.adding) == 0 {
+	if a.clean {
 		return
 	}
 
@@ -156,6 +156,10 @@ func (a *Atlas) Pack() {
 
 			a.adding = append(a.adding, entry)
 		}
+	}
+
+	if len(a.adding) == 0 {
+		return
 	}
 
 	// reset internal stuff
