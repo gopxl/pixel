@@ -6,6 +6,7 @@ import (
 	"github.com/gopxl/pixel/v2"
 )
 
+// Get returns a texture with the given ID.
 func (a *Atlas) Get(id uint32) TextureId {
 	return TextureId{
 		id:    id,
@@ -20,10 +21,12 @@ type TextureId struct {
 	sprite *pixel.Sprite
 }
 
+// ID returns the ID of the texture in the atlas.
 func (t TextureId) ID() uint32 {
 	return t.id
 }
 
+// Frame returns the frame of the texture in the atlas.
 func (t TextureId) Frame() pixel.Rect {
 	if !t.atlas.clean {
 		panic("Atlas is dirty, call atlas.Pack() first")
