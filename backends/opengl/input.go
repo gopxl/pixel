@@ -61,11 +61,11 @@ func (w *Window) MouseInsideWindow() bool {
 
 // MouseScroll returns the mouse scroll amount (in both axes) since the last call to Window.Update.
 func (w *Window) MouseScroll() pixel.Vec {
-	return w.input.Curr.Mouse
+	return w.input.Curr.Scroll
 }
 
 func (w *Window) MousePreviousScroll() pixel.Vec {
-	return w.input.Prev.Mouse
+	return w.input.Prev.Scroll
 }
 
 // Typed returns the text typed on the keyboard since the last call to Window.Update.
