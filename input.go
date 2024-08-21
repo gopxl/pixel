@@ -36,6 +36,16 @@ func (b Button) String() string {
 	return name
 }
 
+// IsMouseButton returns true if the button is one of the mouse buttons.
+func (b Button) IsMouseButton() bool {
+	return b >= mouseButtonStart && b <= mouseButtonEnd
+}
+
+// IsKeyboardButton returns true if the button is one of the keyboard buttons.
+func (b Button) IsKeyboardButton() bool {
+	return b >= keyButtonStart && b <= keyButtonEnd
+}
+
 const UnknownButton Button = -1
 const (
 	// List of all mouse buttons.
@@ -172,6 +182,12 @@ const (
 
 	// Last iota
 	NumButtons int = iota
+
+	// Internal mappings bookending keyboard and mouse buttons.
+	mouseButtonStart = MouseButton1
+	mouseButtonEnd   = MouseButton8
+	keyButtonStart   = KeySpace
+	keyButtonEnd     = KeyMenu
 
 	// Aliases
 	MouseButtonLeft   = MouseButton1
