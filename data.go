@@ -181,6 +181,11 @@ func verticalFlip(rgba *image.RGBA) {
 	}
 }
 
+func defaultDecoder(r io.Reader) (image.Image, error) {
+	i, _, err := image.Decode(r)
+	return i, err
+}
+
 // PictureDataFromFile loads an image from a file using the given decoder and converts it into PictureData.
 //
 // We take a decoder function (png.Decode, jpeg.Decode, etc.) as an argument; in order to decode images,
@@ -191,6 +196,9 @@ func verticalFlip(rgba *image.RGBA) {
 // With this argument, you implicitly import and register the file formats you need and the Pixel project
 // doesn't have to carry all formats around.
 //
+// The decoder can be nil, and Pixel will fallback onto using image.Decode and require you to import the
+// formats you wish to use.
+//
 // See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
 func PictureDataFromFile(path string, decoder func(r io.Reader) (image.Image, error)) (*PictureData, error) {
 	f, err := os.Open(path)
@@ -198,6 +206,10 @@ func PictureDataFromFile(path string, decoder func(r io.Reader) (image.Image, er
 		return nil, err
 	}
 	defer f.Close()
+
+	if decoder == nil {
+		decoder = defaultDecoder
+	}
 
 	img, err := decoder(f)
 	if err != nil {
