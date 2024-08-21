@@ -5,7 +5,9 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"io"
 	"math"
+	"os"
 )
 
 // zeroValueTriangleData is the default value of a TriangleData element
@@ -177,6 +179,32 @@ func verticalFlip(rgba *image.RGBA) {
 		copy(iRow, jRow)
 		copy(jRow, tmpRow)
 	}
+}
+
+// PictureDataFromFile loads an image from a file using the given decoder and converts it into PictureData.
+//
+// We take a decoder function (png.Decode, jpeg.Decode, etc.) as an argument; in order to decode images,
+// you have to register the format (png, jpeg, etc.) with the image package, this will increase the number
+// of dependencies imposed on a project. We want to avoid importing these in Pixel as it will increase the
+// size of the project and it will increase maintanence if we miss a format, or if a new format is added.
+//
+// With this argument, you implicitly import and register the file formats you need and the Pixel project
+// doesn't have to carry all formats around.
+//
+// See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
+func PictureDataFromFile(path string, decoder func(r io.Reader) (image.Image, error)) (*PictureData, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	img, err := decoder(f)
+	if err != nil {
+		return nil, err
+	}
+
+	return PictureDataFromImage(img), nil
 }
 
 // PictureDataFromImage converts an image.Image into PictureData.
