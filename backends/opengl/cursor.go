@@ -40,12 +40,6 @@ func CreateCursorImage(img image.Image, hot pixel.Vec) *Cursor {
 	return c
 }
 
-// CreateCursorPictureData creates a new cursor from PictureData with the specified hotspot (where the click is registered).
-func CreateCursorPictureData(pic *pixel.PictureData, hot pixel.Vec) *Cursor {
-	img := pic.Image()
-	return CreateCursorImage(img, hot)
-}
-
 // SetCursor sets the cursor for the window.
 func (w *Window) SetCursor(cursor *Cursor) {
 	mainthread.Call(func() {
