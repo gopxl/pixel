@@ -109,6 +109,7 @@ type Window struct {
 	mouseEnteredCallback func(win *Window, entered bool)
 	mouseMovedCallback   func(win *Window, pos pixel.Vec)
 	scrollCallback       func(win *Window, scroll pixel.Vec)
+	cursor               *Cursor
 }
 
 var currWin *Window
@@ -204,6 +205,9 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 		})
 	}
 
+	w.cursor = CreateStandardCursor(ArrowCursor)
+	w.SetCursor(w.cursor)
+
 	w.SetVSync(cfg.VSync)
 
 	w.initInput()
@@ -226,6 +230,7 @@ func (w *Window) Destroy() {
 
 // Update swaps buffers and polls events. Call this method at the end of each frame.
 func (w *Window) Update() {
+	w.SetCursor(w.cursor)
 	w.SwapBuffers()
 	w.UpdateInput()
 }
