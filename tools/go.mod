@@ -3,12 +3,12 @@ module github.com/gopxl/pixel/tools
 go 1.21
 
 require (
-	github.com/gopxl/pixel/v2 v2.2.0-local
+	github.com/gopxl/pixel/v2 v2.2.1-local
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.8.1
 )
 
-replace github.com/gopxl/pixel/v2 v2.2.0-local => ../
+replace github.com/gopxl/pixel/v2 v2.2.1-local => ../
 
 require (
 	github.com/go-gl/gl v0.0.0-20231021071112-07e5d0ea2e71 // indirect
