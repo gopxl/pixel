@@ -230,7 +230,6 @@ func (w *Window) Destroy() {
 
 // Update swaps buffers and polls events. Call this method at the end of each frame.
 func (w *Window) Update() {
-	w.SetCursor(w.cursor)
 	w.SwapBuffers()
 	w.UpdateInput()
 }

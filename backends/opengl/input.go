@@ -262,6 +262,9 @@ func (w *Window) initInput() {
 		})
 
 		w.window.SetCursorEnterCallback(func(_ *glfw.Window, entered bool) {
+			if entered && w.cursor != nil {
+				w.window.SetCursor(w.cursor)
+			}
 			w.input.MouseEnteredEvent(entered)
 			if w.mouseEnteredCallback != nil {
 				w.mouseEnteredCallback(w, entered)
