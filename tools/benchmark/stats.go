@@ -50,6 +50,10 @@ func NewStats(name string, duration time.Duration, frames int, frameSeconds []in
 		stats.MinFPS = slices.Min(fps)
 		stats.MaxFPS = slices.Max(fps)
 		stats.StdevFPS = standardDeviation(fps)
+	} else {
+		// 1s or less test. Use average as a stand-in.
+		stats.MinFPS = math.Floor(stats.AvgFPS)
+		stats.MaxFPS = math.Ceil(stats.AvgFPS)
 	}
 
 	return stats
