@@ -51,7 +51,7 @@ type staticTriangles struct {
 	cell       pixel.Vec
 }
 
-func (st *staticTriangles) Step(win *opengl.Window) {
+func (st *staticTriangles) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
 
 	for i := 0; i < st.cols; i++ {
@@ -82,23 +82,27 @@ type movingTriangles struct {
 	imd        *imdraw.IMDraw
 	rows, cols int
 	cell       pixel.Vec
-	counter    int
+	yOffset    float64
 }
 
-func (mt *movingTriangles) Step(win *opengl.Window) {
+func (mt *movingTriangles) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
 
+	mt.yOffset += mt.cell.Y * delta * 3
+	if mt.yOffset >= mt.cell.Y {
+		mt.yOffset = 0
+	}
+
 	for i := 0; i < mt.cols; i++ {
-		yOffset := -mt.cell.Y
-		delta := float64(mt.counter % int(mt.cell.Y))
+		columnOffset := -mt.cell.Y
 		if i%2 == 0 {
-			yOffset += delta
+			columnOffset += mt.yOffset
 		} else {
-			yOffset -= delta
+			columnOffset -= mt.yOffset
 		}
 
 		for j := 0; j < mt.rows+2; j++ {
-			pos := pixel.V(float64(i)*mt.cell.X, (float64(j)*mt.cell.Y)+yOffset)
+			pos := pixel.V(float64(i)*mt.cell.X, (float64(j)*mt.cell.Y)+columnOffset)
 			matrix := pixel.IM.Moved(pos)
 			if i%2 == 1 {
 				matrix = matrix.Rotated(pos.Add(pixel.V(mt.cell.X/2, mt.cell.Y/2)), math.Pi)
@@ -107,8 +111,6 @@ func (mt *movingTriangles) Step(win *opengl.Window) {
 			mt.imd.Draw(win)
 		}
 	}
-
-	mt.counter++
 }
 
 func tri(cell pixel.Vec) *imdraw.IMDraw {

@@ -89,7 +89,7 @@ type spriteStatic struct {
 	batch      *pixel.Batch
 }
 
-func (ss *spriteStatic) Step(win *opengl.Window) {
+func (ss *spriteStatic) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
 	var target pixel.Target
 	if ss.batch != nil {
@@ -134,13 +134,13 @@ func newSpriteMovingBatched(win *opengl.Window) (Benchmark, error) {
 
 type spriteMoving struct {
 	sprite     *pixel.Sprite
+	batch      *pixel.Batch
 	rows, cols int
 	cell       pixel.Vec
-	counter    int
-	batch      *pixel.Batch
+	yOffset    float64
 }
 
-func (sm *spriteMoving) Step(win *opengl.Window) {
+func (sm *spriteMoving) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
 	var target pixel.Target
 	if sm.batch != nil {
@@ -149,11 +149,16 @@ func (sm *spriteMoving) Step(win *opengl.Window) {
 	} else {
 		target = win
 	}
-	spriteGridMoving(sm.sprite, target, sm.rows, sm.cols, sm.cell, sm.counter)
+
+	sm.yOffset += sm.cell.Y * delta * 3
+	if sm.yOffset >= sm.cell.Y {
+		sm.yOffset = 0
+	}
+
+	spriteGridMoving(sm.sprite, target, sm.rows, sm.cols, sm.cell, sm.yOffset)
 	if sm.batch != nil {
 		sm.batch.Draw(win)
 	}
-	sm.counter += 1
 }
 
 func spriteGrid(sprite *pixel.Sprite, target pixel.Target, rows, cols int, cell pixel.Vec) {
@@ -170,23 +175,22 @@ func spriteGrid(sprite *pixel.Sprite, target pixel.Target, rows, cols int, cell 
 	}
 }
 
-func spriteGridMoving(sprite *pixel.Sprite, target pixel.Target, rows, cols int, cell pixel.Vec, counter int) {
+func spriteGridMoving(sprite *pixel.Sprite, target pixel.Target, rows, cols int, cell pixel.Vec, yOffset float64) {
 	spriteBounds := sprite.Frame().Bounds()
 	spriteWidth := spriteBounds.W()
 	spriteHeight := spriteBounds.H()
 	matrix := pixel.IM.ScaledXY(pixel.ZV, pixel.V(cell.X/spriteWidth, cell.Y/spriteHeight))
 	offset := pixel.V(cell.X/2, cell.Y/2)
 	for i := 0; i < cols; i++ {
-		yOffset := -cell.Y
-		delta := float64(counter % int(cell.Y))
+		columnOffset := -cell.Y
 		if i%2 == 0 {
-			yOffset += delta
+			columnOffset += yOffset
 		} else {
-			yOffset -= delta
+			columnOffset -= yOffset
 		}
 
 		for j := 0; j < rows+2; j++ {
-			pos := pixel.V(float64(i)*cell.X, (float64(j)*cell.Y)+yOffset).Add(offset)
+			pos := pixel.V(float64(i)*cell.X, (float64(j)*cell.Y)+columnOffset).Add(offset)
 			sprite.Draw(target, matrix.Moved(pos))
 		}
 	}

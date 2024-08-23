@@ -51,15 +51,15 @@ Information about the machines used to record benchmark stats
 
 | Machine            | Pixel  | Benchmark                    | Duration | Frames | FPS Avg | FPS Min | FPS Max | FPS Stdev |
 |--------------------|--------|------------------------------|----------|--------|---------|---------|---------|-----------|
-| bhperry-wsl        | v2.2.0 | imdraw-moving                | 30.01s   | 2232   | 74.37   | 60      | 78      | 3.45      |
-| bhperry-wsl        | v2.2.0 | imdraw-static                | 30.02s   | 2334   | 77.75   | 73      | 80      | 1.2       |
-| bhperry-wsl        | v2.2.0 | sprite-moving                | 30.03s   | 1452   | 48.35   | 45      | 50      | 1.05      |
-| bhperry-wsl        | v2.2.0 | sprite-moving-batched        | 30.01s   | 4004   | 133.42  | 127     | 139     | 2.45      |
-| bhperry-wsl        | v2.2.0 | sprite-static                | 30.02s   | 1534   | 51.1    | 48      | 52      | 0.91      |
-| bhperry-wsl        | v2.2.0 | sprite-static-batched        | 30s      | 5293   | 176.43  | 163     | 179     | 2.99      |
-| bhperry-win10      | v2.2.0 | imdraw-moving                | 30.03s   | 1425   | 47.45   | 21      | 49      | 4.96      |
-| bhperry-win10      | v2.2.0 | imdraw-static                | 30s      | 1533   | 51.1    | 50      | 52      | 0.55      |
-| bhperry-win10      | v2.2.0 | sprite-moving                | 30.02s   | 1145   | 38.15   | 37      | 39      | 0.46      |
-| bhperry-win10      | v2.2.0 | sprite-moving-batched        | 30s      | 39753  | 1325.06 | 1269    | 1348    | 15.1      |
-| bhperry-win10      | v2.2.0 | sprite-static                | 30.01s   | 1214   | 40.45   | 40      | 41      | 0.5       |
-| bhperry-win10      | v2.2.0 | sprite-static-batched        | 30s      | 39513  | 1317.06 | 1299    | 1336    | 10.1      |
+| bhperry-wsl        | v2.2.0 | imdraw-moving                | 30s      | 2214   | 73.79   | 68      | 76      | 1.77      |
+| bhperry-wsl        | v2.2.0 | imdraw-static                | 30s      | 2355   | 78.5    | 72      | 81      | 1.89      |
+| bhperry-wsl        | v2.2.0 | sprite-moving                | 30.03s   | 1451   | 48.32   | 45      | 50      | 1.25      |
+| bhperry-wsl        | v2.2.0 | sprite-moving-batched        | 30.01s   | 4085   | 136.12  | 127     | 142     | 3.17      |
+| bhperry-wsl        | v2.2.0 | sprite-static                | 30.01s   | 1518   | 50.59   | 47      | 52      | 1.45      |
+| bhperry-wsl        | v2.2.0 | sprite-static-batched        | 30.01s   | 5318   | 177.2   | 159     | 182     | 6.01      |
+| bhperry-win10      | v2.2.0 | imdraw-moving                | 30.03s   | 1430   | 47.61   | 22      | 50      | 5.85      |
+| bhperry-win10      | v2.2.0 | imdraw-static                | 30.02s   | 1569   | 52.27   | 51      | 53      | 0.64      |
+| bhperry-win10      | v2.2.0 | sprite-moving                | 30.03s   | 1148   | 38.23   | 35      | 39      | 0.9       |
+| bhperry-win10      | v2.2.0 | sprite-moving-batched        | 30s      | 39085  | 1302.79 | 1205    | 1329    | 23.93     |
+| bhperry-win10      | v2.2.0 | sprite-static                | 30.04s   | 1218   | 40.54   | 38      | 42      | 0.88      |
+| bhperry-win10      | v2.2.0 | sprite-static-batched        | 30s      | 40570  | 1352.29 | 1245    | 1380    | 26.04     |

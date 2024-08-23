@@ -64,9 +64,12 @@ func (c Config) Run() (*Stats, error) {
 	second := time.NewTicker(time.Second)
 	done := time.NewTicker(duration)
 	start := time.Now()
+	last := start
 loop:
 	for frame = 0; !win.Closed(); frame++ {
-		benchmark.Step(win)
+		now := time.Now()
+		benchmark.Step(win, now.Sub(last).Seconds())
+		last = now
 		win.Update()
 
 		select {
@@ -90,7 +93,7 @@ loop:
 
 // Benchmark provides hooks into the stages of a window's lifecycle
 type Benchmark interface {
-	Step(win *opengl.Window)
+	Step(win *opengl.Window, delta float64)
 }
 
 // Registry is a collection of benchmark configs
