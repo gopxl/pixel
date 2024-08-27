@@ -22,9 +22,21 @@ func init() {
 			Duration:    30 * time.Second,
 		},
 		Config{
+			Name:        "imdraw-static-batched",
+			Description: "Stationary RGB triangles in a grid with batched draw",
+			New:         newStaticTrianglesBatched,
+			Duration:    30 * time.Second,
+		},
+		Config{
 			Name:        "imdraw-moving",
 			Description: "Columns of RGB triangles moving in opposite directions",
 			New:         newMovingTriangles,
+			Duration:    30 * time.Second,
+		},
+		Config{
+			Name:        "imdraw-moving-batched",
+			Description: "Columns of RGB triangles moving in opposite directions with batched draw",
+			New:         newMovingTrianglesBatched,
 			Duration:    30 * time.Second,
 		},
 	)
@@ -45,8 +57,20 @@ func newStaticTriangles(win *opengl.Window) (Benchmark, error) {
 	return benchmark, nil
 }
 
+func newStaticTrianglesBatched(win *opengl.Window) (Benchmark, error) {
+	benchmark, err := newStaticTriangles(win)
+	if err != nil {
+		return nil, err
+	}
+	st := benchmark.(*staticTriangles)
+	st.target = pixel.NewBatch(&pixel.TrianglesData{}, nil)
+	return st, nil
+}
+
 type staticTriangles struct {
 	imd        *imdraw.IMDraw
+	batch      *pixel.Batch
+	target     pixel.BasicTarget
 	rows, cols int
 	cell       pixel.Vec
 }
@@ -54,12 +78,24 @@ type staticTriangles struct {
 func (st *staticTriangles) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
 
+	var target pixel.BasicTarget
+	if st.batch != nil {
+		st.batch.Clear()
+		target = st.batch
+	} else {
+		target = win
+	}
+
 	for i := 0; i < st.cols; i++ {
 		for j := 0; j < st.rows; j++ {
 			pos := pixel.V(float64(i)*st.cell.X, float64(j)*st.cell.Y)
-			win.SetMatrix(pixel.IM.Moved(pos))
-			st.imd.Draw(win)
+			target.SetMatrix(pixel.IM.Moved(pos))
+			st.imd.Draw(target)
 		}
+	}
+
+	if st.batch != nil {
+		st.batch.Draw(win)
 	}
 }
 
@@ -78,8 +114,20 @@ func newMovingTriangles(win *opengl.Window) (Benchmark, error) {
 	return benchmark, nil
 }
 
+func newMovingTrianglesBatched(win *opengl.Window) (Benchmark, error) {
+	benchmark, err := newMovingTriangles(win)
+	if err != nil {
+		return nil, err
+	}
+
+	mt := benchmark.(*movingTriangles)
+	mt.batch = pixel.NewBatch(&pixel.TrianglesData{}, nil)
+	return mt, nil
+}
+
 type movingTriangles struct {
 	imd        *imdraw.IMDraw
+	batch      *pixel.Batch
 	rows, cols int
 	cell       pixel.Vec
 	yOffset    float64
@@ -87,6 +135,14 @@ type movingTriangles struct {
 
 func (mt *movingTriangles) Step(win *opengl.Window, delta float64) {
 	win.Clear(backgroundColor)
+
+	var target pixel.BasicTarget
+	if mt.batch != nil {
+		mt.batch.Clear()
+		target = mt.batch
+	} else {
+		target = win
+	}
 
 	mt.yOffset += mt.cell.Y * delta * 3
 	if mt.yOffset >= mt.cell.Y {
@@ -107,9 +163,13 @@ func (mt *movingTriangles) Step(win *opengl.Window, delta float64) {
 			if i%2 == 1 {
 				matrix = matrix.Rotated(pos.Add(pixel.V(mt.cell.X/2, mt.cell.Y/2)), math.Pi)
 			}
-			win.SetMatrix(matrix)
-			mt.imd.Draw(win)
+			target.SetMatrix(matrix)
+			mt.imd.Draw(target)
 		}
+	}
+
+	if mt.batch != nil {
+		mt.batch.Draw(win)
 	}
 }
 
