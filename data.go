@@ -183,6 +183,9 @@ func verticalFlip(rgba *image.RGBA) {
 
 type DecoderFunc func(io.Reader) (image.Image, error)
 
+// DefaultDecoderFunc is a DecoderFunc that uses image.Decode to decode images.
+// In order to decode, you must import the image formats you wish to use.
+// ex. import _ "image/png"
 func DefaultDecoderFunc(r io.Reader) (image.Image, error) {
 	i, _, err := image.Decode(r)
 	return i, err
