@@ -29,26 +29,32 @@ func image2PixelRect(r image.Rectangle) pixel.Rect {
 	return pixelRect(r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
 }
 
-func loadEmbedSprite(fs embed.FS, file string) (i image.Image, err error) {
+func loadEmbedSprite(fs embed.FS, file string, decoder pixel.DecoderFunc) (i image.Image, err error) {
 	f, err := fs.Open(file)
 	if err != nil {
 		return
 	}
 	defer f.Close()
 
-	i, _, err = image.Decode(f)
-	return
+	if decoder == nil {
+		decoder = pixel.DefaultDecoderFunc
+	}
+
+	return decoder(f)
 }
 
-func loadSprite(file string) (i image.Image, err error) {
+func loadSprite(file string, decoder pixel.DecoderFunc) (i image.Image, err error) {
 	f, err := os.Open(file)
 	if err != nil {
 		return
 	}
 	defer f.Close()
 
-	i, _, err = image.Decode(f)
-	return
+	if decoder == nil {
+		decoder = pixel.DefaultDecoderFunc
+	}
+
+	return decoder(f)
 }
 
 // split is the actual algorithm for splitting a given space (by j in spcs) to fit the given width and height.

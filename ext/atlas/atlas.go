@@ -99,13 +99,13 @@ func (a *Atlas) AddImage(img image.Image) (id TextureId) {
 }
 
 // AddEmbed loads an embed.FS image to the atlas.
-func (a *Atlas) AddEmbed(fs embed.FS, path string) (id TextureId) {
-	return a.DefaultGroup().AddEmbed(fs, path)
+func (a *Atlas) AddEmbed(fs embed.FS, path string, decoder pixel.DecoderFunc) (id TextureId) {
+	return a.DefaultGroup().AddEmbed(fs, path, decoder)
 }
 
 // AddFile loads an image file to the atlas.
-func (a *Atlas) AddFile(path string) (id TextureId) {
-	return a.DefaultGroup().AddFile(path)
+func (a *Atlas) AddFile(path string, decoder pixel.DecoderFunc) (id TextureId) {
+	return a.DefaultGroup().AddFile(path, decoder)
 }
 
 // SliceImage evenly divides the given image into cells of the given size.
@@ -114,13 +114,13 @@ func (a *Atlas) SliceImage(img image.Image, cellSize pixel.Vec) (id SliceId) {
 }
 
 // Slice loads an image and evenly divides it into cells of the given size.
-func (a *Atlas) SliceFile(path string, cellSize pixel.Vec) (id SliceId) {
-	return a.DefaultGroup().SliceFile(path, cellSize)
+func (a *Atlas) SliceFile(path string, cellSize pixel.Vec, decoder pixel.DecoderFunc) (id SliceId) {
+	return a.DefaultGroup().SliceFile(path, cellSize, decoder)
 }
 
 // SliceEmbed loads an embeded image and evenly divides it into cells of the given size.
-func (a *Atlas) SliceEmbed(fs embed.FS, path string, cellSize pixel.Vec) (id SliceId) {
-	return a.DefaultGroup().SliceEmbed(fs, path, cellSize)
+func (a *Atlas) SliceEmbed(fs embed.FS, path string, cellSize pixel.Vec, decoder pixel.DecoderFunc) (id SliceId) {
+	return a.DefaultGroup().SliceEmbed(fs, path, cellSize, decoder)
 }
 
 // Pack takes all of the added textures and adds them to the atlas largest to smallest,
@@ -260,10 +260,10 @@ func (a *Atlas) Pack() {
 		case iImageEntry:
 			sprite = add.Data()
 		case iEmbedEntry:
-			sprite, err = loadEmbedSprite(add.FS(), add.Path())
+			sprite, err = loadEmbedSprite(add.FS(), add.Path(), add.DecoderFunc())
 			err = errors.Wrapf(err, "failed to load embed sprite: %v", add.Path())
 		case iFileEntry:
-			sprite, err = loadSprite(add.Path())
+			sprite, err = loadSprite(add.Path(), add.DecoderFunc())
 			err = errors.Wrapf(err, "failed to load sprite file: %v", add.Path())
 		}
 		if err != nil {

@@ -181,7 +181,9 @@ func verticalFlip(rgba *image.RGBA) {
 	}
 }
 
-func defaultDecoder(r io.Reader) (image.Image, error) {
+type DecoderFunc func(io.Reader) (image.Image, error)
+
+func DefaultDecoderFunc(r io.Reader) (image.Image, error) {
 	i, _, err := image.Decode(r)
 	return i, err
 }
@@ -200,7 +202,7 @@ func defaultDecoder(r io.Reader) (image.Image, error) {
 // formats you wish to use.
 //
 // See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
-func PictureDataFromFile(path string, decoder func(r io.Reader) (image.Image, error)) (*PictureData, error) {
+func PictureDataFromFile(path string, decoder DecoderFunc) (*PictureData, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -208,7 +210,7 @@ func PictureDataFromFile(path string, decoder func(r io.Reader) (image.Image, er
 	defer f.Close()
 
 	if decoder == nil {
-		decoder = defaultDecoder
+		decoder = DefaultDecoderFunc
 	}
 
 	img, err := decoder(f)
