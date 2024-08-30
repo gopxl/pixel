@@ -9,15 +9,15 @@ import (
 	"github.com/gopxl/pixel/v2"
 )
 
-type StandardCursor int
+type StandardCursor = glfw.StandardCursor
 
 const (
-	ArrowCursor     = StandardCursor(glfw.ArrowCursor)
-	IBeamCursor     = StandardCursor(glfw.IBeamCursor)
-	CrosshairCursor = StandardCursor(glfw.CrosshairCursor)
-	HandCursor      = StandardCursor(glfw.HandCursor)
-	HResizeCursor   = StandardCursor(glfw.HResizeCursor)
-	VResizeCursor   = StandardCursor(glfw.VResizeCursor)
+	ArrowCursor     = glfw.ArrowCursor
+	IBeamCursor     = glfw.IBeamCursor
+	CrosshairCursor = glfw.CrosshairCursor
+	HandCursor      = glfw.HandCursor
+	HResizeCursor   = glfw.HResizeCursor
+	VResizeCursor   = glfw.VResizeCursor
 )
 
 type Cursor = glfw.Cursor
@@ -25,7 +25,7 @@ type Cursor = glfw.Cursor
 // CreateStandardCursor creates a new standard cursor.
 func CreateStandardCursor(cursorId StandardCursor) *Cursor {
 	c := mainthread.CallVal(func() *Cursor {
-		return glfw.CreateStandardCursor(glfw.StandardCursor(cursorId))
+		return glfw.CreateStandardCursor(cursorId)
 	})
 	runtime.SetFinalizer(c, (*Cursor).Destroy)
 	return c
