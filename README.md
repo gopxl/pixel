@@ -6,11 +6,11 @@ Revived fork of the original [Pixel](https://github.com/faiface/pixel) library b
 
 
 # Pixel 2
-[![GoDoc](https://godoc.org/github.com/gopxl/pixel/v2?status.svg)](https://godoc.org/github.com/gopxl/pixel/v2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gopxl/pixel/v2.svg)](https://pkg.go.dev/github.com/gopxl/pixel/v2)
 [![Go build status](https://github.com/gopxl/pixel/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/gopxl/pixel/actions/workflows/go.yml?query=branch%3Amain)
 [![Coverage Status](https://coveralls.io/repos/github/gopxl/pixel/badge.svg?branch=main)](https://coveralls.io/github/gopxl/pixel?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gopxl/pixel/v2)](https://goreportcard.com/report/github.com/gopxl/pixel/v2) 
-[![Discord Chat](https://img.shields.io/discord/1158461233121468496)](https://discord.gg/q2DK4MP)  
+[![Discord Chat](https://img.shields.io/discord/1158461233121468496)](https://discord.gg/hPBTTXGDU3)  
 
 A hand-crafted 2D game library in Go. Take a look into the [features](#features) to see what it can
 do.
@@ -31,17 +31,10 @@ See [requirements](#requirements) for the list of libraries necessary for compil
 
 ## Tutorial
 
-The [Wiki of this repo](https://github.com/gopxl/pixel/wiki) contains an extensive tutorial
-covering several topics of Pixel. Here's the content of the tutorial parts so far:
+The [Wiki of this repo](./docs/README.md) contains an extensive tutorial
+covering several topics of Pixel. 
 
-- [Creating a Window](https://github.com/gopxl/pixel/wiki/Creating-a-Window)
-- [Drawing a Sprite](https://github.com/gopxl/pixel/wiki/Drawing-a-Sprite)
-- [Moving, scaling and rotating with Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
-- [Pressing keys and clicking mouse](https://github.com/gopxl/pixel/wiki/Pressing-keys-and-clicking-mouse)
-- [Drawing efficiently with Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
-- [Drawing shapes with IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw)
-- [Typing text on the screen](https://github.com/gopxl/pixel/wiki/Typing-text-on-the-screen)
-- [Using a custom fragment shader](https://github.com/gopxl/pixel/wiki/Using-a-custom-fragment-shader)
+For the tutorial walking through the basics of Pixel, check out [The Basics](./docs/Basics/Creating-a-Window.md)!
 
 ## [Examples](https://github.com/gopxl/pixel-examples)
 
@@ -80,9 +73,9 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
 - Fast 2D graphics
   - Sprites
   - Primitive shapes with immediate mode style
-    [IMDraw](https://github.com/gopxl/pixel/wiki/Drawing-shapes-with-IMDraw) (circles, rectangles,
+    [IMDraw](./docs/Basics/Drawing-shapes-with-IMDraw.md) (circles, rectangles,
     lines, ...)
-  - Optimized drawing with [Batch](https://github.com/gopxl/pixel/wiki/Drawing-efficiently-with-Batch)
+  - Optimized drawing with [Batch](./docs/Basics/Drawing-efficiently-with-Batch.md)
   - Text drawing with [text](https://godoc.org/github.com/gopxl/pixel/v2/text) package
 - Audio through a separate [Beep](https://github.com/gopxl/beep) library.
 - Simple and convenient API
@@ -100,7 +93,7 @@ Here's the list of the main features in Pixel. Although Pixel is still under hea
     multiplication and a few more features
   - Pixel uses `float64` throughout the library, compatible with `"math"` package
 - Geometry transformations with
-  [Matrix](https://github.com/gopxl/pixel/wiki/Moving,-scaling-and-rotating-with-Matrix)
+  [Matrix](./docs/Basics/Moving,-scaling-and-rotating-with-Matrix.md)
   - Moving, scaling, rotating
   - Easy camera implementation
 - Off-screen drawing to Canvas or any other target (Batch, IMDraw, ...)
@@ -143,9 +136,7 @@ possible!
 
 ## Requirements
 
-If you're using Windows and having trouble building Pixel, please check [this
-guide](https://github.com/gopxl/pixel/wiki/Building-Pixel-on-Windows) on the
-[wiki](https://github.com/gopxl/pixel/wiki).
+If you're using Windows and having trouble building Pixel, please check [this guide](./docs/Compilation/Building-Pixel-on-Windows.md) on the [wiki](./docs/README.md).
 
 OpenGL development libraries are needed for compilation. The dependencies
 are same as for [GLFW](https://github.com/go-gl/glfw).
@@ -157,11 +148,23 @@ The OpenGL version used is **OpenGL 3.3**.
 - On Ubuntu/Debian-like Linux distributions, you need `libgl1-mesa-dev` and `xorg-dev` packages.
 - On CentOS/Fedora-like Linux distributions, you need `libX11-devel libXcursor-devel libXrandr-devel
   libXinerama-devel mesa-libGL-devel libXi-devel libXxf86vm-devel` packages.
+- On Linux to use Wayland instead of X11, compile your project with `-tags wayland`.
 - See [here](http://www.glfw.org/docs/latest/compile.html#compile_deps) for full details.
 
 **The combination of Go 1.8, macOS and latest XCode seems to be problematic** as mentioned in issue
 [#7](https://github.com/gopxl/pixel/v2/issues/7). This issue is probably not related to Pixel.
 **Upgrading to Go 1.8.1 fixes the issue.**
+
+### Windows Subsystem for Linux
+
+While pixel does run on Windows, you will likely have significantly better performance running in WSL2, which now has support for GUI applications built-in with WSLg.
+
+Installation instructions [here](https://github.com/microsoft/wslg?tab=readme-ov-file#installing-wslg). If you already have an old version of WSL installed, 
+make sure to follow the upgrade instructions to get WSL2 as well as update your distribution of choice to version 2. Additionally, if you have an old `DISPLAY` environment variable set in your ~/.bashrc (or equivalent) for WSL1, you should remove it. This is now configured automatically.
+
+Once WSL is setup, follow the usual Go and OpenGL installation instructions for your chosen distribution of linux.
+
+Finally, add `export LIBGL_ALWAYS_INDIRECT=0` to your ~/.bashrc (or equivalent) if you see an error like `Error: creating window failed: VersionUnavailable: GLX: Failed to create context: GLXBadFBConfig` when attempting to launch an OpenGL application from WSL.
 
 ## Contributing
 

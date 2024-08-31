@@ -79,8 +79,12 @@ type WindowConfig struct {
 	// You can make the window visible later using Window.Show().
 	Invisible bool
 
-	//SamplesMSAA specifies the level of MSAA to be used. Must be one of 0, 2, 4, 8, 16. 0 to disable.
+	// SamplesMSAA specifies the level of MSAA to be used. Must be one of 0, 2, 4, 8, 16. 0 to disable.
 	SamplesMSAA int
+
+	// BoundsLimits specifies the minimum and maximum bounds of the resizable window.
+	// If the window is full screen or not resizable, this has no effect.
+	BoundsLimits pixel.Rect
 }
 
 // Window is a window handler. Use this type to manipulate a window (input, drawing, etc.).
@@ -105,6 +109,7 @@ type Window struct {
 	mouseEnteredCallback func(win *Window, entered bool)
 	mouseMovedCallback   func(win *Window, pos pixel.Vec)
 	scrollCallback       func(win *Window, scroll pixel.Vec)
+	cursor               *Cursor
 }
 
 var currWin *Window
@@ -173,6 +178,10 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 			w.window.Show()
 		}
 
+		if !cfg.BoundsLimits.Empty() {
+			w.SetBoundsLimits(cfg.BoundsLimits)
+		}
+
 		// enter the OpenGL context
 		w.begin()
 		glhf.Init()
@@ -195,6 +204,9 @@ func NewWindow(cfg WindowConfig) (*Window, error) {
 			w.window.SetIcon(imgs)
 		})
 	}
+
+	w.cursor = CreateStandardCursor(ArrowCursor)
+	w.SetCursor(w.cursor)
 
 	w.SetVSync(cfg.VSync)
 
@@ -336,6 +348,14 @@ func (w *Window) GetPos() pixel.Vec {
 // Bounds returns the current bounds of the Window.
 func (w *Window) Bounds() pixel.Rect {
 	return w.bounds
+}
+
+// SetBoundsLimits sets the minimum and maximum bounds of the window.
+// If the window is full screen or not resizable, this function does nothing.
+func (w *Window) SetBoundsLimits(limits pixel.Rect) {
+	mainthread.Call(func() {
+		w.window.SetSizeLimits(int(limits.Min.X), int(limits.Min.Y), int(limits.Max.X), int(limits.Max.Y))
+	})
 }
 
 func (w *Window) setFullscreen(monitor *Monitor) {
