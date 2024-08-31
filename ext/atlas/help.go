@@ -1,13 +1,7 @@
 package atlas
 
 import (
-	"embed"
 	"image"
-	"os"
-
-	// need the following to automatically register for image.decode
-	_ "image/jpeg"
-	_ "image/png"
 
 	"github.com/gopxl/pixel/v2"
 	"golang.org/x/exp/constraints"
@@ -27,28 +21,6 @@ func pixelRect[T constraints.Integer | constraints.Float](minX, minY, maxX, maxY
 
 func image2PixelRect(r image.Rectangle) pixel.Rect {
 	return pixelRect(r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
-}
-
-func loadEmbedSprite(fs embed.FS, file string) (i image.Image, err error) {
-	f, err := fs.Open(file)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-
-	i, _, err = image.Decode(f)
-	return
-}
-
-func loadSprite(file string) (i image.Image, err error) {
-	f, err := os.Open(file)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-
-	i, _, err = image.Decode(f)
-	return
 }
 
 // split is the actual algorithm for splitting a given space (by j in spcs) to fit the given width and height.

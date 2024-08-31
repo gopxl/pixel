@@ -3,6 +3,8 @@ package atlas
 import (
 	"embed"
 	"image"
+
+	"github.com/gopxl/pixel/v2"
 )
 
 type iEntry interface {
@@ -54,15 +56,21 @@ func (i imageEntry) Data() image.Image {
 type iFileEntry interface {
 	iEntry
 	Path() string
+	DecoderFunc() pixel.DecoderFunc
 }
 
 type fileEntry struct {
 	entry
-	path string
+	path        string
+	decoderFunc pixel.DecoderFunc
 }
 
 func (f fileEntry) Path() string {
 	return f.path
+}
+
+func (f fileEntry) DecoderFunc() pixel.DecoderFunc {
+	return f.decoderFunc
 }
 
 type iSliceEntry interface {
