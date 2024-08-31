@@ -85,7 +85,7 @@ func (g *Group) AddImage(img image.Image) (id TextureId) {
 
 // AddEmbed loads an embed.FS image to the atlas.
 func (g *Group) AddEmbed(fs embed.FS, path string, decoder pixel.DecoderFunc) (id TextureId) {
-	img, err := loadEmbedSprite(fs, path, decoder)
+	img, err := pixel.ImageFromEmbed(fs, path, decoder)
 	if err != nil {
 		panic(err)
 	}
@@ -105,7 +105,7 @@ func (g *Group) AddEmbed(fs embed.FS, path string, decoder pixel.DecoderFunc) (i
 
 // AddFile loads an image file to the atlas.
 func (g *Group) AddFile(path string, decoder pixel.DecoderFunc) (id TextureId) {
-	img, err := loadSprite(path, decoder)
+	img, err := pixel.ImageFromFile(path, decoder)
 	if err != nil {
 		panic(err)
 	}
@@ -149,7 +149,7 @@ func (g *Group) SliceImage(img image.Image, cellSize pixel.Vec) (id SliceId) {
 // SliceFile loads an image and evenly divides it into cells of the given size.
 func (g *Group) SliceFile(path string, cellSize pixel.Vec, decoder pixel.DecoderFunc) (id SliceId) {
 	frame := image.Pt(int(cellSize.X), int(cellSize.Y))
-	img, err := loadSprite(path, decoder)
+	img, err := pixel.ImageFromFile(path, decoder)
 	if err != nil {
 		panic(err)
 	}
@@ -180,7 +180,7 @@ func (g *Group) SliceFile(path string, cellSize pixel.Vec, decoder pixel.Decoder
 
 // SliceEmbed loads an embeded image and evenly divides it into cells of the given size.
 func (g *Group) SliceEmbed(fs embed.FS, path string, cellSize pixel.Vec, decoder pixel.DecoderFunc) (id SliceId) {
-	img, err := loadEmbedSprite(fs, path, decoder)
+	img, err := pixel.ImageFromEmbed(fs, path, decoder)
 	if err != nil {
 		panic(err)
 	}

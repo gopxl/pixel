@@ -1,9 +1,7 @@
 package atlas
 
 import (
-	"embed"
 	"image"
-	"os"
 
 	// need the following to automatically register for image.decode
 	_ "image/jpeg"
@@ -27,34 +25,6 @@ func pixelRect[T constraints.Integer | constraints.Float](minX, minY, maxX, maxY
 
 func image2PixelRect(r image.Rectangle) pixel.Rect {
 	return pixelRect(r.Min.X, r.Min.Y, r.Max.X, r.Max.Y)
-}
-
-func loadEmbedSprite(fs embed.FS, file string, decoder pixel.DecoderFunc) (i image.Image, err error) {
-	f, err := fs.Open(file)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-
-	if decoder == nil {
-		decoder = pixel.DefaultDecoderFunc
-	}
-
-	return decoder(f)
-}
-
-func loadSprite(file string, decoder pixel.DecoderFunc) (i image.Image, err error) {
-	f, err := os.Open(file)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-
-	if decoder == nil {
-		decoder = pixel.DefaultDecoderFunc
-	}
-
-	return decoder(f)
 }
 
 // split is the actual algorithm for splitting a given space (by j in spcs) to fit the given width and height.

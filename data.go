@@ -1,6 +1,7 @@
 package pixel
 
 import (
+	"embed"
 	"fmt"
 	"image"
 	"image/color"
@@ -191,6 +192,62 @@ func DefaultDecoderFunc(r io.Reader) (image.Image, error) {
 	return i, err
 }
 
+// ImageFromEmbed loads an image from an embedded file using the given decoder.
+//
+// We take a decoder function (png.Decode, jpeg.Decode, etc.) as an argument; in order to decode images,
+// you have to register the format (png, jpeg, etc.) with the image package, this will increase the number
+// of dependencies imposed on a project. We want to avoid importing these in Pixel as it will increase the
+// size of the project and it will increase maintanence if we miss a format, or if a new format is added.
+//
+// With this argument, you implicitly import and register the file formats you need and the Pixel project
+// doesn't have to carry all formats around.
+//
+// The decoder can be nil, and Pixel will fallback onto using image.Decode and require you to import the
+// formats you wish to use.
+//
+// See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
+func ImageFromEmbed(fs embed.FS, path string, decoder DecoderFunc) (image.Image, error) {
+	f, err := fs.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	if decoder == nil {
+		decoder = DefaultDecoderFunc
+	}
+
+	return decoder(f)
+}
+
+// ImageFromFile loads an image from a file using the given decoder.
+//
+// We take a decoder function (png.Decode, jpeg.Decode, etc.) as an argument; in order to decode images,
+// you have to register the format (png, jpeg, etc.) with the image package, this will increase the number
+// of dependencies imposed on a project. We want to avoid importing these in Pixel as it will increase the
+// size of the project and it will increase maintanence if we miss a format, or if a new format is added.
+//
+// With this argument, you implicitly import and register the file formats you need and the Pixel project
+// doesn't have to carry all formats around.
+//
+// The decoder can be nil, and Pixel will fallback onto using image.Decode and require you to import the
+// formats you wish to use.
+//
+// See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
+func ImageFromFile(path string, decoder DecoderFunc) (image.Image, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	if decoder == nil {
+		decoder = DefaultDecoderFunc
+	}
+
+	return decoder(f)
+}
+
 // PictureDataFromFile loads an image from a file using the given decoder and converts it into PictureData.
 //
 // We take a decoder function (png.Decode, jpeg.Decode, etc.) as an argument; in order to decode images,
@@ -206,17 +263,7 @@ func DefaultDecoderFunc(r io.Reader) (image.Image, error) {
 //
 // See the example https://github.com/gopxl/pixel-examples/tree/main/core/loadingpictures.
 func PictureDataFromFile(path string, decoder DecoderFunc) (*PictureData, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	if decoder == nil {
-		decoder = DefaultDecoderFunc
-	}
-
-	img, err := decoder(f)
+	img, err := ImageFromFile(path, decoder)
 	if err != nil {
 		return nil, err
 	}

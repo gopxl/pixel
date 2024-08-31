@@ -133,7 +133,7 @@ func (a *Atlas) Pack() {
 	}
 
 	// If we've already packed the textures, we need to convert them back to images to repack them
-	if a.internal != nil && len(a.internal) > 0 {
+	if len(a.internal) > 0 {
 		images := make([]*image.RGBA, len(a.internal))
 		for i, data := range a.internal {
 			images[i] = data.Image()
@@ -260,10 +260,10 @@ func (a *Atlas) Pack() {
 		case iImageEntry:
 			sprite = add.Data()
 		case iEmbedEntry:
-			sprite, err = loadEmbedSprite(add.FS(), add.Path(), add.DecoderFunc())
+			sprite, err = pixel.ImageFromEmbed(add.FS(), add.Path(), add.DecoderFunc())
 			err = errors.Wrapf(err, "failed to load embed sprite: %v", add.Path())
 		case iFileEntry:
-			sprite, err = loadSprite(add.Path(), add.DecoderFunc())
+			sprite, err = pixel.ImageFromFile(add.Path(), add.DecoderFunc())
 			err = errors.Wrapf(err, "failed to load sprite file: %v", add.Path())
 		}
 		if err != nil {
@@ -281,6 +281,4 @@ func (a *Atlas) Pack() {
 
 	a.adding = nil
 	a.clean = true
-
-	return
 }
