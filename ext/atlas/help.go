@@ -3,10 +3,6 @@ package atlas
 import (
 	"image"
 
-	// need the following to automatically register for image.decode
-	_ "image/jpeg"
-	_ "image/png"
-
 	"github.com/gopxl/pixel/v2"
 	"golang.org/x/exp/constraints"
 )
