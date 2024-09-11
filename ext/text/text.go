@@ -334,6 +334,12 @@ func (txt *Text) controlRune(r rune, dot pixel.Vec) (newDot pixel.Vec, control b
 	case '\n':
 		dot.X = txt.Orig.X
 		dot.Y -= txt.LineHeight
+		if txt.bounds.Empty() {
+			txt.bounds.Min = dot
+			txt.bounds.Max = txt.Orig.Add(pixel.V(0.01, txt.atlas.lineHeight))
+		} else {
+			txt.bounds.Min.Y -= txt.LineHeight
+		}
 	case '\r':
 		dot.X = txt.Orig.X
 	case '\t':
@@ -343,6 +349,12 @@ func (txt *Text) controlRune(r rune, dot pixel.Vec) (newDot pixel.Vec, control b
 			rem = txt.TabWidth
 		}
 		dot.X += rem
+		if txt.bounds.Empty() {
+			txt.bounds.Min = txt.Dot
+			txt.bounds.Max = pixel.V(dot.X, txt.Orig.Y+txt.atlas.lineHeight)
+		} else if dot.X > txt.bounds.Max.X {
+			txt.bounds.Max.X = dot.X
+		}
 	default:
 		return dot, false
 	}
