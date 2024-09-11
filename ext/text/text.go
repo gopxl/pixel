@@ -381,8 +381,20 @@ func (txt *Text) drawBuf() {
 			continue
 		}
 
+		var dot pixel.Vec
 		var rect, frame, bounds pixel.Rect
-		rect, frame, bounds, txt.Dot = txt.Atlas().DrawRune(txt.prevR, r, txt.Dot)
+		rect, frame, bounds, dot = txt.Atlas().DrawRune(txt.prevR, r, txt.Dot)
+		if r == ' ' {
+			// Space character has empty bounds for some fonts
+			if bounds.W() == 0 {
+				bounds.Max = bounds.Max.Add(dot.Sub(txt.Dot))
+			}
+			if bounds.H() == 0 {
+				bounds.Min = txt.Dot
+				bounds.Max.Y += txt.atlas.lineHeight
+			}
+		}
+		txt.Dot = dot
 
 		txt.prevR = r
 
