@@ -100,12 +100,13 @@ type Text struct {
 	glyph  pixel.TrianglesData
 	tris   pixel.TrianglesData
 
-	mat    pixel.Matrix
-	col    pixel.RGBA
-	trans  pixel.TrianglesData
-	transD pixel.Drawer
-	dirty  bool
-	anchor pixel.Anchor
+	mat        pixel.Matrix
+	col        pixel.RGBA
+	trans      pixel.TrianglesData
+	transD     pixel.Drawer
+	dirty      bool
+	anchor     pixel.Anchor
+	isAnchored bool
 }
 
 // New creates a new Text capable of drawing runes contained in the provided Atlas. Orig and Dot
@@ -192,10 +193,23 @@ func (txt *Text) BoundsOf(s string) pixel.Rect {
 // AlignedTo returns the text moved by the given anchor.
 func (txt *Text) AlignedTo(anchor pixel.Anchor) *Text {
 	txt.anchor = anchor
+	txt.isAnchored = true
+	return txt
+}
+
+// Unaligned removes anchoring from the text
+func (txt *Text) Unaligned() *Text {
+	var anchor pixel.Anchor
+	txt.anchor = anchor
+	txt.isAnchored = false
 	return txt
 }
 
 func (txt *Text) AnchoredOffset() pixel.Vec {
+	if !txt.isAnchored {
+		return pixel.ZV
+	}
+
 	offset := txt.bounds.AnchorPos(txt.anchor)
 	height := txt.bounds.H()
 	if height > 0 {
@@ -264,8 +278,10 @@ func (txt *Text) Draw(t pixel.Target, matrix pixel.Matrix) {
 // If there's a lot of text written to the Text, changing a matrix or a color mask often might hurt
 // performance. Consider using your Target's SetMatrix or SetColorMask methods if available.
 func (txt *Text) DrawColorMask(t pixel.Target, matrix pixel.Matrix, mask color.Color) {
-	offset := txt.AnchoredOffset()
-	matrix = pixel.IM.Moved(offset).Chained(matrix)
+	if txt.isAnchored {
+		offset := txt.AnchoredOffset()
+		matrix = pixel.IM.Moved(offset).Chained(matrix)
+	}
 
 	if matrix != txt.mat {
 		txt.mat = matrix
