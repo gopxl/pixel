@@ -195,6 +195,17 @@ func (txt *Text) AlignedTo(anchor pixel.Anchor) *Text {
 	return txt
 }
 
+func (txt *Text) AnchoredOffset() pixel.Vec {
+	offset := txt.bounds.AnchorPos(txt.anchor)
+	height := txt.bounds.H()
+	if height > 0 {
+		// Origin marks bottom of first line, while bounds wrap all lines of text
+		// To correctly align anchoring, offset by the height minus the first line's height
+		offset.Y += height - txt.atlas.lineHeight
+	}
+	return offset
+}
+
 // Clear removes all written text from the Text. The Dot field is reset to Orig.
 func (txt *Text) Clear() {
 	txt.prevR = -1
@@ -253,13 +264,13 @@ func (txt *Text) Draw(t pixel.Target, matrix pixel.Matrix) {
 // If there's a lot of text written to the Text, changing a matrix or a color mask often might hurt
 // performance. Consider using your Target's SetMatrix or SetColorMask methods if available.
 func (txt *Text) DrawColorMask(t pixel.Target, matrix pixel.Matrix, mask color.Color) {
+	offset := txt.AnchoredOffset()
+	matrix = pixel.IM.Moved(offset).Chained(matrix)
+
 	if matrix != txt.mat {
 		txt.mat = matrix
 		txt.dirty = true
 	}
-
-	offset := txt.Bounds().AnchorPos(txt.anchor)
-	txt.mat = pixel.IM.Moved(offset).Chained(txt.mat)
 
 	if mask == nil {
 		mask = pixel.Alpha(1)
