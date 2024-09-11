@@ -205,6 +205,20 @@ func (txt *Text) Unaligned() *Text {
 	return txt
 }
 
+func (txt *Text) AnchoredBounds() pixel.Rect {
+	if !txt.isAnchored {
+		return txt.bounds
+	}
+	return txt.bounds.Moved(txt.AnchoredOffset())
+}
+
+func (txt *Text) AnchoredDot() pixel.Vec {
+	if !txt.isAnchored {
+		return txt.Dot
+	}
+	return txt.AnchoredOffset().Add(txt.Dot)
+}
+
 func (txt *Text) AnchoredOffset() pixel.Vec {
 	if !txt.isAnchored {
 		return pixel.ZV
