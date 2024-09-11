@@ -205,6 +205,7 @@ func (txt *Text) Unaligned() *Text {
 	return txt
 }
 
+// AnchoredBounds returns the text bounds with the anchoring offset applied
 func (txt *Text) AnchoredBounds() pixel.Rect {
 	if !txt.isAnchored {
 		return txt.bounds
@@ -212,6 +213,7 @@ func (txt *Text) AnchoredBounds() pixel.Rect {
 	return txt.bounds.Moved(txt.AnchoredOffset())
 }
 
+// AnchoredDot returns text.Dot with the anchoring offset applied
 func (txt *Text) AnchoredDot() pixel.Vec {
 	if !txt.isAnchored {
 		return txt.Dot
@@ -219,6 +221,9 @@ func (txt *Text) AnchoredDot() pixel.Vec {
 	return txt.AnchoredOffset().Add(txt.Dot)
 }
 
+// AnchoredOffset calculates the position offset for the text based on it's anchor
+//
+// Text is anchored relative to the Orig
 func (txt *Text) AnchoredOffset() pixel.Vec {
 	if !txt.isAnchored {
 		return pixel.ZV
