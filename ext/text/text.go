@@ -100,12 +100,13 @@ type Text struct {
 	glyph  pixel.TrianglesData
 	tris   pixel.TrianglesData
 
-	mat    pixel.Matrix
-	col    pixel.RGBA
-	trans  pixel.TrianglesData
-	transD pixel.Drawer
-	dirty  bool
-	anchor pixel.Anchor
+	mat        pixel.Matrix
+	col        pixel.RGBA
+	trans      pixel.TrianglesData
+	transD     pixel.Drawer
+	dirty      bool
+	anchor     pixel.Anchor
+	isAnchored bool
 }
 
 // New creates a new Text capable of drawing runes contained in the provided Atlas. Orig and Dot
@@ -192,7 +193,50 @@ func (txt *Text) BoundsOf(s string) pixel.Rect {
 // AlignedTo returns the text moved by the given anchor.
 func (txt *Text) AlignedTo(anchor pixel.Anchor) *Text {
 	txt.anchor = anchor
+	txt.isAnchored = true
 	return txt
+}
+
+// Unaligned removes anchoring from the text
+func (txt *Text) Unaligned() *Text {
+	var anchor pixel.Anchor
+	txt.anchor = anchor
+	txt.isAnchored = false
+	return txt
+}
+
+// AnchoredBounds returns the text bounds with the anchoring offset applied
+func (txt *Text) AnchoredBounds() pixel.Rect {
+	if !txt.isAnchored {
+		return txt.bounds
+	}
+	return txt.bounds.Moved(txt.AnchoredOffset())
+}
+
+// AnchoredDot returns text.Dot with the anchoring offset applied
+func (txt *Text) AnchoredDot() pixel.Vec {
+	if !txt.isAnchored {
+		return txt.Dot
+	}
+	return txt.AnchoredOffset().Add(txt.Dot)
+}
+
+// AnchoredOffset calculates the position offset for the text based on it's anchor
+//
+// Text is anchored relative to the Orig
+func (txt *Text) AnchoredOffset() pixel.Vec {
+	if !txt.isAnchored {
+		return pixel.ZV
+	}
+
+	offset := txt.bounds.AnchorPos(txt.anchor)
+	height := txt.bounds.H()
+	if height > 0 {
+		// Origin marks bottom of first line, while bounds wrap all lines of text
+		// To correctly align anchoring, offset by the height minus the first line's height
+		offset.Y += height - txt.atlas.lineHeight
+	}
+	return offset
 }
 
 // Clear removes all written text from the Text. The Dot field is reset to Orig.
@@ -253,13 +297,15 @@ func (txt *Text) Draw(t pixel.Target, matrix pixel.Matrix) {
 // If there's a lot of text written to the Text, changing a matrix or a color mask often might hurt
 // performance. Consider using your Target's SetMatrix or SetColorMask methods if available.
 func (txt *Text) DrawColorMask(t pixel.Target, matrix pixel.Matrix, mask color.Color) {
+	if txt.isAnchored {
+		offset := txt.AnchoredOffset()
+		matrix = pixel.IM.Moved(offset).Chained(matrix)
+	}
+
 	if matrix != txt.mat {
 		txt.mat = matrix
 		txt.dirty = true
 	}
-
-	offset := txt.Bounds().AnchorPos(txt.anchor)
-	txt.mat = pixel.IM.Moved(offset).Chained(txt.mat)
 
 	if mask == nil {
 		mask = pixel.Alpha(1)
@@ -293,6 +339,12 @@ func (txt *Text) controlRune(r rune, dot pixel.Vec) (newDot pixel.Vec, control b
 	case '\n':
 		dot.X = txt.Orig.X
 		dot.Y -= txt.LineHeight
+		if txt.bounds.Empty() {
+			txt.bounds.Min = dot
+			txt.bounds.Max = txt.Orig.Add(pixel.V(0.01, txt.atlas.lineHeight))
+		} else {
+			txt.bounds.Min.Y -= txt.LineHeight
+		}
 	case '\r':
 		dot.X = txt.Orig.X
 	case '\t':
@@ -302,6 +354,12 @@ func (txt *Text) controlRune(r rune, dot pixel.Vec) (newDot pixel.Vec, control b
 			rem = txt.TabWidth
 		}
 		dot.X += rem
+		if txt.bounds.Empty() {
+			txt.bounds.Min = txt.Dot
+			txt.bounds.Max = pixel.V(dot.X, txt.Orig.Y+txt.atlas.lineHeight)
+		} else if dot.X > txt.bounds.Max.X {
+			txt.bounds.Max.X = dot.X
+		}
 	default:
 		return dot, false
 	}
@@ -328,8 +386,20 @@ func (txt *Text) drawBuf() {
 			continue
 		}
 
+		var dot pixel.Vec
 		var rect, frame, bounds pixel.Rect
-		rect, frame, bounds, txt.Dot = txt.Atlas().DrawRune(txt.prevR, r, txt.Dot)
+		rect, frame, bounds, dot = txt.Atlas().DrawRune(txt.prevR, r, txt.Dot)
+		if r == ' ' {
+			// Space character has empty bounds for some fonts
+			if bounds.W() == 0 {
+				bounds.Max = bounds.Max.Add(dot.Sub(txt.Dot))
+			}
+			if bounds.H() == 0 {
+				bounds.Min = txt.Dot
+				bounds.Max.Y += txt.atlas.lineHeight
+			}
+		}
+		txt.Dot = dot
 
 		txt.prevR = r
 
