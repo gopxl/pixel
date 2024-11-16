@@ -166,6 +166,25 @@ Once WSL is setup, follow the usual Go and OpenGL installation instructions for 
 
 Finally, add `export LIBGL_ALWAYS_INDIRECT=0` to your ~/.bashrc (or equivalent) if you see an error like `Error: creating window failed: VersionUnavailable: GLX: Failed to create context: GLXBadFBConfig` when attempting to launch an OpenGL application from WSL.
 
+## Cross Platform Build
+
+Go supports cross platform build targets natively, but because pixel depends on [CGo](https://pkg.go.dev/cmd/cgo) it is necessary to specify a C cross-compiler that is compatible with the target.
+
+### Linux to Windows
+
+To build a windows executable on linux, you will need to install a windows C compiler, such as mingw. The following commands can be used to build for an amd64 architecture on windows.
+
+Install mingw on linux with apt:
+```sh
+sudo apt update
+sudo apt install gcc-mingw-w64
+```
+
+Build for windows amd64
+```sh
+GOOS=windows GOARCH=amd64 CGO_ENABLED=1 CXX=x86_64-w64-mingw32-g++ CC=x86_64-w64-mingw32-gcc go build
+```
+
 ## Contributing
 
 Join us in the [Discord Chat!](https://discord.gg/n2Y8uVneK6)
