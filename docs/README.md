@@ -25,5 +25,6 @@ If you are a seasoned game developer, just skim through the tutorials to grasp t
 ### [Drawing shapes with IMDraw](./Basics/Drawing-shapes-with-IMDraw.md)
 ### [Typing text on the screen](./Basics/Typing-text-on-the-screen.md)
 ### [Using a custom fragment shader](./Basics/Using-a-custom-fragment-shader.md)
+### [Unit testing and CI](./Basics/Unit-testing-and-CI.md)
 
 ## [Extensions](../ext/README.md)
