@@ -234,3 +234,5 @@ func gameloop(win *opengl.Window) {
 ![shader tutorial wavy](./images/shadertutorialwavy.gif)
 
 And that's it for now! To grab the full source to each of these examples, check out the [examples repository](https://github.com/gopxl/pixel-examples).
+
+[Next Tutorial](./Basics/Unit-testing-and-CI.md)
