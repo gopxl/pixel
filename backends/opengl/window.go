@@ -1,3 +1,5 @@
+//go:build !js
+
 package opengl
 
 import (
@@ -575,3 +577,9 @@ func (w *Window) SetClipboard(str string) {
 		w.window.SetClipboardString(str)
 	})
 }
+
+
+// ActiveTouches returns the positions of all currently held touch points in
+// window-local pixel coordinates. Desktop builds have no touch hardware, so
+// this always returns nil; use win.Pressed(pixel.MouseButton1) for mouse input.
+func (w *Window) ActiveTouches() []pixel.Vec { return nil }

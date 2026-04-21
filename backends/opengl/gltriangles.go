@@ -201,22 +201,14 @@ func (gt *GLTriangles) Update(t pixel.Triangles) {
 
 // CopyVertices copies the GLTriangle data down to the vertex data.
 func (gt *GLTriangles) CopyVertices() {
-	// this code is supposed to copy the vertex data and CallNonBlock the update if
-	// the data is small enough, otherwise it'll block and not copy the data
-	if len(gt.data) < 256 { // arbitrary heurestic constant
-		data := append([]float32{}, gt.data...)
-		mainthread.CallNonBlock(func() {
-			gt.vs.Begin()
-			gt.vs.SetVertexData(data)
-			gt.vs.End()
-		})
-	} else {
-		mainthread.Call(func() {
-			gt.vs.Begin()
-			gt.vs.SetVertexData(gt.data)
-			gt.vs.End()
-		})
-	}
+	// Always use blocking Call. On WASM, CallNonBlock spawns a goroutine that
+	// can be preempted by a subsequent draw or SwapBuffers before the vertex
+	// upload completes, causing draws with stale or empty buffers.
+	mainthread.Call(func() {
+		gt.vs.Begin()
+		gt.vs.SetVertexData(gt.data)
+		gt.vs.End()
+	})
 }
 
 // Copy returns an independent copy of this GLTriangles.

@@ -126,13 +126,34 @@ Pixel is in development and still missing few critical features. Here're the mos
 - Antialiasing (filtering is supported, though)
 - ~~Advanced window manipulation (cursor hiding, window icon, ...)~~
 - Better support for Hi-DPI displays
-- Mobile (and perhaps HTML5?) backend
+- Mobile backend (an HTML5/WebGL2 backend ships under `GOOS=js GOARCH=wasm`)
 - ~~More advanced graphical effects (e.g. blur)~~ (solved with the addition of GLSL effects)
 - Tests and benchmarks
 - Vulkan support
 
 **Implementing these features will get us to the 1.0 release.** Contribute, so that it's as soon as
 possible!
+
+## WebAssembly (browser)
+
+Pixel ships a WebGL2 backend under the `js && wasm` build tag, so a game
+written against the standard `opengl` backend can also be compiled for the
+browser:
+
+```sh
+GOOS=js GOARCH=wasm go build -o game.wasm ./cmd/game
+```
+
+Load `game.wasm` from an HTML page that also serves Go's `wasm_exec.js` and
+provides a canvas element. The backend attaches to `<canvas id="game">` by
+default; override by setting `opengl.CanvasElementID` before calling
+`opengl.NewWindow`.
+
+Some desktop-oriented features are stubbed in the browser: multi-monitor
+queries, joysticks/gamepads, and custom cursor images are no-ops, and window
+positioning is driven by CSS rather than by `SetPos`. Keyboard, mouse (buttons,
+movement, scroll), text input, and resizing (including fullscreen) are wired
+up through DOM events.
 
 ## Requirements
 

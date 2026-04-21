@@ -256,7 +256,7 @@ uniform vec4 uBounds;
 
 void main() {
 	vec2 transPos = (uTransform * vec3(aPosition, 1.0)).xy;
-	vec2 normPos = (transPos - uBounds.xy) / uBounds.zw * 2 - vec2(1, 1);
+	vec2 normPos = (transPos - uBounds.xy) / uBounds.zw * 2.0 - vec2(1.0, 1.0);
 	gl_Position = vec4(normPos, 0.0, 1.0);
 
 	vColor = aColor;
@@ -282,14 +282,14 @@ uniform vec4 uTexBounds;
 uniform sampler2D uTexture;
 
 void main() {
-	if ((vClipRect != vec4(0,0,0,0)) && (gl_FragCoord.x < vClipRect.x || gl_FragCoord.y < vClipRect.y || gl_FragCoord.x > vClipRect.z || gl_FragCoord.y > vClipRect.w))
+	if ((vClipRect != vec4(0.0, 0.0, 0.0, 0.0)) && (gl_FragCoord.x < vClipRect.x || gl_FragCoord.y < vClipRect.y || gl_FragCoord.x > vClipRect.z || gl_FragCoord.y > vClipRect.w))
 		discard;
 
-	if (vIntensity == 0) {
+	if (vIntensity == 0.0) {
 		fragColor = uColorMask * vColor;
 	} else {
-		fragColor = vec4(0, 0, 0, 0);
-		fragColor += (1 - vIntensity) * vColor;
+		fragColor = vec4(0.0, 0.0, 0.0, 0.0);
+		fragColor += (1.0 - vIntensity) * vColor;
 		vec2 t = (vTexCoords - uTexBounds.xy) / uTexBounds.zw;
 		fragColor += vIntensity * vColor * texture(uTexture, t);
 		fragColor *= uColorMask;

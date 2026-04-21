@@ -184,6 +184,11 @@ func setBlendFunc(cmp pixel.ComposeMethod) {
 		glhf.BlendFunc(glhf.One, glhf.One)
 	case pixel.ComposeCopy:
 		glhf.BlendFunc(glhf.One, glhf.Zero)
+	case pixel.ComposeMultiply:
+		glhf.BlendFunc(glhf.DstColor, glhf.Zero)
+	case pixel.ComposeScreen:
+		glhf.BlendEquation(glhf.FuncAdd)
+		glhf.BlendFuncSeparate(glhf.One, glhf.OneMinusSrcColor, glhf.Zero, glhf.One)
 	default:
 		panic(errors.New("Canvas: invalid compose method"))
 	}
@@ -203,7 +208,11 @@ func (c *Canvas) Clear(color color.Color) {
 		A: float64(c.col[3]),
 	})
 
-	mainthread.CallNonBlock(func() {
+	// Use Call (blocking) not CallNonBlock: on WASM, CallNonBlock spawns a
+	// goroutine, and every WebGL call is a goroutine scheduling point — the
+	// deferred clear would race with in-flight draw calls and wipe content
+	// mid-render.
+	mainthread.Call(func() {
 		c.setGlhfBounds()
 		c.gf.Frame().Begin()
 		glhf.Clear(
@@ -288,7 +297,11 @@ func (ct *canvasTriangles) draw(tex *glhf.Texture, bounds pixel.Rect) {
 	mat := ct.dst.mat
 	col := ct.dst.col
 
-	mainthread.CallNonBlock(func() {
+	// Use Call (blocking) not CallNonBlock: same race as Canvas.Clear — on
+	// WASM every WebGL call is a goroutine scheduling point, so a non-blocking
+	// draw can be preempted by window.Update (SwapBuffers) before it executes,
+	// producing a black frame.
+	mainthread.Call(func() {
 		ct.dst.setGlhfBounds()
 		setBlendFunc(cmp)
 
@@ -317,8 +330,18 @@ func (ct *canvasTriangles) draw(tex *glhf.Texture, bounds pixel.Rect) {
 		}
 
 		for loc, u := range ct.shader.uniforms {
+<<<<<<< HEAD
 			ct.shader.s.SetUniformAttr(loc, u.Value())
 		}
+=======
+			if u.isSampler && u.tex != nil {
+				glhf.ActiveTexture(u.unit)
+				u.tex.Begin()
+			}
+			ct.shader.s.SetUniformAttr(loc, u.Value())
+		}
+		glhf.ActiveTexture(0)
+>>>>>>> 6987ad7 (Fix Canvas.Clear race on WASM: use blocking Call not CallNonBlock)
 
 		if tex == nil {
 			ct.vs.Begin()

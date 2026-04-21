@@ -2,6 +2,7 @@ package opengl
 
 import (
 	"math"
+	"sync"
 
 	"github.com/gopxl/glhf/v2"
 	"github.com/gopxl/mainthread/v2"
@@ -18,9 +19,20 @@ type GLPicture interface {
 	Texture() *glhf.Texture
 }
 
+// pictureDataGLCache memoizes GLPicture uploads keyed by source *pixel.PictureData.
+// Without this, every (sprite, canvas) pair re-uploads and retains a full-size pixel
+// copy; on 32-bit WASM (~4GB heap) a 4096x4096 atlas blows the heap after a handful
+// of draw targets.
+var pictureDataGLCache sync.Map // *pixel.PictureData -> GLPicture
+
 // NewGLPicture creates a new GLPicture with it's own static OpenGL texture. This function always
 // allocates a new texture that cannot (shouldn't) be further modified.
 func NewGLPicture(p pixel.Picture) GLPicture {
+	if pd, ok := p.(*pixel.PictureData); ok {
+		if cached, found := pictureDataGLCache.Load(pd); found {
+			return cached.(GLPicture)
+		}
+	}
 	bounds := p.Bounds()
 	bx, by, bw, bh := intBounds(bounds)
 
@@ -64,6 +76,9 @@ func NewGLPicture(p pixel.Picture) GLPicture {
 		bounds: bounds,
 		tex:    tex,
 		pixels: pixels,
+	}
+	if pd, ok := p.(*pixel.PictureData); ok {
+		pictureDataGLCache.Store(pd, gp)
 	}
 	return gp
 }
