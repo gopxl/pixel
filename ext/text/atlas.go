@@ -2,6 +2,7 @@ package text
 
 import (
 	"image"
+	"image/color"
 	"image/draw"
 	"sort"
 	"unicode"
@@ -24,7 +25,7 @@ type Glyph struct {
 // Atlas is a set of pre-drawn glyphs of a fixed set of runes. This allows for efficient text drawing.
 type Atlas struct {
 	face       font.Face
-	pic        pixel.Picture
+	pic        *pixel.PictureData
 	mapping    map[rune]Glyph
 	ascent     float64
 	descent    float64
@@ -102,6 +103,59 @@ func NewAtlas(face font.Face, runeSets ...[]rune) *Atlas {
 // within the Atlas.
 func (a *Atlas) Picture() pixel.Picture {
 	return a.pic
+}
+
+// PictureDataCopy returns a deep copy of the atlas's underlying pixel data. The caller
+// owns the returned PictureData and may modify it without affecting the Atlas.
+func (a *Atlas) PictureDataCopy() *pixel.PictureData {
+	newPic := &pixel.PictureData{
+		Stride: a.pic.Stride,
+		Rect:   a.pic.Rect,
+		Pix:    make([]color.RGBA, len(a.pic.Pix)),
+	}
+	copy(newPic.Pix, a.pic.Pix)
+	return newPic
+}
+
+// CloneWithPictureData returns a new Atlas that uses pic as its backing image.
+// frame is the sub-rectangle of pic where the atlas glyphs live; it must have
+// the same width and height as the original atlas picture. All glyph coordinates
+// are translated so they remain correct relative to the new location in pic.
+//
+// The intended use is to blit PictureDataCopy into a larger shared atlas image and
+// then call CloneWithPictureData so text can share a pixel.Batch with other sprites.
+func (a *Atlas) CloneWithPictureData(pic *pixel.PictureData, frame pixel.Rect) *Atlas {
+	if a.pic.Bounds().W() != frame.W() || a.pic.Bounds().H() != frame.H() {
+		panic("atlas: new frame dimensions do not match prior picture")
+	}
+	if !pic.Bounds().Contains(frame.Min) || !pic.Bounds().Contains(frame.Max) {
+		panic("atlas: new frame is out of bounds of supplied pic")
+	}
+	newAtlas := &Atlas{
+		face:       a.face,
+		pic:        pic,
+		mapping:    make(map[rune]Glyph, len(a.mapping)),
+		ascent:     a.ascent,
+		descent:    a.descent,
+		lineHeight: a.lineHeight,
+	}
+	// account for non (0,0) origin images
+	picFrameDelta := frame.Min.Sub(a.pic.Rect.Min)
+	// for each glyph, translate the dot and frame to account for the new frame location within the supplied pic
+	for r, glyph := range a.mapping {
+		rMin := glyph.Frame.Min.Add(picFrameDelta)
+		rMax := rMin.Add(pixel.V(glyph.Frame.W(), glyph.Frame.H()))
+		newFrame := pixel.Rect{
+			Min: rMin,
+			Max: rMax,
+		}
+		newAtlas.mapping[r] = Glyph{
+			Dot:     glyph.Dot.Add(picFrameDelta),
+			Frame:   newFrame,
+			Advance: glyph.Advance,
+		}
+	}
+	return newAtlas
 }
 
 // Contains reports wheter r in contained within the Atlas.
