@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"image/color"
 
+	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/gopxl/glhf/v2"
 	"github.com/gopxl/mainthread/v2"
-	"github.com/gopxl/pixel/v2"
 	"github.com/pkg/errors"
+
+	"github.com/gopxl/pixel/v2"
 )
 
 // Canvas is an off-screen rectangular BasicTarget and Picture at the same time, that you can draw
@@ -37,7 +39,7 @@ func NewCanvas(bounds pixel.Rect) *Canvas {
 		col: mgl32.Vec4{1, 1, 1, 1},
 	}
 
-	c.shader = NewGLShader(baseCanvasFragmentShader)
+	c.shader = NewGLShader(BaseCanvasFragmentShader)
 	c.SetBounds(bounds)
 	return c
 }
@@ -47,6 +49,13 @@ func NewCanvas(bounds pixel.Rect) *Canvas {
 // to the new value. The value can be a pointer.
 func (c *Canvas) SetUniform(name string, value interface{}) {
 	c.shader.SetUniform(name, value)
+}
+
+// SetUniformTexture binds tex to the sampler2D uniform named name on this
+// canvas's fragment shader. unit is the texture unit index (0-based) and
+// must not collide with any other sampler bound on the same canvas.
+func (c *Canvas) SetUniformTexture(name string, tex *glhf.Texture, unit int) {
+	c.shader.SetUniformTexture(name, tex, unit)
 }
 
 // SetFragmentShader allows you to set a new fragment shader on the underlying
@@ -184,6 +193,11 @@ func setBlendFunc(cmp pixel.ComposeMethod) {
 		glhf.BlendFunc(glhf.One, glhf.One)
 	case pixel.ComposeCopy:
 		glhf.BlendFunc(glhf.One, glhf.Zero)
+	case pixel.ComposeMultiply:
+		glhf.BlendFunc(glhf.BlendFactor(gl.DST_COLOR), glhf.Zero)
+	case pixel.ComposeScreen:
+		gl.BlendEquation(gl.FUNC_ADD)
+		gl.BlendFuncSeparate(gl.ONE, gl.ONE_MINUS_SRC_COLOR, gl.ZERO, gl.ONE)
 	default:
 		panic(errors.New("Canvas: invalid compose method"))
 	}
@@ -317,8 +331,13 @@ func (ct *canvasTriangles) draw(tex *glhf.Texture, bounds pixel.Rect) {
 		}
 
 		for loc, u := range ct.shader.uniforms {
+			if u.isSampler && u.tex != nil {
+				gl.ActiveTexture(gl.TEXTURE0 + uint32(u.unit))
+				u.tex.Begin()
+			}
 			ct.shader.s.SetUniformAttr(loc, u.Value())
 		}
+		gl.ActiveTexture(gl.TEXTURE0)
 
 		if tex == nil {
 			ct.vs.Begin()

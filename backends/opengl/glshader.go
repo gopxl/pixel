@@ -1,6 +1,8 @@
 package opengl
 
 import (
+	"fmt"
+
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/gopxl/glhf/v2"
 	"github.com/gopxl/mainthread/v2"
@@ -31,6 +33,10 @@ type gsUniformAttr struct {
 	Type      glhf.AttrType
 	value     interface{}
 	ispointer bool
+
+	isSampler bool
+	tex       *glhf.Texture
+	unit      int
 }
 
 const (
@@ -55,7 +61,7 @@ var defaultCanvasVertexFormat = glhf.AttrFormat{
 func NewGLShader(fragmentShader string) *GLShader {
 	gs := &GLShader{
 		vf: defaultCanvasVertexFormat,
-		vs: baseCanvasVertexShader,
+		vs: BaseCanvasVertexShader,
 		fs: fragmentShader,
 	}
 
@@ -120,6 +126,7 @@ func (gs *GLShader) SetUniform(name string, value interface{}) {
 		gs.uniforms[loc].Type = t
 		gs.uniforms[loc].ispointer = p
 		gs.uniforms[loc].value = value
+		gs.uniforms[loc].isSampler = false
 		return
 	}
 	gs.uniforms = append(gs.uniforms, gsUniformAttr{
@@ -127,6 +134,33 @@ func (gs *GLShader) SetUniform(name string, value interface{}) {
 		Type:      t,
 		ispointer: p,
 		value:     value,
+	})
+}
+
+// SetUniformTexture binds a sampler2D uniform so that tex is available in the
+// fragment shader as the sampler named name. unit is the texture unit index
+// (0-based); it must be distinct from any other sampler bound on the same
+// shader. The texture is activated and bound each frame before drawing.
+func (gs *GLShader) SetUniformTexture(name string, tex *glhf.Texture, unit int) {
+	unit32 := int32(unit)
+	t, p := getAttrType(unit32)
+	if idx := gs.getUniform(name); idx > -1 {
+		gs.uniforms[idx].Type = t
+		gs.uniforms[idx].value = unit32
+		gs.uniforms[idx].ispointer = p
+		gs.uniforms[idx].isSampler = true
+		gs.uniforms[idx].tex = tex
+		gs.uniforms[idx].unit = unit
+		return
+	}
+	gs.uniforms = append(gs.uniforms, gsUniformAttr{
+		Name:      name,
+		Type:      t,
+		value:     unit32,
+		ispointer: p,
+		isSampler: true,
+		tex:       tex,
+		unit:      unit,
 	})
 }
 
@@ -231,11 +265,14 @@ func getAttrType(v interface{}) (glhf.AttrType, bool) {
 	case *float32:
 		return glhf.Float, true
 	default:
-		panic("invalid AttrType")
+		if v == nil {
+			panic("invalid AttrType (nil)")
+		}
+		panic(fmt.Sprintf("invalid AttrType: %T value=%#v", v, v))
 	}
 }
 
-var baseCanvasVertexShader = `
+var BaseCanvasVertexShader = `
 #version 330 core
 
 in vec2  aPosition;
@@ -267,7 +304,7 @@ void main() {
 }
 `
 
-var baseCanvasFragmentShader = `
+var BaseCanvasFragmentShader = `
 #version 330 core
 
 in vec4  vColor;
